@@ -158,9 +158,11 @@ lokale sti- og klienttilpasningene bevares.
 Fra pakkerepoet:
 
 ```bash
+mise install
+mise run test
+
 nav-pilot validate --source "$PWD"
-node --test tests/package.test.mjs
-node --check skills/fyllut-form-text-history/scripts/generate-form-text-history.mjs
+mise exec -- node --check skills/fyllut-form-text-history/scripts/generate-form-text-history.mjs
 bash -n skills/fyllut-release/scripts/list-releasable-fyllut-commits.sh
 
 # Oppdater den pinnede Nav-grunnpakken bevisst:

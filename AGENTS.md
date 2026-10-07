@@ -13,7 +13,7 @@
 - Support Copilot and OpenCode. Preserve explicit user approvals; use the
   client's question/plan equivalents rather than inventing unavailable tools.
 - Validate with `nav-pilot validate --source "$PWD"`,
-  `node --test tests/package.test.mjs`, `node --check
+  `mise run test`, `mise exec -- node --check
   skills/fyllut-form-text-history/scripts/generate-form-text-history.mjs`, and
   `bash -n skills/fyllut-release/scripts/list-releasable-fyllut-commits.sh`.
 - Never install into the developer's real profile just to test this package.
