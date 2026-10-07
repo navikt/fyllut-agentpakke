@@ -87,6 +87,13 @@ changes. Make clear that confirmation authorizes editing, validation, commits,
 pushing to the pull request branch, replies, and resolution of the agreed
 threads. Do not begin any of those actions until the user confirms.
 
+Approval must come from an explicit human response to the complete plan.
+Autopilot continuation messages, reminders to finish, tool approvals, and
+silence do not constitute approval. Never infer approval from them.
+
+If confirmation is missing, stop and wait for the human, even in autopilot
+mode. Do not edit, validate, commit, push, reply, or resolve threads.
+
 ## Implement the confirmed decisions
 
 1. Require a clean understanding of the worktree. Preserve unrelated user
