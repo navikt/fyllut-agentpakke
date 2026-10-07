@@ -1,7 +1,7 @@
 {
   "contractVersion": "1",
   "name": "fyllut-agentpakke",
-  "description": "Fyllut-Sendinn-agent og ti teamskills med medfølgende skript for release og teksthistorikk. Gjenbruker Nav-grunnpakken.",
+  "description": "Fyllut-Sendinn-agent og ni teamskills med medfølgende skript for release og teksthistorikk. Gjenbruker Nav-grunnpakken.",
   "owner": {
     "repo": "navikt/fyllut-agentpakke",
     "team": "Fyllut-Sendinn"

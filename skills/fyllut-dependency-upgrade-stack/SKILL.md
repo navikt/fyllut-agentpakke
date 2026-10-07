@@ -1,5 +1,5 @@
 ---
-name: dependency-upgrade-stack
+name: fyllut-dependency-upgrade-stack
 description: Replace open dependency update PRs with a tested GitHub stack. Use for periodic repository-wide Maven, Gradle, npm, Docker image, or GitHub Actions upgrades when minor and patch updates should land before researched major updates.
 disable-model-invocation: true
 ---
@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Create manual dependency upgrade PRs instead of merging bot PRs. Work in one repository unless a dependency contract crosses repository boundaries.
 
-Invoke `dependency-upgrade` before proceeding. That skill owns version eligibility, authoritative research, ecosystem-specific checks, migration work, validation, PR descriptions, and troubleshooting. This skill adds repository-wide inventory, grouping, commit structure, stack orchestration, and replacement of bot PRs. When the skills conflict, this skill controls dependency grouping, commit structure, branch creation, PR bases, and stack submission.
+Invoke `fyllut-dependency-upgrade` before proceeding. That skill owns version eligibility, authoritative research, ecosystem-specific checks, migration work, validation, PR descriptions, and troubleshooting. This skill adds repository-wide inventory, grouping, commit structure, stack orchestration, and replacement of bot PRs. When the skills conflict, this skill controls dependency grouping, commit structure, branch creation, PR bases, and stack submission.
 
 ## Stack rules
 
@@ -21,14 +21,14 @@ Invoke `dependency-upgrade` before proceeding. That skill owns version eligibili
 - Put all GitHub Actions updates in one PR at the bottom of the stack.
 - Put all Docker image updates in one separate major-change PR.
 - Put compatible application, build, and transitive-only dependency patch and minor updates in one PR unless a meaningful breaking change makes that unsafe to review or validate.
-- Complete the `dependency-upgrade` workflow for each layer, including required checks, before adding the next layer.
+- Complete the `fyllut-dependency-upgrade` workflow for each layer, including required checks, before adding the next layer.
 - Do not merge the stack unless the user asks.
 
 ## Inventory the repository
 
 Start from the target repository and:
 
-1. Follow `dependency-upgrade` repository inspection rules across every dependency source in the repository.
+1. Follow `fyllut-dependency-upgrade` repository inspection rules across every dependency source in the repository.
 2. Query open Dependabot or Renovate PRs and inspect their diffs.
 3. Build a current-version inventory from manifests, lockfiles, Docker files, Compose files, and workflow action references.
 4. Re-query registries and upstream releases to find eligible targets.
@@ -54,7 +54,7 @@ Use this order, omitting empty groups:
 4. Major application and build dependency updates
 5. Any exceptional major update that needs its own PR
 
-The major layer may exceed the three-direct-dependency limit in `dependency-upgrade`. Keep dependencies that require each other in one commit. Otherwise, commit each dependency separately so reviewers can inspect and revert it without splitting the PR.
+The major layer may exceed the three-direct-dependency limit in `fyllut-dependency-upgrade`. Keep dependencies that require each other in one commit. Otherwise, commit each dependency separately so reviewers can inspect and revert it without splitting the PR.
 
 In the compatible patch and minor layer, commit independent transitive-only
 updates separately from direct dependency updates. Group a transitive package
@@ -68,7 +68,7 @@ Write the proposed order and a concrete risk assessment before editing. Name lik
 
 ## Create the first layer
 
-Confirm that `dependency-upgrade` has completed its clean-worktree check, then verify the required base:
+Confirm that `fyllut-dependency-upgrade` has completed its clean-worktree check, then verify the required base:
 
 ```bash
 git fetch origin main
@@ -77,13 +77,13 @@ git switch --detach origin/main
 gh stack init --base main <first-branch>
 ```
 
-Apply the first group's upgrade by following `dependency-upgrade`. Stay on the initialized branch and use:
+Apply the first group's upgrade by following `fyllut-dependency-upgrade`. Stay on the initialized branch and use:
 
 ```bash
 gh stack submit --auto --open
 ```
 
-Replace the generated PR body with the description required by `dependency-upgrade`. Do not add another layer until that skill's validation and check-watching steps are complete.
+Replace the generated PR body with the description required by `fyllut-dependency-upgrade`. Do not add another layer until that skill's validation and check-watching steps are complete.
 
 ## Add each remaining layer
 
@@ -95,7 +95,7 @@ For every remaining group:
    gh stack add <next-branch>
    ```
 
-2. Follow the full `dependency-upgrade` workflow for that group. Use the stack branch instead of creating a standalone branch.
+2. Follow the full `fyllut-dependency-upgrade` workflow for that group. Use the stack branch instead of creating a standalone branch.
 3. In the grouped major layer, commit each independent dependency separately when possible. Keep required migration changes in the commit for the dependency that caused them.
 4. Submit with `gh stack submit --auto --open`.
 5. Replace the generated PR body.
@@ -147,6 +147,6 @@ Report:
 - local and GitHub check results
 - bot PRs closed as superseded
 - dependencies left unchanged and why
-- versions deferred by the eligibility rules in `dependency-upgrade`
+- versions deferred by the eligibility rules in `fyllut-dependency-upgrade`
 
 End with the canonical stack URL when GitHub exposes one. Otherwise, use the top PR as the stack entry point.

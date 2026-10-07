@@ -1,5 +1,5 @@
 ---
-name: release-fyllut
+name: fyllut-release
 description: Release a selected skjemabygging-formio main commit to skjemautfylling-formio. Use when publishing or propagating the FyllUt monorepo reference.
 disable-model-invocation: true
 license: MIT
@@ -30,7 +30,7 @@ name another target branch, such as `test-publishing`.
 
    ```bash
    : "${NAV_PILOT_SKILLS_DIR:?Start the client through nav-pilot to locate its skills}"
-   bash "$NAV_PILOT_SKILLS_DIR/release-fyllut/scripts/list-releasable-fyllut-commits.sh" \
+   bash "$NAV_PILOT_SKILLS_DIR/fyllut-release/scripts/list-releasable-fyllut-commits.sh" \
      <target-branch>
    ```
 

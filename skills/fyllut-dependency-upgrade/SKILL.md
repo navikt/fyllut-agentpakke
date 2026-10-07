@@ -1,5 +1,5 @@
 ---
-name: dependency-upgrade
+name: fyllut-dependency-upgrade
 description: Upgrade one dependency or a small group of two or three tightly related dependencies in one pull request. Use for targeted Maven, Gradle, npm, Docker image, runtime, or GitHub Actions upgrades without inspecting or managing Dependabot or Renovate pull requests.
 ---
 
@@ -7,9 +7,9 @@ description: Upgrade one dependency or a small group of two or three tightly rel
 
 Upgrade one named dependency, or two or three dependencies that must move together. Finish with one branch and one pull request. Do not create a PR stack.
 
-This skill may also be called by `dependency-upgrade-stack` for one layer of a larger stack. In that case, use the branch and base supplied by the stack skill, but keep all selected dependencies in one PR layer.
+This skill may also be called by `fyllut-dependency-upgrade-stack` for one layer of a larger stack. In that case, use the branch and base supplied by the stack skill, but keep all selected dependencies in one PR layer.
 
-If the `unslop` skill is available, invoke it before writing branch names, commits, PR text, risk notes, or the final report. Do not assume every machine has it installed.
+If the `fyllut-unslop` skill is available, invoke it before writing branch names, commits, PR text, risk notes, or the final report. Do not assume every machine has it installed.
 
 ## Keep the scope narrow
 
@@ -84,7 +84,7 @@ For a Docker image or runtime target:
 
 ## Apply and validate the upgrade
 
-1. Fetch the remote default branch and create one clearly named branch from it. When called by `dependency-upgrade-stack`, stay on the supplied stack branch instead.
+1. Fetch the remote default branch and create one clearly named branch from it. When called by `fyllut-dependency-upgrade-stack`, stay on the supplied stack branch instead.
 2. Apply the version changes and required migration work.
 3. Regenerate only the files tied to the selected dependencies.
 4. Review the complete diff. Remove unrelated lockfile or generated-file churn.
@@ -92,7 +92,7 @@ For a Docker image or runtime target:
 6. For framework or runtime majors, run tests that start the real application, not only compilation or isolated unit tests.
 7. Fix root causes. If a framework split or moved a module, add the supported module instead of recreating old behavior.
 8. Commit with a plain description.
-9. Push the branch and create one pull request. When called by `dependency-upgrade-stack`, use its stack submission command instead.
+9. Push the branch and create one pull request. When called by `fyllut-dependency-upgrade-stack`, use its stack submission command instead.
 10. Wait for required GitHub checks and fix failures before finishing.
 
 If local tests pass but CI fails, inspect the failed job log and reproduce the same command locally before changing code.

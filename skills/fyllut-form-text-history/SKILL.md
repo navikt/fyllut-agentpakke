@@ -1,5 +1,5 @@
 ---
-name: form-text-history
+name: fyllut-form-text-history
 description: Extract the user-visible text history of a published FyllUt form across a date range, including Bokmål source text, translations in its published languages, exact change dates, and a shareable HTML report. Use when someone asks what wording a form had, when wording changed, or whether a specific question changed.
 ---
 
@@ -131,7 +131,7 @@ Run it with Node.js:
 
 ```sh
 : "${NAV_PILOT_SKILLS_DIR:?Start the client through nav-pilot to locate its skills}"
-node "$NAV_PILOT_SKILLS_DIR/form-text-history/scripts/generate-form-text-history.mjs" \
+node "$NAV_PILOT_SKILLS_DIR/fyllut-form-text-history/scripts/generate-form-text-history.mjs" \
   --form nav190105 \
   --from 2024-01-01 \
   --to 2024-12-31 \

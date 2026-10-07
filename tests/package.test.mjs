@@ -9,19 +9,18 @@ import { fileURLToPath } from 'node:url';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const read = (path) => readFileSync(join(root, path), 'utf8');
 const expectedSkills = [
-  'approve-github-stack',
-  'bug-triage-and-fix',
-  'conventional-commit',
-  'dependency-upgrade',
-  'dependency-upgrade-stack',
-  'form-text-history',
+  'fyllut-approve-github-stack',
+  'fyllut-bug-triage-and-fix',
+  'fyllut-dependency-upgrade',
+  'fyllut-dependency-upgrade-stack',
+  'fyllut-form-text-history',
+  'fyllut-pr-review-follow-up',
+  'fyllut-release',
   'fyllut-sendinn-specification',
-  'pr-review-follow-up',
-  'release-fyllut',
-  'unslop',
+  'fyllut-unslop',
 ];
-const releaseScript = join(root, 'skills/release-fyllut/scripts/list-releasable-fyllut-commits.sh');
-const generator = join(root, 'skills/form-text-history/scripts/generate-form-text-history.mjs');
+const releaseScript = join(root, 'skills/fyllut-release/scripts/list-releasable-fyllut-commits.sh');
+const generator = join(root, 'skills/fyllut-form-text-history/scripts/generate-form-text-history.mjs');
 
 test('Tier 1 layout includes every team skill and a startable persona', () => {
   const manifest = JSON.parse(read('.nav-pilot/agentpakke.json'));
@@ -38,6 +37,7 @@ test('Tier 1 layout includes every team skill and a startable persona', () => {
   assert.match(read('agents/fyllut.agent.md'), /^---\nname: fyllut\n/);
   assert.deepEqual(readdirSync(join(root, 'skills')).sort(), expectedSkills);
   for (const skill of expectedSkills) {
+    assert.ok(skill.startsWith('fyllut-'));
     assert.match(read(`skills/${skill}/SKILL.md`), new RegExp(`^---\\nname: ${skill}\\n`));
   }
   for (const reference of [
@@ -50,7 +50,7 @@ test('Tier 1 layout includes every team skill and a startable persona', () => {
 });
 
 test('bundled script instructions use the launch-provided skills directory', () => {
-  for (const skill of ['release-fyllut', 'form-text-history']) {
+  for (const skill of ['fyllut-release', 'fyllut-form-text-history']) {
     const text = read(`skills/${skill}/SKILL.md`);
     assert.ok(text.includes(': "${NAV_PILOT_SKILLS_DIR:?'));
     assert.ok(text.includes(`"$NAV_PILOT_SKILLS_DIR/${skill}/scripts/`));

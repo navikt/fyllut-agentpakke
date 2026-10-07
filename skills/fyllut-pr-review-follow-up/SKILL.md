@@ -1,5 +1,5 @@
 ---
-name: pr-review-follow-up
+name: fyllut-pr-review-follow-up
 description: Work through recent GitHub pull request review comments with the user, decide how to handle each one, then implement, commit, push, reply, and resolve the agreed follow-ups. Use when the user provides a pull request and wants to address review feedback collaboratively.
 license: MIT
 metadata:

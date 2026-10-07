@@ -32,7 +32,7 @@ gh auth login
 ```
 
 Du trenger tilgang til repoene du skal arbeide med. Installer Node.js dersom
-du skal bruke `form-text-history`, og bruk prosjektets pinnede versjon når
+du skal bruke `fyllut-form-text-history`, og bruk prosjektets pinnede versjon når
 prosjektet har en. Stack-skillene trenger også GitHub CLI-utvidelsen:
 
 ```bash
@@ -84,9 +84,9 @@ av klienten har ikke nødvendigvis denne variabelen.
 Be agenten bruke skillen ved navn, for eksempel:
 
 ```text
-Bruk dependency-upgrade til å oppdatere avhengighetene i dette repoet.
-Bruk pr-review-follow-up for https://github.com/navikt/<repo>/pull/<nummer>.
-Bruk form-text-history for nav190105 i perioden 2024-01-01 til 2024-12-31.
+Bruk fyllut-dependency-upgrade til å oppdatere avhengighetene i dette repoet.
+Bruk fyllut-pr-review-follow-up for https://github.com/navikt/<repo>/pull/<nummer>.
+Bruk fyllut-form-text-history for nav190105 i perioden 2024-01-01 til 2024-12-31.
 ```
 
 Start spesifikasjonsflyten uttrykkelig:
@@ -102,18 +102,19 @@ vente på svar og godkjenning der skillen krever det.
 
 | Skill | Bruk |
 | --- | --- |
-| `approve-github-stack` | Gjennomgå og godkjenne en GitHub PR-stack |
-| `dependency-upgrade` | Undersøke og gjennomføre avhengighetsoppgraderinger |
-| `dependency-upgrade-stack` | Organisere oppgraderinger som en PR-stack |
-| `bug-triage-and-fix` | Undersøke en feil, rette den og levere en PR |
-| `conventional-commit` | Skrive conventional commits |
-| `pr-review-follow-up` | Avklare og håndtere reviewkommentarer |
-| `release-fyllut` | Publisere valgt FyllUt-commit etter bekreftelse |
-| `unslop` | Fjerne unødvendige KI-genererte kode- og tekstmønstre |
+| `fyllut-approve-github-stack` | Gjennomgå og godkjenne en GitHub PR-stack |
+| `fyllut-dependency-upgrade` | Undersøke og gjennomføre avhengighetsoppgraderinger |
+| `fyllut-dependency-upgrade-stack` | Organisere oppgraderinger som en PR-stack |
+| `fyllut-bug-triage-and-fix` | Undersøke en feil, rette den og levere en PR |
+| `fyllut-pr-review-follow-up` | Avklare og håndtere reviewkommentarer |
+| `fyllut-release` | Publisere valgt FyllUt-commit etter bekreftelse |
+| `fyllut-unslop` | Fjerne unødvendige KI-genererte kode- og tekstmønstre |
 | `fyllut-sendinn-specification` | Lage funksjonell eller teknisk spesifikasjon |
-| `form-text-history` | Undersøke publisert skjematekst og lage HTML-rapport |
+| `fyllut-form-text-history` | Undersøke publisert skjematekst og lage HTML-rapport |
 
-`form-text-history` trenger lokale form- og rendererrepoer med relevant
+`conventional-commit` leveres av Nav-grunnpakken, ikke som en egen teamskill.
+
+`fyllut-form-text-history` trenger lokale form- og rendererrepoer med relevant
 Git-historikk. Release- og stack-skillene trenger de respektive
 GitHub-rettighetene; installasjon av pakken gir ikke nye tilganger.
 Ved arbeid på tvers av lokale repoer må også sandkassen tillate de aktuelle
@@ -133,6 +134,14 @@ nav-pilot sync --user --apply
 finnes. Utviklerne kan ha ulike revisjoner hvis de oppdaterer på ulike
 tidspunkt; bruker-scope har ingen felles låsfil i prosjektet.
 
+Teamskillene har nå `fyllut-`-prefiks. Etter oppdatering bruker du de nye
+navnene i tabellen over. Synkroniseringen rydder gamle, sporede skillmapper
+som pakken ikke lenger leverer, og kan be om bekreftelse før fjerning.
+Hvis en gammel mappe er endret lokalt eller ikke spores av nav-pilot, kan den
+bli liggende; les meldingene før du rydder den manuelt. `conventional-commit`
+beholder navnet, men kommer nå fra basen. En lokalt avvikende kopi kan gi
+konflikt; se over forskjellen før du erstatter den.
+
 Ved problemer, kjør `nav-pilot doctor`. Hvis du vil bruke MCP-verktøy, aktiver
 aktuelle servere med `nav-pilot mcp enable` etter Navs veiledning.
 Pakkeinstallasjonen setter ikke opp MCP eller innlogging automatisk.
@@ -151,8 +160,8 @@ Fra pakkerepoet:
 ```bash
 nav-pilot validate --source "$PWD"
 node --test tests/package.test.mjs
-node --check skills/form-text-history/scripts/generate-form-text-history.mjs
-bash -n skills/release-fyllut/scripts/list-releasable-fyllut-commits.sh
+node --check skills/fyllut-form-text-history/scripts/generate-form-text-history.mjs
+bash -n skills/fyllut-release/scripts/list-releasable-fyllut-commits.sh
 
 # Oppdater den pinnede Nav-grunnpakken bevisst:
 nav-pilot pakke bump-base
