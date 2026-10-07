@@ -157,6 +157,9 @@ lokale sti- og klienttilpasningene bevares.
 
 Fra pakkerepoet:
 
+GitHub Actions kjører `mise run test` på pull requests og push til `main`,
+med Node-versjonen fra `mise.toml`.
+
 ```bash
 mise install
 mise run test
