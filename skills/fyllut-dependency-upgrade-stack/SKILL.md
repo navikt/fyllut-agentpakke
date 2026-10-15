@@ -12,8 +12,9 @@ Invoke `fyllut-dependency-upgrade` before proceeding. That skill owns version el
 
 ## Stack rules
 
-- Require the `gh stack` extension. If `gh stack --help` fails, stop and report that it is not installed. Do not install it unless the user asks.
+- Run `gh stack --help` to check whether the extension is available. Use it when available; otherwise, create the stack manually with Git and the standard `gh pr` commands below. Do not install the extension unless the user asks.
 - Fetch `origin/main` and create the first stack branch directly from that remote-tracking branch. Never base the stack on local `main`, the current branch, or another remote. If `origin/main` does not exist, stop and notify the user.
+- In both modes, the first PR must target `main`. Each later branch must start from the previous layer's branch, and its PR must target that previous branch, not `main`. Record each layer's branch, base branch, and PR URL.
 - Treat bot PRs as leads, not as sources of truth for target versions.
 - Put dependencies that must remain compatible in the same PR.
 - Put major application and build dependency updates in one PR. Commit each dependency separately when the upgrades do not require a shared change.
@@ -73,32 +74,66 @@ Confirm that `fyllut-dependency-upgrade` has completed its clean-worktree check,
 ```bash
 git fetch origin main
 git rev-parse --verify origin/main
+```
+
+With the extension:
+
+```bash
 git switch --detach origin/main
 gh stack init --base main <first-branch>
 ```
 
-Apply the first group's upgrade by following `fyllut-dependency-upgrade`. Stay on the initialized branch and use:
+Without the extension:
+
+```bash
+git switch --create <first-branch> origin/main
+```
+
+Apply the first group's upgrade by following `fyllut-dependency-upgrade`. Stay on the branch created above instead of creating a standalone branch.
+
+With the extension, submit with:
 
 ```bash
 gh stack submit --auto --open
 ```
 
-Replace the generated PR body with the description required by `fyllut-dependency-upgrade`. Do not add another layer until that skill's validation and check-watching steps are complete.
+Replace the generated PR body with the description required by `fyllut-dependency-upgrade`.
+
+Without the extension, push the branch and create the PR with an explicit base and head. Use the title and body required by `fyllut-dependency-upgrade`:
+
+```bash
+git push --set-upstream origin <first-branch>
+gh pr create --base main --head <first-branch> --title <title> --body-file <pr-body-file>
+```
+
+In either mode, verify the PR's `baseRefName` and `headRefName` with `gh pr view <pr-url> --json baseRefName,headRefName,url`. Do not add another layer until that skill's validation and check-watching steps are complete.
 
 ## Add each remaining layer
 
 For every remaining group:
 
-1. Add a branch from the current stack top:
+1. Add a branch from the current stack top. With the extension:
 
    ```bash
    gh stack add <next-branch>
    ```
 
+   Without the extension, use the recorded branch of the previous layer:
+
+   ```bash
+   git switch --create <next-branch> <previous-branch>
+   ```
+
 2. Follow the full `fyllut-dependency-upgrade` workflow for that group. Use the stack branch instead of creating a standalone branch.
 3. In the grouped major layer, commit each independent dependency separately when possible. Keep required migration changes in the commit for the dependency that caused them.
-4. Submit with `gh stack submit --auto --open`.
-5. Replace the generated PR body.
+4. With the extension, submit with `gh stack submit --auto --open` and replace the generated PR body. Without it, push and create the PR targeting the previous layer's branch, using the required title and body:
+
+   ```bash
+   git push --set-upstream origin <next-branch>
+   gh pr create --base <previous-branch> --head <next-branch> --title <title> --body-file <pr-body-file>
+   ```
+
+5. Verify the PR's base and head with `gh pr view <pr-url> --json baseRefName,headRefName,url`. Record the new layer and, in manual mode, add links to the preceding and following PRs in their descriptions as the stack grows. Preserve the required upgrade descriptions.
 6. Finish validation and required checks before adding another layer.
 
 The stack inventory may contain many updates. The grouped major layer, patch and minor layer, and GitHub Actions layer are review categories for a periodic repository-wide upgrade, so they may contain more than three direct dependency updates.
@@ -136,7 +171,7 @@ upgraded if one of its requested transitive updates is still missing.
 
 ## Finish
 
-Verify stack order and PR bases with `gh stack view` and GitHub PR data. Confirm every required check passes.
+With the extension, inspect stack order with `gh stack view`. In both modes, verify every layer against the recorded order using `gh pr view <pr-url> --json baseRefName,headRefName,url`. The first base must be `main`; every later base must equal the preceding PR's head branch. Correct any mismatch before finishing. Confirm every required check passes.
 
 Report:
 
