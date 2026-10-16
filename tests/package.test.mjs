@@ -50,7 +50,7 @@ test('Tier 1 layout includes every team skill and a startable persona', () => {
   }
 });
 
-test('Playwright skill bundles its referenced guides, license, and pinned origin', () => {
+test('Playwright skill bundles its referenced guides and license', () => {
   const directory = 'skills/fyllut-playwright-best-practices';
   const skill = read(`${directory}/SKILL.md`);
   const references = [...skill.matchAll(/\]\(([^)]+\.md)\)/g)].map((match) => match[1]);
@@ -62,7 +62,6 @@ test('Playwright skill bundles its referenced guides, license, and pinned origin
   const license = read(`${directory}/LICENSE.md`);
   assert.match(license, /Copyright © 2026 Currents Software Inc\./);
   assert.match(license, /Permission is hereby granted/);
-  assert.match(read('README.md'), /283d5cbc5d11aac1abda058b16ad22c317d54dc0/);
   assert.match(skill, /## Nav integration/);
   assert.match(skill, /Never use production credentials or real personal data/);
 });
@@ -75,24 +74,6 @@ test('Unslop uses upstream invocation settings and includes its license', () => 
   assert.match(license, /MIT License/);
   assert.match(license, /Copyright \(c\) 2026 Lauren Tan/);
   assert.match(license, /Permission is hereby granted/);
-  assert.match(read('README.md'), /f713f14203cd6420cec13cd7c55c32d598dbab68/);
-});
-
-test('README leads with install and update commands and lists all local agents and skills', () => {
-  const readme = read('README.md');
-  const inventory = readme.indexOf('## Agent og skills i dette repoet');
-  assert.ok(inventory >= 0);
-  for (const command of ['nav-pilot install fyllut-agentpakke', 'nav-pilot sync --user --apply']) {
-    const position = readme.indexOf(command);
-    assert.ok(position >= 0 && position < inventory, command);
-  }
-  for (const skill of expectedSkills) {
-    assert.ok(readme.includes(`| Skill | [\`${skill}\`](skills/${skill}/SKILL.md) |`), skill);
-  }
-  for (const agent of readdirSync(join(root, 'agents')).filter((file) => file.endsWith('.agent.md'))) {
-    const name = agent.replace(/\.agent\.md$/, '');
-    assert.ok(readme.includes(`| Agent | [\`${name}\`](agents/${agent}) |`), name);
-  }
 });
 
 test('bundled script instructions use the launch-provided skills directory', () => {

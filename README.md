@@ -1,6 +1,6 @@
 # Fyllut-agentpakke
 
-Fyllut-Sendinns agent og ti skills for Copilot CLI og OpenCode.
+Fyllut-Sendinns agent og skills for Copilot CLI og OpenCode.
 Pakken gjenbruker en pinnet versjon av Nav-grunnpakken og installeres én gang
 per utvikler, på tvers av repoer.
 
@@ -77,8 +77,8 @@ distribusjonskilden. Eget innhold har [MIT-lisens](LICENSE).
 
 Playwright-skillen har lokalt navn, Nav-integrasjonsregler og repoets testkommando.
 Avsluttende mellomrom i to referansefiler er fjernet. Unslop beholder lokalt navn.
-Hent hele skillmapper ved oppdatering,
-bevar lisensene og lokale tilpasninger, og gjennomgå endringene i en PR.
+Hent hele skillmapper ved oppdatering, bevar lisensene og lokale tilpasninger,
+og gjennomgå endringene i en PR.
 
 ## Vedlikehold
 
