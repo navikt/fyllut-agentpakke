@@ -107,12 +107,16 @@ vente på svar og godkjenning der skillen krever det.
 | `fyllut-dependency-upgrade-stack` | Organisere oppgraderinger som en PR-stack |
 | `fyllut-bug-triage-and-fix` | Undersøke en feil, rette den og levere en PR |
 | `fyllut-pr-review-follow-up` | Avklare og håndtere reviewkommentarer |
+| `fyllut-playwright-best-practices` | Skrive og vedlikeholde Playwright-tester med temainndelte referanser |
 | `fyllut-release` | Publisere valgt FyllUt-commit etter bekreftelse |
 | `fyllut-unslop` | Fjerne unødvendige KI-genererte kode- og tekstmønstre |
 | `fyllut-sendinn-specification` | Lage funksjonell eller teknisk spesifikasjon |
 | `fyllut-form-text-history` | Undersøke publisert skjematekst og lage HTML-rapport |
 
 `conventional-commit` leveres av Nav-grunnpakken, ikke som en egen teamskill.
+
+`fyllut-playwright-best-practices` gir detaljerte Playwright-råd. Grunnpakkens
+`playwright-testing` gir innførende Nav-eksempler og lastes ved behov.
 
 `fyllut-form-text-history` trenger lokale form- og rendererrepoer med relevant
 Git-historikk. Release- og stack-skillene trenger de respektive
@@ -154,6 +158,14 @@ revisjon `961b0d6ba56d2ce5f72c20f919c99f7fad4342d5`.
 Dette repoet er distribusjonskilden for nav-pilot; det synkes ikke automatisk
 fra de opprinnelige pluginene. Ved import må hele skillmapper kopieres og de
 lokale sti- og klienttilpasningene bevares.
+
+`fyllut-playwright-best-practices` er importert fra
+[`currents-dev/playwright-best-practices-skill`](https://github.com/currents-dev/playwright-best-practices-skill/tree/283d5cbc5d11aac1abda058b16ad22c317d54dc0/playwright-best-practices),
+revisjon `283d5cbc5d11aac1abda058b16ad22c317d54dc0`.
+Hele skillmappen følger med under [MIT-lisensen](skills/fyllut-playwright-best-practices/LICENSE.md).
+Lokale tilpasninger er `fyllut-`-navnet, Nav-integrasjonsregler og bruk av repoets
+testkommando. Avsluttende mellomrom i to referansefiler er fjernet.
+Oppdateringer hentes inn og gjennomgås manuelt som PR-er.
 
 Fra pakkerepoet:
 

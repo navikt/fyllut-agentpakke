@@ -14,6 +14,7 @@ const expectedSkills = [
   'fyllut-dependency-upgrade',
   'fyllut-dependency-upgrade-stack',
   'fyllut-form-text-history',
+  'fyllut-playwright-best-practices',
   'fyllut-pr-review-follow-up',
   'fyllut-release',
   'fyllut-sendinn-specification',
@@ -47,6 +48,23 @@ test('Tier 1 layout includes every team skill and a startable persona', () => {
   ]) {
     assert.ok(read(`skills/fyllut-sendinn-specification/references/${reference}`).length > 0);
   }
+});
+
+test('Playwright skill bundles its referenced guides, license, and pinned origin', () => {
+  const directory = 'skills/fyllut-playwright-best-practices';
+  const skill = read(`${directory}/SKILL.md`);
+  const references = [...skill.matchAll(/\]\(([^)]+\.md)\)/g)].map((match) => match[1]);
+  assert.ok(new Set(references).size > 50);
+  for (const reference of references) {
+    assert.ok(!reference.startsWith('/') && !reference.split('/').includes('..'));
+    assert.ok(read(`${directory}/${reference}`).length > 0, reference);
+  }
+  const license = read(`${directory}/LICENSE.md`);
+  assert.match(license, /Copyright © 2026 Currents Software Inc\./);
+  assert.match(license, /Permission is hereby granted/);
+  assert.match(read('README.md'), /283d5cbc5d11aac1abda058b16ad22c317d54dc0/);
+  assert.match(skill, /## Nav integration/);
+  assert.match(skill, /Never use production credentials or real personal data/);
 });
 
 test('bundled script instructions use the launch-provided skills directory', () => {
