@@ -12,7 +12,8 @@ Invoke `fyllut-dependency-upgrade` before proceeding. That skill owns version el
 
 ## Stack rules
 
-- Run `gh stack --help` to check whether the extension is available. Use it when available; otherwise, create the stack manually with Git and the standard `gh pr` commands below. Do not install the extension unless the user asks.
+- Run `gh stack --help` to check whether the extension is available to the agent. Use it only when the environment permits it. If it is missing or blocked by the sandbox, create the branches and PRs with Git and `gh pr`, then give the developer a ready-to-run stack registration command as described below. Do not install the extension unless the user asks.
+- Keep `gh_guard` and `git_guard` enabled. Do not change sandbox settings or ask the developer to disable guards to make the extension work.
 - Fetch `origin/main` and create the first stack branch directly from that remote-tracking branch. Never base the stack on local `main`, the current branch, or another remote. If `origin/main` does not exist, stop and notify the user.
 - In both modes, the first PR must target `main`. Each later branch must start from the previous layer's branch, and its PR must target that previous branch, not `main`. Record each layer's branch, base branch, and PR URL.
 - Treat bot PRs as leads, not as sources of truth for target versions.
@@ -138,6 +139,64 @@ For every remaining group:
 
 The stack inventory may contain many updates. The grouped major layer, patch and minor layer, and GitHub Actions layer are review categories for a periodic repository-wide upgrade, so they may contain more than three direct dependency updates.
 
+## Hand off stack registration without the extension
+
+Chained PR bases alone do not create a GitHub PR stack. After all layers are
+pushed, their PRs exist, and validation passes, give the developer a complete
+command to register them through GitHub's
+[stack REST API](https://docs.github.com/rest/pulls/stacks#create-a-pull-request-stack)
+in a normal terminal outside the sandbox. Do not run the POST from the agent
+session or request relaxed API-write permissions.
+
+Use the actual target repository and PR numbers in the final command, not
+placeholders. Order the numbers from bottom to top (the PR targeting `main`
+first). Never use branch names or PR URLs in the `pull_requests` array. A stack
+needs at least two PRs; report a single-layer upgrade as a standalone PR instead.
+
+If read-only API access is allowed, first check whether the first PR already
+belongs to a stack:
+
+```bash
+gh api "repos/<owner>/<repo>/stacks?pull_request=<first-pr-number>" \
+  -H "X-GitHub-Api-Version: 2026-03-10"
+```
+
+If a stack exists, verify that its complete PR list matches the recorded order
+and reuse it. Stop and report a mismatch rather than modifying an unrelated
+stack. If no stack exists, provide the command below for the developer to run.
+If lookup is blocked, include the lookup command as a prerequisite and explain
+that the developer must check for an existing stack before creating one.
+The repository and numbers below are placeholders and examples; replace them
+with this run's values:
+
+```bash
+gh api --method POST "repos/<owner>/<repo>/stacks" \
+  -H "X-GitHub-Api-Version: 2026-03-10" \
+  --input - \
+  --jq '{number, url, pull_requests: [.pull_requests[].number]}' <<'JSON'
+{"pull_requests":[101,102,103]}
+JSON
+```
+
+Also provide this read-back command with the actual repository. The developer
+can run it after creation, or the agent can use it when read-only API access is
+allowed:
+
+```bash
+gh api "repos/<owner>/<repo>/stacks?pull_request=<first-pr-number>" \
+  -H "X-GitHub-Api-Version: 2026-03-10" \
+  --jq '.[] | {number, url, base: .base.ref, pull_requests: [.pull_requests[].number]}'
+```
+
+Verify that the stack base is `main` and that every PR appears exactly once in
+the recorded bottom-to-top order. Only report the stack as created after a
+successful read-back. Until then, report that registration is pending developer
+action and include the ready-to-run command in the final response. If the
+developer reports a timeout or ambiguous failure, have them repeat the lookup
+before attempting another POST. If registration or verification is blocked,
+preserve the branches and PRs and explain what remains. Do not bypass sandbox
+restrictions or claim that chained PRs are a registered stack.
+
 ## Replace bot PRs
 
 Close a bot PR only after the passing replacement stack covers its complete dependency group. Leave a short comment linking the replacement PR or stack.
@@ -171,12 +230,12 @@ upgraded if one of its requested transitive updates is still missing.
 
 ## Finish
 
-With the extension, inspect stack order with `gh stack view`. In both modes, verify every layer against the recorded order using `gh pr view <pr-url> --json baseRefName,headRefName,url`. The first base must be `main`; every later base must equal the preceding PR's head branch. Correct any mismatch before finishing. Confirm every required check passes.
+With the extension, inspect stack order with `gh stack view`. If it is unavailable or blocked, hand off the registration and read-back commands above to the developer. In both modes, verify every layer against the recorded order using `gh pr view <pr-url> --json baseRefName,headRefName,url`. The first base must be `main`; every later base must equal the preceding PR's head branch. Correct any mismatch before finishing. Confirm every required check passes.
 
 Report:
 
 - stack order with PR links
-- one direct GitHub link to the stack
+- one verified GitHub stack link, or the top PR as the entry point while registration is pending
 - versions covered by each PR
 - migration risks and decisions from each PR
 - local and GitHub check results
@@ -184,4 +243,4 @@ Report:
 - dependencies left unchanged and why
 - versions deferred by the eligibility rules in `fyllut-dependency-upgrade`
 
-End with the canonical stack URL when GitHub exposes one. Otherwise, use the top PR as the stack entry point.
+End with the canonical stack URL when GitHub exposes one. Otherwise, report the verified API `url` if available and use the top PR as the browser entry point. If registration is pending or failed, say so explicitly and include the developer's registration and verification commands.

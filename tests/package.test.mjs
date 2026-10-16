@@ -14,6 +14,7 @@ const expectedSkills = [
   'fyllut-dependency-upgrade',
   'fyllut-dependency-upgrade-stack',
   'fyllut-form-text-history',
+  'fyllut-playwright-best-practices',
   'fyllut-pr-review-follow-up',
   'fyllut-release',
   'fyllut-sendinn-specification',
@@ -49,6 +50,32 @@ test('Tier 1 layout includes every team skill and a startable persona', () => {
   }
 });
 
+test('Playwright skill bundles its referenced guides and license', () => {
+  const directory = 'skills/fyllut-playwright-best-practices';
+  const skill = read(`${directory}/SKILL.md`);
+  const references = [...skill.matchAll(/\]\(([^)]+\.md)\)/g)].map((match) => match[1]);
+  assert.ok(new Set(references).size > 50);
+  for (const reference of references) {
+    assert.ok(!reference.startsWith('/') && !reference.split('/').includes('..'));
+    assert.ok(read(`${directory}/${reference}`).length > 0, reference);
+  }
+  const license = read(`${directory}/LICENSE.md`);
+  assert.match(license, /Copyright © 2026 Currents Software Inc\./);
+  assert.match(license, /Permission is hereby granted/);
+  assert.match(skill, /## Nav integration/);
+  assert.match(skill, /Never use production credentials or real personal data/);
+});
+
+test('Unslop uses upstream invocation settings and includes its license', () => {
+  const skill = read('skills/fyllut-unslop/SKILL.md');
+  assert.match(skill, /^---\nname: fyllut-unslop\ndescription: Cut AI tells from any writing\.\ndisable-model-invocation: true\n---/);
+  assert.match(skill, /Scan for the patterns below, then rewrite\./);
+  const license = read('skills/fyllut-unslop/LICENSE');
+  assert.match(license, /MIT License/);
+  assert.match(license, /Copyright \(c\) 2026 Lauren Tan/);
+  assert.match(license, /Permission is hereby granted/);
+});
+
 test('bundled script instructions use the launch-provided skills directory', () => {
   for (const skill of ['fyllut-release', 'fyllut-form-text-history']) {
     const text = read(`skills/${skill}/SKILL.md`);
@@ -57,6 +84,24 @@ test('bundled script instructions use the launch-provided skills directory', () 
     assert.ok(!text.includes('plugins/'));
     assert.ok(!text.includes('<skill-directory>'));
   }
+});
+
+test('manual dependency stacks hand off registration without relaxing sandbox guards', () => {
+  const skill = read('skills/fyllut-dependency-upgrade-stack/SKILL.md');
+  assert.match(skill, /Chained PR bases alone do not create a GitHub PR stack/);
+  assert.match(skill, /stacks\?pull_request=<first-pr-number>/);
+  assert.match(skill, /gh api --method POST "repos\/<owner>\/<repo>\/stacks"/);
+  assert.match(skill, /X-GitHub-Api-Version: 2026-03-10/);
+  const payload = skill.match(/<<'JSON'\n([^\n]+)\nJSON/);
+  assert.ok(payload);
+  assert.deepEqual(JSON.parse(payload[1]), { pull_requests: [101, 102, 103] });
+  assert.match(skill, /Do not run the POST from the agent\nsession/);
+  assert.match(skill, /Keep `gh_guard` and `git_guard` enabled/);
+  assert.match(skill, /Use the actual target repository and PR numbers in the final command/);
+  assert.match(skill, /Only report the stack as created after a\nsuccessful read-back/);
+  assert.match(skill, /registration is pending developer\naction/);
+  assert.match(skill, /repeat the lookup\nbefore attempting another POST/);
+  assert.match(skill, /Do not bypass sandbox\nrestrictions/);
 });
 
 test('report generator exposes help and rejects invalid input before repository access', () => {
