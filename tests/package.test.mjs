@@ -88,7 +88,7 @@ test('bundled script instructions use the launch-provided skills directory', () 
   }
 });
 
-test('manual dependency stacks require REST registration and verified PR order', () => {
+test('manual dependency stacks hand off registration without relaxing sandbox guards', () => {
   const skill = read('skills/fyllut-dependency-upgrade-stack/SKILL.md');
   assert.match(skill, /Chained PR bases alone do not create a GitHub PR stack/);
   assert.match(skill, /stacks\?pull_request=<first-pr-number>/);
@@ -97,10 +97,13 @@ test('manual dependency stacks require REST registration and verified PR order',
   const payload = skill.match(/<<'JSON'\n([^\n]+)\nJSON/);
   assert.ok(payload);
   assert.deepEqual(JSON.parse(payload[1]), { pull_requests: [101, 102, 103] });
-  assert.match(skill, /stacks\/<stack-number>/);
-  assert.match(skill, /Only report the stack as created after this\nread-back succeeds/);
-  assert.match(skill, /repeat the lookup before attempting another POST/);
-  assert.match(skill, /Do not bypass sandbox restrictions/);
+  assert.match(skill, /Do not run the POST from the agent\nsession/);
+  assert.match(skill, /Keep `gh_guard` and `git_guard` enabled/);
+  assert.match(skill, /Use the actual target repository and PR numbers in the final command/);
+  assert.match(skill, /Only report the stack as created after a\nsuccessful read-back/);
+  assert.match(skill, /registration is pending developer\naction/);
+  assert.match(skill, /repeat the lookup\nbefore attempting another POST/);
+  assert.match(skill, /Do not bypass sandbox\nrestrictions/);
 });
 
 test('report generator exposes help and rejects invalid input before repository access', () => {
