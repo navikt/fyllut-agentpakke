@@ -1,200 +1,95 @@
 # Fyllut-agentpakke
 
-Teamets skills og en liten Fyllut-agent, distribuert med nav-pilot som en
-**Tier 1-pakke**. Installer med **bruker-scope** én gang på hver utviklermaskin:
-innholdet kan brukes på tvers av repoer, uten installasjon i hvert repo.
+Fyllut-Sendinns agent og ti skills for Copilot CLI og OpenCode.
+Pakken gjenbruker en pinnet versjon av Nav-grunnpakken og installeres én gang
+per utvikler, på tvers av repoer.
 
-Pakken gjenbruker `navikt/copilot` fra en pinnet revisjon. Navs agenter, skills
-og instruksjoner følger dermed med uten at vi vedlikeholder kopier av dem.
-Standardpersonaen er `fyllut`; modellen velges fra brukerens klientoppsett.
+## Installer og oppdater
 
-## Slik tar du i bruk agentpakken
-
-### 1. Installer verktøyene
-
-På macOS:
+Kjør i en vanlig terminal utenfor agentsandkassen:
 
 ```bash
-brew install navikt/tap/nav-pilot navikt/tap/cplt
-```
-
-Har du dem allerede, oppdater med `brew upgrade`. Pakken krever nav-pilot
-`2026.10.07-064704` eller nyere. For Linux og andre installasjonsmåter, følg
-[Navs veiledning](https://ki-utvikling.nav.no/nav-pilot).
-
-Velg og klargjør Copilot CLI eller OpenCode etter den samme veiledningen.
-Git og autentisert GitHub CLI er nødvendig for GitHub-arbeidsflytene:
-
-```bash
-gh auth status
-# Bare hvis du ikke allerede er innlogget:
-gh auth login
-```
-
-Du trenger tilgang til repoene du skal arbeide med. Installer Node.js dersom
-du skal bruke `fyllut-form-text-history`, og bruk prosjektets pinnede versjon når
-prosjektet har en. Stack-skillene trenger også GitHub CLI-utvidelsen:
-
-```bash
-gh extension install github/gh-stack
-```
-
-### 2. Installer pakken for brukeren din
-
-Kjør dette i en vanlig terminal **utenfor cplt-/agentsandkassen**:
-
-```bash
+# Installer og velg pakken som standardkilde:
 nav-pilot install fyllut-agentpakke \
-  --source navikt/fyllut-agentpakke \
-  --user --save-source
+  --source navikt/fyllut-agentpakke --user --save-source
+
+# Oppdater brukerinstallasjonen:
+nav-pilot sync --user --apply
 ```
 
-Godkjenn installasjonen når du blir spurt. `--user` velger bruker-scope;
-`--save-source` gjør denne pakken til standardkilde for senere oppstarter.
-Ingen `.github/`-filer eller pakkelåsfil opprettes i arbeidsrepoene dine.
-For Copilot ligger skillene i `~/.copilot/skills/`. Nav-pilot klargjør
-klientens eget innhold ved oppstart.
+Dette erstatter eventuell Nav-grunnpakke i samme bruker-scope. Grunnpakkens
+innhold følger fortsatt med. Les konfliktmeldinger før du godtar overskriving.
+Pakken krever nav-pilot `2026.10.07-064704` eller nyere.
+Oppsett av verktøyene er beskrevet hos [nav-pilot](https://github.com/navikt/copilot/tree/main/cli/nav-pilot)
+og [cplt](https://github.com/navikt/cplt).
 
-Har du allerede installert Nav-grunnpakken i bruker-scope, er dette et
-bevisst bytte av kilde for scopet, ikke en ekstra uavhengig installasjon.
-Grunnpakken følger med gjennom gjenbrukserklæringen i denne pakken.
-Les eventuelle konfliktmeldinger før du velger overskriving; ikke bruk
-`--force` ukritisk. Hooks og prompts fra basen er ikke del av bruker-scope;
-ikke baser sikkerheten på at en repo-hook er installert.
+## Agent og skills i dette repoet
 
-### 3. Start fra repoet du skal arbeide i
+| Type | Navn | Beskrivelse |
+| --- | --- | --- |
+| Agent | [`fyllut`](agents/fyllut.agent.md) | Hjelper teamet med utvikling og brukerstøtte i repoet du arbeider i. |
+| Skill | [`fyllut-approve-github-stack`](skills/fyllut-approve-github-stack/SKILL.md) | Gjennomgår og godkjenner kvalifiserte PR-er i en GitHub-stack. |
+| Skill | [`fyllut-bug-triage-and-fix`](skills/fyllut-bug-triage-and-fix/SKILL.md) | Undersøker en feil, retter den og leverer en testet PR. |
+| Skill | [`fyllut-dependency-upgrade`](skills/fyllut-dependency-upgrade/SKILL.md) | Oppgraderer én avhengighet eller en liten gruppe i én PR. |
+| Skill | [`fyllut-dependency-upgrade-stack`](skills/fyllut-dependency-upgrade-stack/SKILL.md) | Samler avhengighetsoppgraderinger i en testet PR-stack og erstatter dekkede bot-PR-er. |
+| Skill | [`fyllut-form-text-history`](skills/fyllut-form-text-history/SKILL.md) | Dokumenterer publiserte skjematekster og endringsdatoer i en HTML-rapport. |
+| Skill | [`fyllut-playwright-best-practices`](skills/fyllut-playwright-best-practices/SKILL.md) | Gir råd og temainndelte referanser for Playwright-tester. |
+| Skill | [`fyllut-pr-review-follow-up`](skills/fyllut-pr-review-follow-up/SKILL.md) | Avklarer reviewkommentarer med deg og gjennomfører avtalte endringer. |
+| Skill | [`fyllut-release`](skills/fyllut-release/SKILL.md) | Publiserer en valgt FyllUt-commit etter bekreftelse. |
+| Skill | [`fyllut-sendinn-specification`](skills/fyllut-sendinn-specification/SKILL.md) | Lager en funksjonell eller teknisk spesifikasjon ved eksplisitt invokasjon. |
+| Skill | [`fyllut-unslop`](skills/fyllut-unslop/SKILL.md) | Fjerner KI-markører og unødvendige formuleringer fra tekst. |
+
+Nav-grunnpakkens agenter og skills kommer i tillegg, blant annet
+`conventional-commit` og `playwright-testing`. Sistnevnte gir innførende
+Nav-eksempler; teamskillen gir detaljerte Playwright-råd.
+
+## Bruk
+
+Start fra repoet du skal arbeide i:
 
 ```bash
-cd /sti/til/ditt/repo
 nav-pilot --client copilot --persona fyllut
 # Eller:
 nav-pilot --client opencode --persona fyllut
 ```
 
-Et repo som har sin egen `.nav-pilot/agentpakke.lock.json` kan velge en annen
-pakkekilde enn brukerens standard. Vil du uttrykkelig bruke teamets pakke i
-en slik økt, legg til `--source navikt/fyllut-agentpakke` ved oppstart.
+Be om en skill ved navn. Spesifikasjonsflyten må startes eksplisitt med
+`/fyllut-sendinn-specification` eller en tilsvarende forespørsel.
+Et repos egen pakkekilde kan overstyre brukerens standard. Legg til
+`--source navikt/fyllut-agentpakke` ved oppstart for å velge teamets pakke.
 
-Start gjennom nav-pilot når du bruker skills med skript. Det setter
-`NAV_PILOT_SKILLS_DIR` til riktig katalog for klienten. En direkte oppstart
-av klienten har ikke nødvendigvis denne variabelen.
+Start gjennom nav-pilot for å få `NAV_PILOT_SKILLS_DIR` satt for medfølgende
+skript. GitHub-arbeidsflytene krever innlogget `gh` og tilgang til målrepoet.
+`fyllut-approve-github-stack` krever også extensionen `github/gh-stack`.
+Øvrige krav står i hver skill. MCP aktiveres separat med `nav-pilot mcp enable`.
 
-### 4. Bruk en skill
+## Opphav og lisenser
 
-Be agenten bruke skillen ved navn, for eksempel:
+De opprinnelige teamskillene ble importert fra
+[`navikt/fyllut-sendinn-local-dev-env`](https://github.com/navikt/fyllut-sendinn-local-dev-env/tree/961b0d6ba56d2ce5f72c20f919c99f7fad4342d5/plugins)
+ved revisjon `961b0d6ba56d2ce5f72c20f919c99f7fad4342d5`. Dette repoet er nå
+distribusjonskilden. Eget innhold har [MIT-lisens](LICENSE).
 
-```text
-Bruk fyllut-dependency-upgrade til å oppdatere avhengighetene i dette repoet.
-Bruk fyllut-pr-review-follow-up for https://github.com/navikt/<repo>/pull/<nummer>.
-Bruk fyllut-form-text-history for nav190105 i perioden 2024-01-01 til 2024-12-31.
-```
+| Importert skill | Kilde og pinnet revisjon | Lisens |
+| --- | --- | --- |
+| `fyllut-playwright-best-practices` | [currents-dev/playwright-best-practices-skill, `283d5cbc5d11aac1abda058b16ad22c317d54dc0`](https://github.com/currents-dev/playwright-best-practices-skill/tree/283d5cbc5d11aac1abda058b16ad22c317d54dc0/playwright-best-practices) | [MIT, Currents Software Inc.](skills/fyllut-playwright-best-practices/LICENSE.md) |
+| `fyllut-unslop` | [cursor/plugins, `f713f14203cd6420cec13cd7c55c32d598dbab68`](https://github.com/cursor/plugins/tree/f713f14203cd6420cec13cd7c55c32d598dbab68/pstack/skills/unslop) | [MIT fra `pstack/LICENSE`, Lauren Tan](skills/fyllut-unslop/LICENSE) |
 
-Start spesifikasjonsflyten uttrykkelig:
-
-```text
-/fyllut-sendinn-specification
-```
-
-Hvis klienten ikke tilbyr slash-kommandoen, be eksplisitt om å bruke
-`fyllut-sendinn-specification`. I Copilot kan godkjent spesifikasjon overføres
-til `/plan`; i OpenCode brukes klientens planmodus. Agenten skal fortsatt
-vente på svar og godkjenning der skillen krever det.
-
-| Skill | Bruk |
-| --- | --- |
-| `fyllut-approve-github-stack` | Gjennomgå og godkjenne en GitHub PR-stack |
-| `fyllut-dependency-upgrade` | Undersøke og gjennomføre avhengighetsoppgraderinger |
-| `fyllut-dependency-upgrade-stack` | Organisere oppgraderinger som en PR-stack |
-| `fyllut-bug-triage-and-fix` | Undersøke en feil, rette den og levere en PR |
-| `fyllut-pr-review-follow-up` | Avklare og håndtere reviewkommentarer |
-| `fyllut-playwright-best-practices` | Skrive og vedlikeholde Playwright-tester med temainndelte referanser |
-| `fyllut-release` | Publisere valgt FyllUt-commit etter bekreftelse |
-| `fyllut-unslop` | Fjerne unødvendige KI-genererte kode- og tekstmønstre |
-| `fyllut-sendinn-specification` | Lage funksjonell eller teknisk spesifikasjon |
-| `fyllut-form-text-history` | Undersøke publisert skjematekst og lage HTML-rapport |
-
-`conventional-commit` leveres av Nav-grunnpakken, ikke som en egen teamskill.
-
-`fyllut-playwright-best-practices` gir detaljerte Playwright-råd. Grunnpakkens
-`playwright-testing` gir innførende Nav-eksempler og lastes ved behov.
-
-`fyllut-form-text-history` trenger lokale form- og rendererrepoer med relevant
-Git-historikk. Release- og stack-skillene trenger de respektive
-GitHub-rettighetene; installasjon av pakken gir ikke nye tilganger.
-Ved arbeid på tvers av lokale repoer må også sandkassen tillate de aktuelle
-katalogene. Følg cplt-veiledningen; ikke slå av beskyttelsene generelt.
-
-### 5. Hold brukerinstallasjonen oppdatert
-
-```bash
-# Vis tilgjengelige oppdateringer:
-nav-pilot sync --user
-
-# Installer oppdateringene i en vanlig terminal:
-nav-pilot sync --user --apply
-```
-
-`sync` uten `--apply` endrer ingenting, og exitkode `1` betyr at oppdateringer
-finnes. Utviklerne kan ha ulike revisjoner hvis de oppdaterer på ulike
-tidspunkt; bruker-scope har ingen felles låsfil i prosjektet.
-
-Teamskillene har nå `fyllut-`-prefiks. Etter oppdatering bruker du de nye
-navnene i tabellen over. Synkroniseringen rydder gamle, sporede skillmapper
-som pakken ikke lenger leverer, og kan be om bekreftelse før fjerning.
-Hvis en gammel mappe er endret lokalt eller ikke spores av nav-pilot, kan den
-bli liggende; les meldingene før du rydder den manuelt. `conventional-commit`
-beholder navnet, men kommer nå fra basen. En lokalt avvikende kopi kan gi
-konflikt; se over forskjellen før du erstatter den.
-
-Ved problemer, kjør `nav-pilot doctor`. Hvis du vil bruke MCP-verktøy, aktiver
-aktuelle servere med `nav-pilot mcp enable` etter Navs veiledning.
-Pakkeinstallasjonen setter ikke opp MCP eller innlogging automatisk.
+Playwright-skillen har lokalt navn, Nav-integrasjonsregler og repoets testkommando.
+Avsluttende mellomrom i to referansefiler er fjernet. Unslop beholder lokalt navn
+og «Must always apply» i beskrivelsen. Hent hele skillmapper ved oppdatering,
+bevar lisensene og lokale tilpasninger, og gjennomgå endringene i en PR.
 
 ## Vedlikehold
 
-De opprinnelige teamskillene er kopiert fra
-[`navikt/fyllut-sendinn-local-dev-env`](https://github.com/navikt/fyllut-sendinn-local-dev-env/tree/961b0d6ba56d2ce5f72c20f919c99f7fad4342d5/plugins),
-revisjon `961b0d6ba56d2ce5f72c20f919c99f7fad4342d5`.
-Dette repoet er distribusjonskilden for nav-pilot; det synkes ikke automatisk
-fra de opprinnelige pluginene. Ved import må hele skillmapper kopieres og de
-lokale sti- og klienttilpasningene bevares.
-
-`fyllut-playwright-best-practices` er importert fra
-[`currents-dev/playwright-best-practices-skill`](https://github.com/currents-dev/playwright-best-practices-skill/tree/283d5cbc5d11aac1abda058b16ad22c317d54dc0/playwright-best-practices),
-revisjon `283d5cbc5d11aac1abda058b16ad22c317d54dc0`.
-Hele skillmappen følger med under [MIT-lisensen](skills/fyllut-playwright-best-practices/LICENSE.md).
-Lokale tilpasninger er `fyllut-`-navnet, Nav-integrasjonsregler og bruk av repoets
-testkommando. Avsluttende mellomrom i to referansefiler er fjernet.
-Oppdateringer hentes inn og gjennomgås manuelt som PR-er.
-
-`fyllut-unslop` er oppdatert fra
-[`cursor/plugins`, `pstack/skills/unslop`](https://github.com/cursor/plugins/tree/f713f14203cd6420cec13cd7c55c32d598dbab68/pstack/skills/unslop),
-revisjon `f713f14203cd6420cec13cd7c55c32d598dbab68`.
-[MIT-lisensen fra `pstack/LICENSE`](skills/fyllut-unslop/LICENSE) følger med.
-Lokale tilpasninger er `fyllut-`-navnet og «Must always apply» i beskrivelsen.
-
-Fra pakkerepoet:
-
-GitHub Actions kjører `mise run test` på pull requests og push til `main`,
-med Node-versjonen fra `mise.toml`.
+Kjør fra pakkerepoet med verktøyversjonene i `mise.toml`:
 
 ```bash
-mise install
 mise run test
-
 nav-pilot validate --source "$PWD"
 mise exec -- node --check skills/fyllut-form-text-history/scripts/generate-form-text-history.mjs
 bash -n skills/fyllut-release/scripts/list-releasable-fyllut-commits.sh
-
-# Oppdater den pinnede Nav-grunnpakken bevisst:
-nav-pilot pakke bump-base
 ```
 
-Se over endringen i `.nav-pilot/agentpakke.lock.json`, valider, og commit den.
-Den filen beskriver **pakken vi gjenbruker**, ikke brukerens installasjon.
-Endringer med samme skillnavn som i basen skygger basens innhold; sjekk dette
-ved oppdateringer.
-
-[Pakkekontrakten](https://github.com/navikt/copilot/blob/main/docs/README.agentpakke.md)
-beskriver formatet. Eget innhold distribueres under [MIT-lisensen](LICENSE).
-Importerte skills beholder copyright og lisens som angitt over.
+Oppdater Nav-grunnpakken med `nav-pilot pakke bump-base`, og gjennomgå
+låsefilendringen i en PR. Se [pakkekontrakten](https://github.com/navikt/copilot/blob/main/docs/README.agentpakke.md).

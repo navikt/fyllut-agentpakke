@@ -79,6 +79,23 @@ test('Unslop preserves local invocation settings and includes its upstream licen
   assert.match(read('README.md'), /f713f14203cd6420cec13cd7c55c32d598dbab68/);
 });
 
+test('README leads with install and update commands and lists all local agents and skills', () => {
+  const readme = read('README.md');
+  const inventory = readme.indexOf('## Agent og skills i dette repoet');
+  assert.ok(inventory >= 0);
+  for (const command of ['nav-pilot install fyllut-agentpakke', 'nav-pilot sync --user --apply']) {
+    const position = readme.indexOf(command);
+    assert.ok(position >= 0 && position < inventory, command);
+  }
+  for (const skill of expectedSkills) {
+    assert.ok(readme.includes(`| Skill | [\`${skill}\`](skills/${skill}/SKILL.md) |`), skill);
+  }
+  for (const agent of readdirSync(join(root, 'agents')).filter((file) => file.endsWith('.agent.md'))) {
+    const name = agent.replace(/\.agent\.md$/, '');
+    assert.ok(readme.includes(`| Agent | [\`${name}\`](agents/${agent}) |`), name);
+  }
+});
+
 test('bundled script instructions use the launch-provided skills directory', () => {
   for (const skill of ['fyllut-release', 'fyllut-form-text-history']) {
     const text = read(`skills/${skill}/SKILL.md`);
