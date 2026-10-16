@@ -67,10 +67,9 @@ test('Playwright skill bundles its referenced guides, license, and pinned origin
   assert.match(skill, /Never use production credentials or real personal data/);
 });
 
-test('Unslop preserves local invocation settings and includes its upstream license', () => {
+test('Unslop uses upstream invocation settings and includes its license', () => {
   const skill = read('skills/fyllut-unslop/SKILL.md');
-  assert.match(skill, /description: Cut AI tells from any writing\. Must always apply\./);
-  assert.match(skill, /disable-model-invocation: true/);
+  assert.match(skill, /^---\nname: fyllut-unslop\ndescription: Cut AI tells from any writing\.\ndisable-model-invocation: true\n---/);
   assert.match(skill, /Scan for the patterns below, then rewrite\./);
   const license = read('skills/fyllut-unslop/LICENSE');
   assert.match(license, /MIT License/);
