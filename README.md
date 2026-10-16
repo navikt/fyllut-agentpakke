@@ -171,7 +171,7 @@ Oppdateringer hentes inn og gjennomgås manuelt som PR-er.
 [`cursor/plugins`, `pstack/skills/unslop`](https://github.com/cursor/plugins/tree/f713f14203cd6420cec13cd7c55c32d598dbab68/pstack/skills/unslop),
 revisjon `f713f14203cd6420cec13cd7c55c32d598dbab68`.
 [MIT-lisensen fra `pstack/LICENSE`](skills/fyllut-unslop/LICENSE) følger med.
-Lokale tilpasninger er `fyllut-`-navnet og «Must always apply» i beskrivelsen.
+Eneste lokale tilpasning er `fyllut-`-navnet.
 
 Fra pakkerepoet:
 
