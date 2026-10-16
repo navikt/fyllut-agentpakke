@@ -152,7 +152,7 @@ Pakkeinstallasjonen setter ikke opp MCP eller innlogging automatisk.
 
 ## Vedlikehold
 
-Skillene er kopiert fra
+De opprinnelige teamskillene er kopiert fra
 [`navikt/fyllut-sendinn-local-dev-env`](https://github.com/navikt/fyllut-sendinn-local-dev-env/tree/961b0d6ba56d2ce5f72c20f919c99f7fad4342d5/plugins),
 revisjon `961b0d6ba56d2ce5f72c20f919c99f7fad4342d5`.
 Dette repoet er distribusjonskilden for nav-pilot; det synkes ikke automatisk
@@ -166,6 +166,12 @@ Hele skillmappen følger med under [MIT-lisensen](skills/fyllut-playwright-best-
 Lokale tilpasninger er `fyllut-`-navnet, Nav-integrasjonsregler og bruk av repoets
 testkommando. Avsluttende mellomrom i to referansefiler er fjernet.
 Oppdateringer hentes inn og gjennomgås manuelt som PR-er.
+
+`fyllut-unslop` er oppdatert fra
+[`cursor/plugins`, `pstack/skills/unslop`](https://github.com/cursor/plugins/tree/f713f14203cd6420cec13cd7c55c32d598dbab68/pstack/skills/unslop),
+revisjon `f713f14203cd6420cec13cd7c55c32d598dbab68`.
+[MIT-lisensen fra `pstack/LICENSE`](skills/fyllut-unslop/LICENSE) følger med.
+Lokale tilpasninger er `fyllut-`-navnet og «Must always apply» i beskrivelsen.
 
 Fra pakkerepoet:
 
@@ -190,4 +196,5 @@ Endringer med samme skillnavn som i basen skygger basens innhold; sjekk dette
 ved oppdateringer.
 
 [Pakkekontrakten](https://github.com/navikt/copilot/blob/main/docs/README.agentpakke.md)
-beskriver formatet. Innholdet distribueres under [MIT-lisensen](LICENSE).
+beskriver formatet. Eget innhold distribueres under [MIT-lisensen](LICENSE).
+Importerte skills beholder copyright og lisens som angitt over.

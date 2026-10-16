@@ -67,6 +67,18 @@ test('Playwright skill bundles its referenced guides, license, and pinned origin
   assert.match(skill, /Never use production credentials or real personal data/);
 });
 
+test('Unslop preserves local invocation settings and includes its upstream license', () => {
+  const skill = read('skills/fyllut-unslop/SKILL.md');
+  assert.match(skill, /description: Cut AI tells from any writing\. Must always apply\./);
+  assert.match(skill, /disable-model-invocation: true/);
+  assert.match(skill, /Scan for the patterns below, then rewrite\./);
+  const license = read('skills/fyllut-unslop/LICENSE');
+  assert.match(license, /MIT License/);
+  assert.match(license, /Copyright \(c\) 2026 Lauren Tan/);
+  assert.match(license, /Permission is hereby granted/);
+  assert.match(read('README.md'), /f713f14203cd6420cec13cd7c55c32d598dbab68/);
+});
+
 test('bundled script instructions use the launch-provided skills directory', () => {
   for (const skill of ['fyllut-release', 'fyllut-form-text-history']) {
     const text = read(`skills/${skill}/SKILL.md`);
