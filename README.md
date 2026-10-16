@@ -76,8 +76,8 @@ distribusjonskilden. Eget innhold har [MIT-lisens](LICENSE).
 | `fyllut-unslop` | [cursor/plugins, `f713f14203cd6420cec13cd7c55c32d598dbab68`](https://github.com/cursor/plugins/tree/f713f14203cd6420cec13cd7c55c32d598dbab68/pstack/skills/unslop) | [MIT fra `pstack/LICENSE`, Lauren Tan](skills/fyllut-unslop/LICENSE) |
 
 Playwright-skillen har lokalt navn, Nav-integrasjonsregler og repoets testkommando.
-Avsluttende mellomrom i to referansefiler er fjernet. Unslop beholder lokalt navn
-og «Must always apply» i beskrivelsen. Hent hele skillmapper ved oppdatering,
+Avsluttende mellomrom i to referansefiler er fjernet. Unslop beholder lokalt navn.
+Hent hele skillmapper ved oppdatering,
 bevar lisensene og lokale tilpasninger, og gjennomgå endringene i en PR.
 
 ## Vedlikehold
