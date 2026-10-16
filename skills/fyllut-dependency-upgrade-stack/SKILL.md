@@ -12,7 +12,7 @@ Invoke `fyllut-dependency-upgrade` before proceeding. That skill owns version el
 
 ## Stack rules
 
-- Run `gh stack --help` to check whether the extension is available. Use it when available; otherwise, create the stack manually with Git and the standard `gh pr` commands below. Do not install the extension unless the user asks.
+- Run `gh stack --help` to check whether the extension is available. Use it when available; otherwise, create the branches and PRs with Git and `gh pr`, then register the stack through `gh api` as described below. Do not install the extension unless the user asks.
 - Fetch `origin/main` and create the first stack branch directly from that remote-tracking branch. Never base the stack on local `main`, the current branch, or another remote. If `origin/main` does not exist, stop and notify the user.
 - In both modes, the first PR must target `main`. Each later branch must start from the previous layer's branch, and its PR must target that previous branch, not `main`. Record each layer's branch, base branch, and PR URL.
 - Treat bot PRs as leads, not as sources of truth for target versions.
@@ -138,6 +138,52 @@ For every remaining group:
 
 The stack inventory may contain many updates. The grouped major layer, patch and minor layer, and GitHub Actions layer are review categories for a periodic repository-wide upgrade, so they may contain more than three direct dependency updates.
 
+## Register the stack without the extension
+
+Chained PR bases alone do not create a GitHub PR stack. After all layers are
+pushed, their PRs exist, and validation passes, register them through GitHub's
+[stack REST API](https://docs.github.com/rest/pulls/stacks#create-a-pull-request-stack).
+Use the target repository and the recorded PR numbers, ordered from bottom to
+top (the PR targeting `main` first). Never use branch names or PR URLs in the
+`pull_requests` array. A stack needs at least two PRs; report a single-layer
+upgrade as a standalone PR instead.
+
+First check whether the first PR already belongs to a stack:
+
+```bash
+gh api "repos/<owner>/<repo>/stacks?pull_request=<first-pr-number>" \
+  -H "X-GitHub-Api-Version: 2026-03-10"
+```
+
+If a stack exists, verify that its complete PR list matches the recorded order
+and reuse it. Stop and report a mismatch rather than modifying an unrelated
+stack. If the lookup succeeds with an empty array, create the stack. The numbers
+below are examples; replace them with this run's PR numbers:
+
+```bash
+gh api --method POST "repos/<owner>/<repo>/stacks" \
+  -H "X-GitHub-Api-Version: 2026-03-10" \
+  --input - <<'JSON'
+{"pull_requests":[101,102,103]}
+JSON
+```
+
+Record the returned `number` and `url`, then read the stack back:
+
+```bash
+gh api "repos/<owner>/<repo>/stacks/<stack-number>" \
+  -H "X-GitHub-Api-Version: 2026-03-10" \
+  --jq '{number, url, base: .base.ref, pull_requests: [.pull_requests[].number]}'
+```
+
+Verify that the stack base is `main` and that every PR appears exactly once in
+the recorded bottom-to-top order. Only report the stack as created after this
+read-back succeeds. If creation times out or returns an ambiguous failure,
+repeat the lookup before attempting another POST. If the API is unavailable,
+permission is denied, or the sandbox blocks it, preserve the branches and PRs
+and report the blocker. Do not bypass sandbox restrictions or claim that the
+chained PRs are a registered stack.
+
 ## Replace bot PRs
 
 Close a bot PR only after the passing replacement stack covers its complete dependency group. Leave a short comment linking the replacement PR or stack.
@@ -171,7 +217,7 @@ upgraded if one of its requested transitive updates is still missing.
 
 ## Finish
 
-With the extension, inspect stack order with `gh stack view`. In both modes, verify every layer against the recorded order using `gh pr view <pr-url> --json baseRefName,headRefName,url`. The first base must be `main`; every later base must equal the preceding PR's head branch. Correct any mismatch before finishing. Confirm every required check passes.
+With the extension, inspect stack order with `gh stack view`. Without it, complete the REST registration and read-back above. In both modes, verify every layer against the recorded order using `gh pr view <pr-url> --json baseRefName,headRefName,url`. The first base must be `main`; every later base must equal the preceding PR's head branch. Correct any mismatch before finishing. Confirm every required check passes.
 
 Report:
 
@@ -184,4 +230,4 @@ Report:
 - dependencies left unchanged and why
 - versions deferred by the eligibility rules in `fyllut-dependency-upgrade`
 
-End with the canonical stack URL when GitHub exposes one. Otherwise, use the top PR as the stack entry point.
+End with the canonical stack URL when GitHub exposes one. Otherwise, report the verified API `url` and use the top PR as the browser entry point. If registration failed, say so explicitly.

@@ -89,6 +89,21 @@ test('bundled script instructions use the launch-provided skills directory', () 
   }
 });
 
+test('manual dependency stacks require REST registration and verified PR order', () => {
+  const skill = read('skills/fyllut-dependency-upgrade-stack/SKILL.md');
+  assert.match(skill, /Chained PR bases alone do not create a GitHub PR stack/);
+  assert.match(skill, /stacks\?pull_request=<first-pr-number>/);
+  assert.match(skill, /gh api --method POST "repos\/<owner>\/<repo>\/stacks"/);
+  assert.match(skill, /X-GitHub-Api-Version: 2026-03-10/);
+  const payload = skill.match(/<<'JSON'\n([^\n]+)\nJSON/);
+  assert.ok(payload);
+  assert.deepEqual(JSON.parse(payload[1]), { pull_requests: [101, 102, 103] });
+  assert.match(skill, /stacks\/<stack-number>/);
+  assert.match(skill, /Only report the stack as created after this\nread-back succeeds/);
+  assert.match(skill, /repeat the lookup before attempting another POST/);
+  assert.match(skill, /Do not bypass sandbox restrictions/);
+});
+
 test('report generator exposes help and rejects invalid input before repository access', () => {
   const help = spawnSync(process.execPath, [generator, '--help'], { encoding: 'utf8' });
   assert.equal(help.status, 0, help.stderr);
