@@ -35,6 +35,7 @@ og [cplt](https://github.com/navikt/cplt).
 | Skill | [`fyllut-form-text-history`](skills/fyllut-form-text-history/SKILL.md) | Dokumenterer publiserte skjematekster og endringsdatoer i en HTML-rapport. |
 | Skill | [`fyllut-playwright-best-practices`](skills/fyllut-playwright-best-practices/SKILL.md) | Gir råd og temainndelte referanser for Playwright-tester. |
 | Skill | [`fyllut-pr-review-follow-up`](skills/fyllut-pr-review-follow-up/SKILL.md) | Avklarer reviewkommentarer med deg og gjennomfører avtalte endringer. |
+| Skill | [`fyllut-preprod-e2e`](skills/fyllut-preprod-e2e/SKILL.md) | Tester lokale Fyllut-SendInn-apper mot preprod med Playwright MCP og verifiserer arkivering i etterkant. |
 | Skill | [`fyllut-release`](skills/fyllut-release/SKILL.md) | Publiserer en valgt FyllUt-commit etter bekreftelse. |
 | Skill | [`fyllut-sendinn-specification`](skills/fyllut-sendinn-specification/SKILL.md) | Lager en funksjonell eller teknisk spesifikasjon ved eksplisitt invokasjon. |
 | Skill | [`fyllut-unslop`](skills/fyllut-unslop/SKILL.md) | Fjerner KI-markører og unødvendige formuleringer fra tekst. |
