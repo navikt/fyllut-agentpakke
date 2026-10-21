@@ -1,6 +1,6 @@
 # Fyllut-agentpakke
 
-Fyllut-Sendinns agent og skills for Copilot CLI og OpenCode.
+Fyllut-Sendinns agent, skills og felles instruksjoner for Copilot CLI, OpenCode og Pi.
 Pakken gjenbruker en pinnet versjon av Nav-grunnpakken og installeres én gang
 per utvikler, på tvers av repoer.
 
@@ -51,6 +51,8 @@ Start fra repoet du skal arbeide i:
 nav-pilot --client copilot --persona fyllut
 # Eller:
 nav-pilot --client opencode --persona fyllut
+# Eller:
+nav-pilot --client pi --persona fyllut
 ```
 
 Be om en skill ved navn. Spesifikasjonsflyten må startes eksplisitt med

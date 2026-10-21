@@ -15,10 +15,15 @@
     "opencode": {
       "primaryAgents": ["fyllut"],
       "defaultModel": "inherit"
+    },
+    "pi": {
+      "primaryAgents": ["fyllut"],
+      "defaultModel": "inherit"
     }
   },
   "layout": {
     "agents": "agents",
-    "skills": "skills"
+    "skills": "skills",
+    "instructions": "instructions"
   }
 }

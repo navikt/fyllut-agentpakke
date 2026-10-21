@@ -28,13 +28,15 @@ test('Tier 1 layout includes every team skill and a startable persona', () => {
   const base = JSON.parse(read('.nav-pilot/agentpakke.lock.json'));
   assert.equal(manifest.name, 'fyllut-agentpakke');
   assert.equal(manifest.contractVersion, '1');
-  assert.deepEqual(manifest.layout, { agents: 'agents', skills: 'skills' });
+  assert.deepEqual(manifest.layout, { agents: 'agents', skills: 'skills', instructions: 'instructions' });
   assert.equal(base.source, 'navikt/copilot');
   assert.match(base.sha, /^[0-9a-f]{40}$/);
-  for (const client of ['copilot', 'opencode']) {
+  for (const client of ['copilot', 'opencode', 'pi']) {
     assert.equal(manifest.clients[client].payloads, undefined);
     assert.deepEqual(manifest.clients[client].primaryAgents, ['fyllut']);
+    assert.equal(manifest.clients[client].defaultModel, 'inherit');
   }
+  assert.match(read('instructions/fyllut-sandbox.instructions.md'), /^---\napplyTo: "\*\*"\n---\n/);
   assert.match(read('agents/fyllut.agent.md'), /^---\nname: fyllut\n/);
   assert.deepEqual(readdirSync(join(root, 'skills')).sort(), expectedSkills);
   for (const skill of expectedSkills) {

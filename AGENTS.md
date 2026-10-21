@@ -10,7 +10,7 @@
   `conventional-commit` comes from the base; do not add a local copy.
 - Skills originated in `navikt/fyllut-sendinn-local-dev-env`; README records
   the import revision. Preserve local adaptations when refreshing them.
-- Support Copilot and OpenCode. Preserve explicit user approvals; use the
+- Support Copilot, OpenCode, and Pi. Preserve explicit user approvals; use the
   client's question/plan equivalents rather than inventing unavailable tools.
 - Validate with `nav-pilot validate --source "$PWD"`,
   `mise run test`, `mise exec -- node --check
