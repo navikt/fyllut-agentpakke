@@ -139,9 +139,12 @@ test('PR review comments with zones and never approves or changes code', () => {
   assert.match(skill, /gh pr comment <number> -R <owner>\/<repo> --body-file <file>/);
   assert.match(skill, /Never use `gh pr review --approve` or `--request-changes`/);
   assert.match(skill, /Never edit files, commit,\npush/);
-  assert.match(skill, /Ask for confirmation before posting/);
+  assert.doesNotMatch(skill, /Ask for confirmation before posting/);
+  assert.match(skill, /Do not ask for confirmation before publishing/);
   assert.match(skill, /Resolve model and effort before gathering review context/);
-  assert.match(skill, /_KI-gjennomgang: <model name> \(`<provider>\/<model>`\), innsats `<effort>`, `fyllut-pr-review` <version>\._/);
+  assert.match(skill, /KI-gjennomgang: Modell=<model display name>, Innsats:<effort>, Skill=fyllut-pr-review-v<version>\./);
+  assert.match(skill, /omit effort from the footer; never write `ukjent`/);
+  assert.match(skill, /version: "0\.2\.0"/);
   assert.match(skill, /Record the model and effort actually used/);
 });
 
@@ -166,25 +169,20 @@ test('PR review reads an explicit repository PR ref at the recorded head', () =>
   assert.match(skill, /Recheck\s+`headRefOid` after gathering context/);
 });
 
-test('PR review resolves existing comments before a single confirmed write', () => {
+test('PR review publishes without gh api user and without confirmation', () => {
   const skill = read('skills/fyllut-pr-review/SKILL.md');
   const publish = skill.slice(skill.indexOf('## Publish'));
-  const confirmation = publish.indexOf('Ask for confirmation before posting');
   const lookup = publish.indexOf('gh api --paginate');
-  const decision = publish.indexOf('ask whether to update it or add a new one');
-  const write = publish.indexOf('Perform exactly one confirmed write per PR');
+  const revisionCheck = publish.indexOf('Right before posting, recheck `headRefOid` and `baseRefOid`');
   const create = publish.indexOf('gh pr comment');
-  const update = publish.indexOf('gh api --method PATCH');
-  assert.ok(confirmation >= 0 && confirmation < lookup);
-  assert.ok(lookup < decision && decision < write && write < create && write < update);
-  assert.match(publish, /gh api user --jq \.login/);
-  assert.match(publish, /Stop if the lookup fails/);
-  assert.match(publish, /issues\/comments\/<comment-id>/);
-  assert.match(publish, /Do not use\s+`--edit-last`/);
-  assert.match(publish, /Verify the created or updated comment/);
-  const revisionCheck = publish.indexOf('Before posting, recheck `headRefOid` and `baseRefOid`');
-  assert.ok(decision < revisionCheck && revisionCheck < write);
-  assert.match(publish, /get confirmation for the revised drafts/);
+  assert.ok(lookup >= 0 && lookup < revisionCheck && revisionCheck < create);
+  assert.match(publish, /Do not call `gh api user`/);
+  assert.doesNotMatch(publish, /gh api --method PATCH|--jq \.login/);
+  assert.match(publish, /Stop if the\s+read fails/);
+  assert.match(publish, /Never overwrite earlier comments/);
+  assert.match(publish, /Do not use `--edit-last`/);
+  assert.match(publish, /Verify the published comment/);
+  assert.match(publish, /without a new confirmation/);
 });
 
 test('PR review separates evidence from consequence and keeps output compact', () => {
@@ -228,7 +226,7 @@ test('PR review honors model choices and keeps child reviews draft-only', () => 
   assert.match(skill, /verified base\/head IDs, stack order, user scope/);
   assert.match(skill, /must not\s+restart model selection or broaden the scope/);
   assert.match(skill, /draft-only: no source edits, commits, pushes or GitHub writes/);
-  assert.match(skill, /Only the parent may ask for publication confirmation and publish/);
+  assert.match(skill, /Only the parent publishes/);
   assert.match(skill, /parent fills in provenance from the actual invocation/);
 });
 

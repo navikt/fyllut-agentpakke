@@ -1,10 +1,10 @@
 ---
 name: fyllut-pr-review
-description: Review one GitHub pull request, several pull requests, or a stacked PR without changing code. Draft a short Norwegian comment per PR with evidence-based findings in rød, gul and grønn sone; publish only after confirmation. Use only when the user explicitly invokes fyllut-pr-review.
+description: Review one GitHub pull request, several pull requests, or a stacked PR without changing code. Draft a short Norwegian comment per PR with evidence-based findings in rød, gul and grønn sone; publish one comment per PR without further confirmation. Use only when the user explicitly invokes fyllut-pr-review.
 disable-model-invocation: true
 license: MIT
 metadata:
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # Review pull requests with zones
@@ -13,7 +13,9 @@ Help the human reviewer find consequential details hidden across code,
 callers and documentation. Write one short comment per PR with actionable
 findings. It does not summarize the diff or replace human review.
 
-This skill only reads code and writes comments. Never edit files, commit,
+Explicit invocation of this skill is permission to publish one comment per PR
+in the agreed scope. Do not ask for confirmation before publishing. Respect an
+explicit request for drafts only or no publishing. Never edit files, commit,
 push, check out the PR branch in the user's worktree, approve, request
 changes, merge, or enqueue.
 
@@ -93,9 +95,14 @@ question tool when available, otherwise ask in chat.
   no variants, omit the variant parameter; never invent `#standard`.
 - If the chosen model or effort cannot be used, ask before falling back to the
   current session. Never substitute silently or claim an unavailable setting.
-- Record the model and effort actually used, not the requested ones. If the
-  client does not expose the effort, record `ukjent`. Never guess. Keep this
-  provenance for the comment footer.
+- Record the model and effort actually used, from the review invocation or
+  exposed session metadata. Never infer effort from the model name, supported
+  variants or the user's wish alone. If the used level cannot be established,
+  omit effort from the footer; never write `ukjent`. Keep this provenance for
+  the comment footer.
+- Pass an explicitly chosen effort to the subagent when the tool supports it.
+- Keep the provider/model ID internally for model selection and invocation.
+  The footer uses only the model's display name.
 
 ## Gather context
 
@@ -168,7 +175,7 @@ restart model selection or broaden the scope.
 
 The child is draft-only: no source edits, commits, pushes or GitHub writes.
 It returns findings with evidence, coverage limits and draft comments to the
-parent. Only the parent may ask for publication confirmation and publish.
+parent. Only the parent publishes.
 The parent fills in provenance from the actual invocation, checks that evidence
 matches the reviewed revisions, and removes duplicate or unsupported findings.
 
@@ -204,45 +211,46 @@ Use this structure; placeholders describe content, not extra sections:
 Kontroll: <reviewed head permalink>. CI: <inspected checks/result link>. Lokalt: <tests run, or «ikke kjørt»>.
 Avgrensning: <skipped or unavailable material; omit if none>.
 
-_KI-gjennomgang: <model name> (`<provider>/<model>`), innsats `<effort>`, `fyllut-pr-review` <version>._
+KI-gjennomgang: Modell=<model display name>, Innsats:<effort>, Skill=fyllut-pr-review-v<version>.
 ```
 
+Omit `, Innsats:<effort>` when the used level is not established. Show known
+levels in Norwegian: low=Lav, medium=Middels, high=Høy, xhigh=Ekstra høy,
+max=Maksimal. Example: `KI-gjennomgang: Modell=GPT-6.1 Sol, Innsats:Høy,
+Skill=fyllut-pr-review-v0.2.0.` Without effort:
+`KI-gjennomgang: Modell=GPT-6.1 Sol, Skill=fyllut-pr-review-v0.2.0.`
+
 Drop "(nivå … i stacken)" for a single PR. Always include the
-`KI-gjennomgang` line with the recorded model and effort and the `version`
-from this skill's front matter, so the team can compare models later. Never
+`KI-gjennomgang` line with the recorded model, effort when known, and the
+`version` from this skill's front matter, so the team can compare models later. Never
 include secrets, tokens, fødselsnummer, names, journalpost IDs,
 innsendings-IDs or raw production logs in a comment.
 
 ## Publish
 
+Publish unless the user asked for drafts only or no publishing.
+
 1. Show the short drafts in the chat.
-2. Ask for confirmation before posting. A request to "review" alone is not
-   permission to publish.
-3. Before writing anything to GitHub, get the authenticated login with
-   `gh api user --jq .login` and read all conversation comments with
-   `gh api --paginate "repos/<owner>/<repo>/issues/<number>/comments"`.
-   Match that login and the `KI-gjennomgang` line naming `fyllut-pr-review`.
-   If a previous review exists, ask whether to update it or add a new one.
-   If there are several, identify which comment to update. Save its comment
-   ID and URL. Stop if the lookup fails; do not assume no review exists.
-4. Before posting, recheck `headRefOid` and `baseRefOid` against the reviewed
-   revisions. If either changed, stop, review the affected layers again and
-   get confirmation for the revised drafts.
-   Perform exactly one confirmed write per PR, bottom of the stack first.
-   Write the body to a file in the session's temporary directory. For a new
-   comment, use:
+2. Before writing, read all conversation comments for each PR. Stop if the
+   read fails; do not assume no comments exist. Do not call `gh api user`.
+   ```sh
+   gh api --paginate "repos/<owner>/<repo>/issues/<number>/comments"
+   ```
+   If a comment has identical final content, including reviewed commit and
+   the `KI-gjennomgang` footer, use its URL instead of posting a duplicate.
+   Otherwise publish a new comment. Never overwrite earlier comments or assume
+   who owns them.
+3. Right before posting, recheck `headRefOid` and `baseRefOid` against the
+   reviewed revisions. If either changed, review the affected layers again and
+   publish the revised drafts without a new confirmation.
+4. Write each body to a file in the session's temporary directory and publish
+   bottom of the stack first:
    ```sh
    gh pr comment <number> -R <owner>/<repo> --body-file <file>
    ```
-   For an update, use the saved comment ID:
-   ```sh
-   gh api --method PATCH "repos/<owner>/<repo>/issues/comments/<comment-id>" \
-     -F "body=@<file>"
-   ```
-   Do not create a new comment before updating an existing one. Do not use
-   `--edit-last`: another comment could become the latest between reads.
-   Never use `gh pr review --approve` or `--request-changes`.
-5. Verify the created or updated comment before reporting success. Report
-   each PR URL with its comment URL and the number of rød and gul findings.
-   If a write has an uncertain outcome, read the comments again before
-   retrying to avoid duplicates.
+   Do not use `--edit-last`: another comment could become the latest between
+   reads. Never use `gh pr review --approve` or `--request-changes`.
+5. Verify the published comment with a repository-scoped API call before
+   reporting success. Report each PR URL with its comment URL and the number
+   of rød and gul findings. If a write has an uncertain outcome, read the
+   comments again before retrying to avoid duplicates.
