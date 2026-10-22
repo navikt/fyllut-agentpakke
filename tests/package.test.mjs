@@ -13,6 +13,7 @@ const expectedSkills = [
   'fyllut-bug-triage-and-fix',
   'fyllut-dependency-upgrade',
   'fyllut-dependency-upgrade-stack',
+  'fyllut-follow-up-issue',
   'fyllut-form-text-history',
   'fyllut-playwright-best-practices',
   'fyllut-pr-review',
@@ -51,6 +52,29 @@ test('Tier 1 layout includes every team skill and a startable persona', () => {
   ]) {
     assert.ok(read(`skills/fyllut-sendinn-specification/references/${reference}`).length > 0);
   }
+});
+
+test('follow-up issue requires human invocation and preserves publication rules', () => {
+  const skill = read('skills/fyllut-follow-up-issue/SKILL.md');
+  const text = skill.replace(/\s+/g, ' ');
+  assert.match(skill, /^---\nname: fyllut-follow-up-issue\ndescription: [^\n]+\ndisable-model-invocation: true\n/);
+  assert.match(text, /Use this skill only when a human explicitly invokes it/);
+  assert.match(text, /Create an issue only when they ask for one/);
+  assert.match(text, /Search open and closed issues/);
+  assert.match(text, /Include relevant sibling repositories/);
+  assert.match(text, /Keep the following information, adding missing sections/);
+  assert.match(text, /Write the issue title and body in Norwegian Bokmål by default, including template headings/);
+  assert.match(text, /Use English only when the human explicitly requests it/);
+  assert.match(text, /This overrides the repository's or template's language/);
+  assert.match(text, /## Opphav .*høyst to setninger/);
+  assert.match(text, /## Funn og åpne spørsmål/);
+  assert.match(text, /## Akseptansekriterier/);
+  assert.match(text, /All conditions must hold/);
+  assert.match(text, /Unknown root cause, .*rule out `quick-win`/);
+  assert.match(text, /Ask before creating, renaming, or redefining labels/);
+  assert.match(text, /For sensitive security findings, ask about the approved reporting channel instead of publishing an issue/);
+  assert.match(text, /If creation was requested and scope is clear, do not ask for approval again/);
+  assert.match(text, /Read the created issue back/);
 });
 
 test('Playwright skill bundles its referenced guides and license', () => {
