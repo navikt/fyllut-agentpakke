@@ -13,6 +13,7 @@ const expectedSkills = [
   'fyllut-bug-triage-and-fix',
   'fyllut-dependency-upgrade',
   'fyllut-dependency-upgrade-stack',
+  'fyllut-follow-up-issue',
   'fyllut-form-text-history',
   'fyllut-playwright-best-practices',
   'fyllut-pr-review-follow-up',
@@ -50,6 +51,26 @@ test('Tier 1 layout includes every team skill and a startable persona', () => {
   ]) {
     assert.ok(read(`skills/fyllut-sendinn-specification/references/${reference}`).length > 0);
   }
+});
+
+test('follow-up issue draft preserves publication gates and independent labels', () => {
+  const skill = read('skills/fyllut-follow-up-issue/SKILL.md');
+  assert.match(skill, /# Draft: create a follow-up issue/);
+  assert.match(skill, /Create an issue only when the user\s+explicitly asks to create one/);
+  assert.match(skill, /Search open and closed issues/);
+  assert.match(skill, /Include likely sibling repositories/);
+  assert.match(skill, /Always retain origin, confirmed facts, hypotheses, open questions, scope, and\s+acceptance criteria/);
+  assert.match(skill, /## Origin/);
+  assert.match(skill, /## Evidence and uncertainty/);
+  assert.match(skill, /## Acceptance criteria/);
+  assert.match(skill, /`follow-up`/);
+  assert.match(skill, /`quick-win`/);
+  assert.match(skill, /All conditions must hold/);
+  assert.match(skill, /unknown root cause; do not call it a `quick-win`/);
+  assert.match(skill, /Do not silently create, rename, or redefine labels/);
+  assert.match(skill, /Do not publish sensitive security\s+findings through this workflow/);
+  assert.match(skill, /If creation\s+was explicitly requested and scope is clear, do not ask for approval again/);
+  assert.match(skill, /Read the created issue back/);
 });
 
 test('Playwright skill bundles its referenced guides and license', () => {
