@@ -62,9 +62,12 @@ test('follow-up issue requires human invocation and preserves publication rules'
   assert.match(text, /Search open and closed issues/);
   assert.match(text, /Include relevant sibling repositories/);
   assert.match(text, /Keep the following information, adding missing sections/);
-  assert.match(text, /## Origin .*In one or two sentences at most/);
-  assert.match(text, /## Evidence and uncertainty/);
-  assert.match(text, /## Acceptance criteria/);
+  assert.match(text, /Write the issue title and body in Norwegian Bokmål by default, including template headings/);
+  assert.match(text, /Use English only when the human explicitly requests it/);
+  assert.match(text, /This overrides the repository's or template's language/);
+  assert.match(text, /## Opphav .*høyst to setninger/);
+  assert.match(text, /## Funn og åpne spørsmål/);
+  assert.match(text, /## Akseptansekriterier/);
   assert.match(text, /All conditions must hold/);
   assert.match(text, /Unknown root cause, .*rule out `quick-win`/);
   assert.match(text, /Ask before creating, renaming, or redefining labels/);

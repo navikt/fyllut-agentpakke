@@ -21,38 +21,41 @@ without permission.
 2. Search open and closed issues for the behavior and affected component.
    Include relevant sibling repositories for cross-service work. If an issue
    already covers the work, link it and ask before updating or reopening it.
-3. Check issue templates and label descriptions. Follow the repository's language
-   conventions, or use the user's language if none exist. Load `klarsprak` before
+3. Check issue templates and label descriptions. Load `klarsprak` before
    writing. Ask if ownership or scope is unclear. Do not postpone work the
    current task needs unless the user agrees.
 
 ## Write the issue
 
+Write the issue title and body in Norwegian Bokmål by default, including template
+headings. Use English only when the human explicitly requests it. This overrides
+the repository's or template's language.
+
 Name the affected behavior and desired outcome in the title. Use the repository
 template if available. Keep the following information, adding missing sections.
 
 ```markdown
-## Problem and impact
-What happens, who or what is affected, and what should improve?
+## Problem og konsekvens
+Hva skjer, hvem eller hva rammes, og hva skal bli bedre?
 
-## Origin
-Link the original issue, PR, or incident. In one or two sentences at most,
-explain where the finding came from and why it is a separate task.
+## Opphav
+Lenk til den opprinnelige saken, PR-en eller hendelsen og forklar med høyst to
+setninger hvor funnet kom fra og hvorfor det er en egen oppgave.
 
-## Evidence and uncertainty
-State confirmed observations, source/test links, and known reproduction steps.
-Separate facts from hypotheses and open questions.
+## Funn og åpne spørsmål
+Beskriv bekreftede observasjoner, lenker til kode eller tester og kjente steg
+for å gjenskape problemet. Skill fakta fra hypoteser og åpne spørsmål.
 
-## Scope
-What this issue covers, what it excludes, and known dependencies.
+## Avgrensning
+Hva dekker saken, hva ligger utenfor, og hvilke avhengigheter kjenner vi til?
 
-## Acceptance criteria
-- [ ] An observable outcome and how to verify it.
-- [ ] Regression coverage, or expected findings for an investigation.
+## Akseptansekriterier
+- [ ] Et observerbart resultat og hvordan det skal verifiseres.
+- [ ] Regresjonstester, eller hva en undersøkelse skal avklare.
 ```
 
 - Use full URLs for cross-repository links. If no source link exists, say so
-  within the one- or two-sentence Origin section. Do not invent a parent issue
+  within the one- or two-sentence origin section. Do not invent a parent issue
   or rely on a private agent conversation for context.
 - For incidents, include the date, timezone, environment, and time window.
   Missing evidence does not prove that nothing happened. An investigation
