@@ -95,5 +95,24 @@ mise exec -- node --check skills/fyllut-form-text-history/scripts/generate-form-
 bash -n skills/fyllut-release/scripts/list-releasable-fyllut-commits.sh
 ```
 
-Oppdater Nav-grunnpakken med `nav-pilot pakke bump-base`, og gjennomgå
-låsefilendringen i en PR. Se [pakkekontrakten](https://github.com/navikt/copilot/blob/main/docs/README.agentpakke.md).
+Oppdater Nav-grunnpakken fra en vanlig terminal utenfor agentsandkassen:
+
+```bash
+bash scripts/bump-base.sh
+```
+
+Skriptet krever et rent repo på `main`, innlogget `gh` og verktøyene `git`,
+`jq`, `nav-pilot` og `mise`. Det oppdaterer lokal `main` fra `origin/main`
+med fast-forward og kjører `nav-pilot pakke bump-base`. Lokal `main` med
+egne commits avvises. `origin` må peke til `navikt/fyllut-agentpakke`, ikke en fork.
+
+Ved ny base oppretter skriptet `chore/nav-pilot-base-<sha>`, kjører kontrollene
+over, committer låsefilen og pusher branchen til `origin`. Deretter oppretter
+det en PR mot `main` med endringsoversikten fra nav-pilot. Commitmeldingen
+inneholder kort base-SHA i tittelen og full SHA i brødteksten. Ingen ny base
+betyr ingen branch, commit eller PR.
+
+Ved feil beholdes filer og eventuell branch for manuell oppfølging. Skriptet
+overskriver ikke en eksisterende branch og bruker ikke force-push. Hvis push
+lykkes, men PR-oppretting feiler, opprett PR-en manuelt med `gh pr create`.
+Gjennomgå PR-en før merge. Se [pakkekontrakten](https://github.com/navikt/copilot/blob/main/docs/README.agentpakke.md).
