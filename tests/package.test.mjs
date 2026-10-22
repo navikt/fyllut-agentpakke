@@ -53,24 +53,24 @@ test('Tier 1 layout includes every team skill and a startable persona', () => {
   }
 });
 
-test('follow-up issue draft preserves publication gates and independent labels', () => {
+test('follow-up issue requires human invocation and preserves publication rules', () => {
   const skill = read('skills/fyllut-follow-up-issue/SKILL.md');
-  assert.match(skill, /# Draft: create a follow-up issue/);
-  assert.match(skill, /Create an issue only when the user\s+explicitly asks to create one/);
-  assert.match(skill, /Search open and closed issues/);
-  assert.match(skill, /Include likely sibling repositories/);
-  assert.match(skill, /Always retain origin, confirmed facts, hypotheses, open questions, scope, and\s+acceptance criteria/);
-  assert.match(skill, /## Origin/);
-  assert.match(skill, /## Evidence and uncertainty/);
-  assert.match(skill, /## Acceptance criteria/);
-  assert.match(skill, /`follow-up`/);
-  assert.match(skill, /`quick-win`/);
-  assert.match(skill, /All conditions must hold/);
-  assert.match(skill, /unknown root cause; do not call it a `quick-win`/);
-  assert.match(skill, /Do not silently create, rename, or redefine labels/);
-  assert.match(skill, /Do not publish sensitive security\s+findings through this workflow/);
-  assert.match(skill, /If creation\s+was explicitly requested and scope is clear, do not ask for approval again/);
-  assert.match(skill, /Read the created issue back/);
+  const text = skill.replace(/\s+/g, ' ');
+  assert.match(skill, /^---\nname: fyllut-follow-up-issue\ndescription: [^\n]+\ndisable-model-invocation: true\n/);
+  assert.match(text, /Use this skill only when a human explicitly invokes it/);
+  assert.match(text, /Create an issue only when they ask for one/);
+  assert.match(text, /Search open and closed issues/);
+  assert.match(text, /Include relevant sibling repositories/);
+  assert.match(text, /Keep the following information, adding missing sections/);
+  assert.match(text, /## Origin .*In one or two sentences at most/);
+  assert.match(text, /## Evidence and uncertainty/);
+  assert.match(text, /## Acceptance criteria/);
+  assert.match(text, /All conditions must hold/);
+  assert.match(text, /Unknown root cause, .*rule out `quick-win`/);
+  assert.match(text, /Ask before creating, renaming, or redefining labels/);
+  assert.match(text, /For sensitive security findings, ask about the approved reporting channel instead of publishing an issue/);
+  assert.match(text, /If creation was requested and scope is clear, do not ask for approval again/);
+  assert.match(text, /Read the created issue back/);
 });
 
 test('Playwright skill bundles its referenced guides and license', () => {
