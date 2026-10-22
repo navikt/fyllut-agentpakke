@@ -15,6 +15,7 @@ const expectedSkills = [
   'fyllut-dependency-upgrade-stack',
   'fyllut-form-text-history',
   'fyllut-playwright-best-practices',
+  'fyllut-pr-review',
   'fyllut-pr-review-follow-up',
   'fyllut-release',
   'fyllut-sendinn-specification',
@@ -104,6 +105,20 @@ test('manual dependency stacks hand off registration without relaxing sandbox gu
   assert.match(skill, /registration is pending developer\naction/);
   assert.match(skill, /repeat the lookup\nbefore attempting another POST/);
   assert.match(skill, /Do not bypass sandbox\nrestrictions/);
+});
+
+test('PR review comments with zones and never approves or changes code', () => {
+  const skill = read('skills/fyllut-pr-review/SKILL.md');
+  assert.match(skill, /🔴 \*\*Rød sone\*\*: må vurderes før merge\./);
+  assert.match(skill, /🟡 \*\*Gul sone\*\*: bør vurderes, men blokkerer ikke\./);
+  assert.match(skill, /🟢 \*\*Grønn sone\*\*: gjennomgått, ingen merknader\./);
+  assert.match(skill, /gh pr comment <number> -R <owner>\/<repo> --body-file <file>/);
+  assert.match(skill, /Never use `gh pr review --approve` or `--request-changes`/);
+  assert.match(skill, /Never edit files, commit,\npush/);
+  assert.match(skill, /Ask for confirmation before posting/);
+  assert.match(skill, /Ask which model and effort to review with before gathering context/);
+  assert.match(skill, /_KI-gjennomgang: <model name> \(`<provider>\/<model>`\), innsats `<effort>`, `fyllut-pr-review` <version>\._/);
+  assert.match(skill, /Record the model and effort that were actually used/);
 });
 
 test('report generator exposes help and rejects invalid input before repository access', () => {
