@@ -18,6 +18,7 @@ const expectedSkills = [
   'fyllut-playwright-best-practices',
   'fyllut-pr-review',
   'fyllut-pr-review-follow-up',
+  'fyllut-preprod-e2e',
   'fyllut-release',
   'fyllut-sendinn-specification',
   'fyllut-unslop',
@@ -101,6 +102,28 @@ test('Unslop uses upstream invocation settings and includes its license', () => 
   assert.match(license, /MIT License/);
   assert.match(license, /Copyright \(c\) 2026 Lauren Tan/);
   assert.match(license, /Permission is hereby granted/);
+});
+
+test('preprod E2E skill requires MCP, local preparation and archiving evidence', () => {
+  const skill = read('skills/fyllut-preprod-e2e/SKILL.md');
+  for (const requirement of [
+    'Playwright MCP',
+    'pnpm get-tokens fyllut',
+    'MOCKS_ENABLED=false',
+    'SEND_INN_HOST',
+    'pnpm start:fyllut',
+    'observability-debugging',
+    'NAV_PILOT_SKILLS_DIR',
+    '### Stopp før innsending',
+    'Send bare inn hvis brukeren har godkjent innsending i testplanen.',
+    'soknadsmottaker',
+    'soknadsarkiverer',
+    'innsending-api',
+    'Ferdig behandlet mottatt melding',
+  ]) {
+    assert.ok(skill.includes(requirement), requirement);
+  }
+  assert.doesNotMatch(skill, /\b\d{6}\s?\d{5}\b|eyJ[A-Za-z0-9_-]+\./);
 });
 
 test('bundled script instructions use the launch-provided skills directory', () => {
