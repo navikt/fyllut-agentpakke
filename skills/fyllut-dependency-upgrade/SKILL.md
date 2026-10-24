@@ -61,9 +61,10 @@ For Docker images, check publisher tags and release notes. Preserve digest pinni
 
 For GitHub Actions, check the latest eligible release and find every reference to the selected action. Apply this skill's release-age and CVE-exemption rules to the release date, not the commit date.
 
-Before editing action references, ask the `security-champion` agent or the client's equivalent security subagent to read the installed Nav GitHub Actions instructions. Ask for the current pinning and version-comment requirements, and follow them. If the agent or instructions are unavailable, or the requirements are unclear, leave the action references unchanged and ask the user how to proceed.
+- Pin remote actions to a full 40-character commit SHA, never a tag or branch.
+- Add a trailing comment with the exact release version, such as `# v4.2.2`.
 
-Update every reference to the selected action together. Record the security guidance and its source in the PR description.
+Update every reference to the selected action together.
 
 ## Plan the change
 
