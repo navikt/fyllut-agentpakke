@@ -15,6 +15,7 @@ check runtime labels or Nais manifests for variants and apps not listed here.
 | `soknadsmottaker` | `team-soknad` | Receives submissions and publishes to Kafka. |
 | `soknadsarkiverer` | `team-soknad` | Processes submissions and archives documents in Joark. |
 | `upload-convert-to-pdf` | `fyllut-sendinn` | File conversion. |
+| `upload-convert-to-pdf-en` | `fyllut-sendinn` | English PDF conversion variant. Check the caller's routing rather than inferring the service from the selected language. |
 | `tilbakemeldingsmottak-api`, `tilbakemeldingsmottak-frontend` | `teamserviceklage` | API and frontend for tilbakemeldingsmottak. |
 
 ## Submission flow

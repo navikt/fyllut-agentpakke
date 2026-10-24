@@ -73,6 +73,7 @@ test('team observability adds navigation context and suggests updates without ed
   for (const app of [
     'innsending-api', 'soknadsmottaker', 'soknadsarkiverer', 'skjemautfylling-preprod-alt',
     'tilbakemeldingsmottak-api', 'tilbakemeldingsmottak-frontend',
+    'upload-convert-to-pdf-en',
   ]) {
     assert.ok(map.includes(app), app);
   }
