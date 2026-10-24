@@ -59,14 +59,11 @@ For npm, query the registry and use the repository's pinned package manager. Res
 
 For Docker images, check publisher tags and release notes. Preserve digest pinning when the repository uses it. Confirm architecture support and migration notes for stateful services.
 
-For GitHub Actions, check the latest eligible release and find every reference to the selected action so the repository does not run mixed versions by accident.
+For GitHub Actions, check the latest eligible release and find every reference to the selected action. Apply this skill's release-age and CVE-exemption rules to the release date, not the commit date.
 
-- Pin remote actions, including `actions/*`, and reusable workflows to a full 40-character commit SHA. Do not use tags, branches, or short SHAs as the ref.
-- Add a trailing comment with the exact release version: `uses: actions/checkout@<full-40-character-commit-sha> # vX.Y.Z` (replace both placeholders with verified values).
-- Resolve the selected release tag in the action's canonical upstream repository. Dereference annotated tags to the commit SHA, not the tag-object SHA. Verify that the commit belongs to the upstream default or release branch, not only a fork or pull request. Stop and report if verification fails.
-- Apply the release-age and CVE-exemption rules to the selected release, not the commit date. Update the SHA and version comment together in every reference to the selected action.
-- Record the exact release tag, verified commit SHA, and verification source in the PR description.
-- Local actions and workflows (`./...`) do not use a Git ref. For `docker://` actions, pin the image by digest instead.
+Before editing action references, ask the `security-champion` agent or the client's equivalent security subagent to read the installed Nav GitHub Actions instructions. Ask for the current pinning and version-comment requirements, and follow them. If the agent or instructions are unavailable, or the requirements are unclear, leave the action references unchanged and ask the user how to proceed.
+
+Update every reference to the selected action together. Record the security guidance and its source in the PR description.
 
 ## Plan the change
 
