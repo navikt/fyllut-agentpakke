@@ -15,6 +15,7 @@ const expectedSkills = [
   'fyllut-dependency-upgrade-stack',
   'fyllut-follow-up-issue',
   'fyllut-form-text-history',
+  'fyllut-innsending-observability-debugging',
   'fyllut-playwright-best-practices',
   'fyllut-pr-review',
   'fyllut-pr-review-follow-up',
@@ -52,6 +53,47 @@ test('Tier 1 layout includes every team skill and a startable persona', () => {
   ]) {
     assert.ok(read(`skills/fyllut-sendinn-specification/references/${reference}`).length > 0);
   }
+});
+
+test('submission diagnostics extends the base skill and keeps evidence and safety boundaries', () => {
+  const directory = 'skills/fyllut-innsending-observability-debugging';
+  const skill = read(`${directory}/SKILL.md`);
+  const text = skill.replace(/\s+/g, ' ');
+  assert.match(text, /Load `observability-debugging` first/);
+  assert.match(skill, /\$NAV_PILOT_SKILLS_DIR\/observability-debugging\/obs-query\.sh/);
+  assert.match(text, /stop and ask the user to restart through nav-pilot/);
+  assert.match(text, /before any production query: metrics, log counts, log fields, or traces/);
+  assert.match(text, /If the base skill cannot be loaded, stop/);
+  assert.match(text, /correlate at least two pillars before concluding/);
+  assert.match(text, /Empty query results are missing evidence, not zero errors/);
+  assert.match(text, /HTTP success or `Innsendt` is not proof of `FINISHED`/);
+  assert.match(text, /Do not approve\/merge a PR, deploy, replay submissions/);
+  assert.match(text, /Never publish raw log lines/);
+  assert.match(text, /journalpost IDs, or trace IDs/);
+  const links = [...skill.matchAll(/\]\((references\/[^)]+\.md)\)/g)].map((match) => match[1]);
+  assert.deepEqual(links, ['references/submission-map.md', 'references/query-starter.md']);
+  const map = read(`${directory}/${links[0]}`);
+  const queries = read(`${directory}/${links[1]}`);
+  for (const app of ['innsending-api', 'soknadsmottaker', 'soknadsarkiverer', 'skjemautfylling-preprod-alt']) {
+    assert.ok(map.includes(app), app);
+  }
+  assert.match(map, /RECEIVED → STARTED → ARCHIVED → FINISHED/);
+  assert.match(map, /18–22 October 2026/);
+  assert.match(queries, /set -o pipefail/);
+  assert.match(queries, /--range "\$START" "\$END"/);
+  assert.match(queries, /--range "\$START_SECONDS" "\$END_SECONDS" --limit 10/);
+  assert.doesNotMatch(skill + map + queries, /\/Users\/|ses_[a-zA-Z0-9]+/);
+  const shellBlocks = [...(skill + queries).matchAll(/```bash\n([\s\S]*?)```/g)];
+  assert.equal(shellBlocks.length, 7);
+  for (const [, script] of shellBlocks) {
+    const result = spawnSync('bash', ['-n'], { input: script, encoding: 'utf8' });
+    assert.equal(result.status, 0, result.stderr);
+  }
+  assert.doesNotMatch(queries, /60 --limit/);
+  assert.match(queries, /--range "\$START" "\$END" --limit 20/);
+  assert.match(queries, /Need exactly one trace in the selected window/);
+  assert.match(queries, /expected_service_spans/);
+  assert.doesNotMatch(queries, /echo "\$TRACE_ID"|jq ['"]\.message/);
 });
 
 test('follow-up issue requires human invocation and preserves publication rules', () => {
