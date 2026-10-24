@@ -1,5 +1,5 @@
 ---
-name: fyllut-innsending-observability-debugging
+name: fyllut-observability-debugging
 description: Check Fyllut-Sendinn logs, metrics, and traces after preprod testing or during a production incident. Use for submission flow diagnostics across FyllUt, Send inn, innsending-api, soknadsmottaker, and soknadsarkiverer. Extends observability-debugging with team application names, completion signals, and interpretation pitfalls.
 license: MIT
 metadata:

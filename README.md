@@ -34,7 +34,7 @@ og [cplt](https://github.com/navikt/cplt).
 | Skill | [`fyllut-dependency-upgrade-stack`](skills/fyllut-dependency-upgrade-stack/SKILL.md) | Samler avhengighetsoppgraderinger i en testet PR-stack og erstatter dekkede bot-PR-er. |
 | Skill | [`fyllut-follow-up-issue`](skills/fyllut-follow-up-issue/SKILL.md) | Oppretter oppfølgingssaker med opphav og kriterier for `follow-up` og `quick-win`. Krever eksplisitt invokasjon fra et menneske. |
 | Skill | [`fyllut-form-text-history`](skills/fyllut-form-text-history/SKILL.md) | Dokumenterer publiserte skjematekster og endringsdatoer i en HTML-rapport. |
-| Skill | [`fyllut-innsending-observability-debugging`](skills/fyllut-innsending-observability-debugging/SKILL.md) | Undersøker innsendingsflyten etter preprod-test eller ved hendelser, med appkart og innsendingssignaler. Bygger på `observability-debugging`. |
+| Skill | [`fyllut-observability-debugging`](skills/fyllut-observability-debugging/SKILL.md) | Undersøker innsendingsflyten etter preprod-test eller ved hendelser, med appkart og innsendingssignaler. Bygger på `observability-debugging`. |
 | Skill | [`fyllut-playwright-best-practices`](skills/fyllut-playwright-best-practices/SKILL.md) | Gir råd og temainndelte referanser for Playwright-tester. |
 | Skill | [`fyllut-pr-review`](skills/fyllut-pr-review/SKILL.md) | Gjennomgår én PR eller en hel stack med valgt modell og innsats, og kommenterer funn i rød, gul og grønn sone. |
 | Skill | [`fyllut-pr-review-follow-up`](skills/fyllut-pr-review-follow-up/SKILL.md) | Avklarer reviewkommentarer med deg og gjennomfører avtalte endringer. |

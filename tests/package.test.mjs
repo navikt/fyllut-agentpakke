@@ -15,7 +15,7 @@ const expectedSkills = [
   'fyllut-dependency-upgrade-stack',
   'fyllut-follow-up-issue',
   'fyllut-form-text-history',
-  'fyllut-innsending-observability-debugging',
+  'fyllut-observability-debugging',
   'fyllut-playwright-best-practices',
   'fyllut-pr-review',
   'fyllut-pr-review-follow-up',
@@ -56,7 +56,7 @@ test('Tier 1 layout includes every team skill and a startable persona', () => {
 });
 
 test('submission diagnostics extends the base skill and keeps evidence and safety boundaries', () => {
-  const directory = 'skills/fyllut-innsending-observability-debugging';
+  const directory = 'skills/fyllut-observability-debugging';
   const skill = read(`${directory}/SKILL.md`);
   const text = skill.replace(/\s+/g, ' ');
   assert.match(text, /Load `observability-debugging` first/);
