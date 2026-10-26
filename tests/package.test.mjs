@@ -15,6 +15,7 @@ const expectedSkills = [
   'fyllut-dependency-upgrade-stack',
   'fyllut-follow-up-issue',
   'fyllut-form-text-history',
+  'fyllut-observability-debugging',
   'fyllut-playwright-best-practices',
   'fyllut-pr-review',
   'fyllut-pr-review-follow-up',
@@ -52,6 +53,39 @@ test('Tier 1 layout includes every team skill and a startable persona', () => {
   ]) {
     assert.ok(read(`skills/fyllut-sendinn-specification/references/${reference}`).length > 0);
   }
+});
+
+test('team observability adds navigation context and suggests updates without editing itself', () => {
+  const directory = 'skills/fyllut-observability-debugging';
+  const skill = read(`${directory}/SKILL.md`);
+  const text = skill.replace(/\s+/g, ' ');
+  assert.match(text, /Load `observability-debugging` first/);
+  assert.match(text, /Use it for query tools, access, time windows, correlation, and safety rules/);
+  assert.match(text, /Keep the investigation read-only unless the user requests a separate change/);
+  assert.match(text, /Keep personal data, raw payloads, and correlation IDs out of shared output/);
+  assert.match(text, /suggest an update to `fyllut-observability-debugging` in the final response/);
+  assert.match(text, /Do not edit the skill automatically/);
+  assert.match(text, /Do not suggest incident-specific details or personal data/);
+  const links = [...skill.matchAll(/\]\((references\/[^)]+\.md)\)/g)].map((match) => match[1]);
+  assert.deepEqual(links, ['references/submission-map.md']);
+  assert.deepEqual(readdirSync(join(root, directory, 'references')), ['submission-map.md']);
+  const map = read(`${directory}/${links[0]}`);
+  for (const app of [
+    'innsending-api', 'soknadsmottaker', 'soknadsarkiverer', 'skjemautfylling-preprod-alt',
+    'tilbakemeldingsmottak-api', 'tilbakemeldingsmottak-frontend',
+    'upload-convert-to-pdf-en',
+  ]) {
+    assert.ok(map.includes(app), app);
+  }
+  for (const namespace of ['skjemadigitalisering', 'fyllut-sendinn', 'team-soknad', 'teamserviceklage']) {
+    assert.ok(map.includes(`\`${namespace}\``), namespace);
+  }
+  for (const integration of ['SAF', 'Joark', 'ID-porten', 'TokenX', 'Azure', 'Kafka', 'forms-api']) {
+    assert.ok(map.includes(integration), integration);
+  }
+  assert.match(map, /Local status `Innsendt` confirms a different stage from completed archiving/);
+  assert.match(map, /`innsendingapi_submissions_total`/);
+  assert.doesNotMatch(skill + map, /\/Users\/|ses_[a-zA-Z0-9]+|OpenCode|query-starter\.md/);
 });
 
 test('follow-up issue requires human invocation and preserves publication rules', () => {
