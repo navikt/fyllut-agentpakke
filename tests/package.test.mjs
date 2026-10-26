@@ -144,7 +144,7 @@ test('PR review comments with zones and never approves or changes code', () => {
   assert.match(skill, /Resolve model and effort before gathering review context/);
   assert.match(skill, /KI-gjennomgang: Modell=<model display name>, Innsats:<effort>, Skill=fyllut-pr-review-v<version>\./);
   assert.match(skill, /omit effort from the footer; never write `ukjent`/);
-  assert.match(skill, /version: "0\.2\.0"/);
+  assert.match(skill, /version: "0\.3\.0"/);
   assert.match(skill, /Record the model and effort actually used/);
 });
 
