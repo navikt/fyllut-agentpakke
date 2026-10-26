@@ -59,7 +59,12 @@ For npm, query the registry and use the repository's pinned package manager. Res
 
 For Docker images, check publisher tags and release notes. Preserve digest pinning when the repository uses it. Confirm architecture support and migration notes for stateful services.
 
-For GitHub Actions, check the latest eligible release and find every reference to the selected action so the repository does not run mixed majors by accident. Write major-only references such as `actions/checkout@v7`, even when research uses a specific release to assess age and risk.
+For GitHub Actions, check the latest eligible release and find every reference to the selected action. Apply this skill's release-age and CVE-exemption rules to the release date, not the commit date.
+
+- Pin remote actions to a full 40-character commit SHA, never a tag or branch.
+- Add a trailing comment with the exact release version, such as `# v4.2.2`.
+
+Update every reference to the selected action together.
 
 ## Plan the change
 
