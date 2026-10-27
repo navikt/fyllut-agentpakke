@@ -15,6 +15,7 @@ const expectedSkills = [
   'fyllut-dependency-upgrade-stack',
   'fyllut-follow-up-issue',
   'fyllut-form-text-history',
+  'fyllut-investigate-incident',
   'fyllut-observability-debugging',
   'fyllut-playwright-best-practices',
   'fyllut-pr-review',
