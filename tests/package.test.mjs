@@ -20,6 +20,7 @@ const expectedSkills = [
   'fyllut-playwright-best-practices',
   'fyllut-pr-review',
   'fyllut-pr-review-follow-up',
+  'fyllut-preprod-submission-test',
   'fyllut-release',
   'fyllut-sendinn-specification',
   'fyllut-unslop',
@@ -69,6 +70,29 @@ test('Playwright skill bundles its referenced guides and license', () => {
 
 test('Unslop bundles its license', () => {
   assert.ok(read('skills/fyllut-unslop/LICENSE').length > 0);
+});
+
+test('preprod submission skill bundles small synthetic upload files and a valid PDF structure', () => {
+  const directory = 'skills/fyllut-preprod-submission-test';
+  const skill = read(`${directory}/SKILL.md`);
+  for (const name of ['test-document.pdf', 'test-attachment.txt']) {
+    const data = read(`${directory}/assets/${name}`);
+    assert.ok(Buffer.byteLength(data) < 1024, name);
+    assert.match(data, /Synthetic document\. No personal data\./);
+    assert.ok(skill.includes(name), name);
+  }
+  const pdf = read(`${directory}/assets/test-document.pdf`);
+  assert.match(pdf, /^%PDF-1\.4\n/);
+  assert.match(pdf, /%%EOF\n$/);
+  const xref = Number(pdf.match(/startxref\n(\d+)\n/)[1]);
+  assert.equal(pdf.slice(xref, xref + 4), 'xref');
+  const offsets = [...pdf.matchAll(/^(\d{10}) 00000 n /gm)];
+  assert.equal(offsets.length, 5);
+  offsets.forEach((match, index) => {
+    assert.ok(pdf.slice(Number(match[1])).startsWith(`${index + 1} 0 obj\n`));
+  });
+  const stream = pdf.match(/\/Length (\d+) >>\nstream\n([\s\S]*?)endstream/);
+  assert.equal(Buffer.byteLength(stream[2]), Number(stream[1]));
 });
 
 test('report generator exposes help and rejects invalid input before repository access', () => {
