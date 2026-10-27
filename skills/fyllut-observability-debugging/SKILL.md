@@ -3,7 +3,7 @@ name: fyllut-observability-debugging
 description: Navigate Fyllut-Sendinn logs, metrics, and traces after preprod testing or during incidents. Use with observability-debugging for app names, namespaces, flow, and integrations.
 license: MIT
 metadata:
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Fyllut-Sendinn observability
@@ -30,6 +30,42 @@ against the selected environment when they differ from the map.
 
 Keep the investigation read-only unless the user requests a separate change.
 Keep personal data, raw payloads, and correlation IDs out of shared output.
+
+## Ingress and HAProxy in FSS
+
+In `prod-fss`, ingress logs were found in Loki's **platform dataset**:
+use `--org nais`, not the application default `tenant`. Access logs use
+`service_name="nais-ingress"` and **the target application's namespace** in
+`service_namespace`, even though the ingress controller runs in `nais-system`.
+Controller lifecycle and reload logs use `service_namespace="nais-system"`.
+Verify these labels in other environments rather than assuming the same layout.
+
+For example, find access logs for Foerstesidegenerator with this selector:
+
+```logql
+{k8s_cluster_name="prod-fss",service_name="nais-ingress",service_namespace="teamdokumenthandtering"} |= "foerstesidegenerator"
+```
+
+Pass the selector to `obs-query.sh loki` with `--org nais`, an explicit
+`--range <start> <end>`, and a small `--limit`. Inspect the JSON field names
+first, then select only the technical fields needed. Do not dump raw access
+logs: URLs, query strings, client addresses, and trace fields can be sensitive.
+
+- Indexed `service_name` identifies the ingress logger. The JSON body's
+  `service_name` identifies the target app. Distinguish them when parsing.
+- Useful fields include `upstream_status`, `termination_state`, `request_time`,
+  `upstream_connect_time`, `upstream_header_time`, and `upstream_response_time`.
+  Confirm timing units against the controller's log format before interpreting.
+- A normal termination state (`----`) with an upstream 504 can mean the target
+  app returned that status. It does not by itself prove an ingress timeout.
+- For resets, compare both ingress hops: incoming traffic to the proxy and its
+  outgoing traffic to the dependency. Correlate with controller shutdown/reload
+  logs and pod start times. HAProxy backend metrics can be selected by `proxy`,
+  for example `teamdokumenthandtering_svc_foerstesidegenerator_http`, in Mimir
+  with `--org nais`; discover available names and labels first.
+- Missing access entries and zero backend error counters do not prove a request
+  never arrived. A nearby rollout is a hypothesis, not proof that a particular
+  socket used a terminating pod or a stale keep-alive connection.
 
 ## Suggest useful updates
 
