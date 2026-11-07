@@ -99,8 +99,13 @@ test('review mode decides whether PR creation may fix findings', () => {
   assert.match(createPr, /1\. Review and report findings\. Do not edit code\./);
   assert.match(createPr, /2\. Review and fix findings\./);
   assert.match(createPr, /3\. No review, under the exception below\./);
-  assert.match(createPr, /\*\*Started by another skill\.\*\* Always review\. Fix verified findings within\s+that skill's task scope/);
-  assert.match(createPr, /\*\*Any other start\.\*\* Always review, report findings and do not edit code/);
+  assert.match(createPr, /\*\*Part of a task\.\*\* You changed the code in this conversation because the\s+user asked you to/);
+  assert.match(createPr, /«implement X, commit, push and create a PR»/);
+  assert.match(createPr, /Fix verified\s+findings within the task's scope without asking/);
+  assert.match(createPr, /before editing changes you did not make in this conversation/);
+  assert.match(createPr, /\*\*Any other start\.\*\* Report findings and do not edit code/);
+  assert.match(createPr, /Outside explicit invocation, always review/);
+  assert.match(createPr, /Without a\s+mode, the subagent reports findings without editing/);
   assert.match(createPr, /If unsure which case applies, review and report findings without editing/);
   assert.doesNotMatch(createPr, /who wrote the code decides|Code the user wrote|Code you wrote/i, 'fix permission must not depend on guessing authorship');
   assert.match(createPr, /## Handle findings/);

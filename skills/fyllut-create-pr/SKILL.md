@@ -24,13 +24,22 @@ whether you may fix findings.
 
   Skip the question if the user already chose. Leave out the third choice
   when a required delivery review is outstanding, as the exception describes.
-- **Started by another skill.** Always review. Fix verified findings within
-  that skill's task scope, and ask before changes outside it.
-- **Any other start.** Always review, report findings and do not edit code.
-  This covers PR requests that do not name the skill, a subagent, and a skill
-  name the user mentioned earlier in the conversation. If the user asks to
-  skip review, say that the choice is offered only when the skill is invoked
-  explicitly.
+  A skill name mentioned earlier in the conversation is not explicit
+  invocation.
+- **Part of a task.** You changed the code in this conversation because the
+  user asked you to, and the PR completes that work. This covers a request
+  such as «implement X, commit, push and create a PR», a later PR request for
+  that work, and another skill that loads this one for its task. Fix verified
+  findings within the task's scope without asking. Ask before changes outside
+  it, or before editing changes you did not make in this conversation.
+- **Any other start.** Report findings and do not edit code. This covers PR
+  requests for changes you did not make in this conversation, such as code
+  the user wrote.
+
+Outside explicit invocation, always review. If the user asks to skip review,
+say that the choice is offered only when the skill is invoked explicitly.
+When you pass this skill to a subagent, pass the mode as well. Without a
+mode, the subagent reports findings without editing.
 
 If unsure which case applies, review and report findings without editing.
 
