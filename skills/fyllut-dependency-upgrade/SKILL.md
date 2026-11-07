@@ -9,7 +9,7 @@ Upgrade one named dependency, or two or three dependencies that must move togeth
 
 This skill may also be called by `fyllut-dependency-upgrade-stack` for one layer of a larger stack. In that case, use the branch and base supplied by the stack skill, but keep all selected dependencies in one PR layer.
 
-If the `fyllut-unslop` skill is available, invoke it before writing branch names, commits, PR text, risk notes, or the final report. Do not assume every machine has it installed.
+Load `klarsprak` before writing branch names, commits, PR text, risk notes, or the final report.
 
 ## Keep the scope narrow
 
@@ -96,9 +96,10 @@ For a Docker image or runtime target:
 5. Run the smallest complete repository-native validation. Use the same build command as CI when practical.
 6. For framework or runtime majors, run tests that start the real application, not only compilation or isolated unit tests.
 7. Fix root causes. If a framework split or moved a module, add the supported module instead of recreating old behavior.
-8. Commit with a plain description.
-9. Push the branch and create one pull request. When called by `fyllut-dependency-upgrade-stack`, use its stack submission command instead.
-10. Wait for required GitHub checks and fix failures before finishing.
+8. Review the change with `fyllut-review-before-pr` and fix verified findings.
+9. Commit with a plain description.
+10. Publish one pull request with `fyllut-create-pr`, using the content required below. Invoking this skill is the request to create that PR. When called by `fyllut-dependency-upgrade-stack`, publish with its stack submission command instead, but write the description and run the pre-publication checks from `fyllut-create-pr`.
+11. Wait for required GitHub checks and fix failures before finishing. Follow the fix-round limit in `fyllut-review-core`. When the limit is reached, stop and ask the user how to proceed.
 
 If local tests pass but CI fails, inspect the failed job log and reproduce the same command locally before changing code.
 
@@ -116,7 +117,7 @@ In `Migration work and decisions`, name every workaround, necessary rewrite, con
 
 ## Finish
 
-Confirm that the PR contains only the selected dependency group, required migration work, and synchronized metadata. Confirm every required check passes.
+Confirm that the PR contains only the selected dependency group, required migration work, and synchronized metadata. Confirm every required check passes, or report the failing checks if the fix-round limit stopped the work.
 
 Report:
 

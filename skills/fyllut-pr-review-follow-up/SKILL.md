@@ -3,7 +3,7 @@ name: fyllut-pr-review-follow-up
 description: Work through recent GitHub pull request review comments with the user, decide how to handle each one, then implement, commit, push, reply, and resolve the agreed follow-ups. Use when the user provides a pull request and wants to address review feedback collaboratively.
 license: MIT
 metadata:
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Follow up pull request reviews
@@ -109,7 +109,15 @@ mode. Do not edit, validate, commit, push, reply, or resolve threads.
 7. Create separate commits for independent review comments unless the user
    chose another grouping. Do not create empty commits for reply-only outcomes.
    Follow the repository's commit convention and required trailers.
-8. Push the pull request branch.
+8. Before pushing, review the new commits with `fyllut-review-before-pr`.
+   It scales the review to the size and risk of the follow-up, from
+   self-review of a small fix to independent review of the whole PR.
+   Fix verified
+   findings only within the confirmed plan, and follow the fix-round limit in
+   `fyllut-review-core`. The confirmed plan starts a new implementation task
+   for that count. Ask the user about findings outside the plan.
+   Reply-only outcomes need no review.
+9. Push the pull request branch.
 
 ## Reply and resolve
 

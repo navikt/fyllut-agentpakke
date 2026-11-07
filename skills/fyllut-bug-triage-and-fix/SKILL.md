@@ -3,7 +3,7 @@ name: fyllut-bug-triage-and-fix
 description: Trace a suspected bug from evidence to root cause, optionally file a detailed GitHub issue, implement and prove the fix, then publish a pull request. Use when a bug report needs investigation and delivery rather than a speculative patch.
 license: MIT
 metadata:
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Triage and fix a bug
@@ -85,17 +85,21 @@ facts already established.
 
 ## Review and publish
 
-1. Review the complete diff for races, false-positive tests, shared-flow gaps,
-   and unrelated changes. Use a read-only reviewer when available.
-2. Fix review findings in a new commit. Re-run affected checks.
-3. After the fix passes its tests and you verify the behavior, create
-   conventional commits with required trailers, push the feature branch, and
-   open a pull request against `main` unless the user specifies another base
-   branch.
-4. If an issue exists, put `Closes #NUMBER` in the pull request body. Explain
-   the cause, behavior change, red-before-green proof, and validation commands.
-5. Watch the pull request until all checks pass. Fix failures, push the changes,
-   and repeat until the checks are green.
+1. Review the complete change with `fyllut-review-before-pr`. In addition to
+   the shared criteria, ask the reviewer to check for races, false-positive
+   tests, shared-flow gaps and unrelated changes.
+2. Fix verified findings in a new commit and re-run affected checks. Follow
+   the fix-round limit in `fyllut-review-core`.
+3. Publish with `fyllut-create-pr`. Invoking this skill is the request to
+   create the pull request, so it permits commits and pushes of the agreed fix.
+   Use conventional commits with required trailers. Target `main` unless the
+   user specifies another base branch.
+4. If an issue exists, put `Closes #NUMBER` in the pull request body. Add the
+   cause, behavior change and red-before-green proof to the description format
+   in `fyllut-create-pr`.
+5. Follow required checks on the published head. Fix failures within this task
+   under the same fix-round limit. When the limit is reached, stop and ask the
+   user how to proceed.
 6. Verify the remote branch, pull request body, target branch, linked issue, and
    repository status before reporting completion.
 
