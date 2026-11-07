@@ -30,7 +30,7 @@ og [cplt](https://github.com/navikt/cplt).
 | Agent | [`fyllut`](agents/fyllut.agent.md) | Hjelper teamet med utvikling og brukerstøtte i repoet du arbeider i. |
 | Skill | [`fyllut-approve-github-stack`](skills/fyllut-approve-github-stack/SKILL.md) | Gjennomgår og godkjenner kvalifiserte PR-er i en GitHub-stack. |
 | Skill | [`fyllut-bug-triage-and-fix`](skills/fyllut-bug-triage-and-fix/SKILL.md) | Undersøker en feil, retter den og leverer en testet PR. |
-| Skill | [`fyllut-create-pr`](skills/fyllut-create-pr/SKILL.md) | Skriver korte PR-beskrivelser med verifisering, risiko og rollback. Starter du skillen selv, spør den om review skal kjøres; ellers kjøres review alltid. Publiserer bare på bestilling. |
+| Skill | [`fyllut-create-pr`](skills/fyllut-create-pr/SKILL.md) | Skriver korte PR-beskrivelser med verifisering, risiko og rollback. Starter du skillen selv, velger du om review skal kjøres og om agenten skal rette funn. Ellers kjøres review alltid. Publiserer bare på bestilling. |
 | Skill | [`fyllut-dependency-upgrade`](skills/fyllut-dependency-upgrade/SKILL.md) | Oppgraderer én avhengighet eller en liten gruppe i én PR. |
 | Skill | [`fyllut-dependency-upgrade-stack`](skills/fyllut-dependency-upgrade-stack/SKILL.md) | Samler avhengighetsoppgraderinger i en testet PR-stack og erstatter dekkede bot-PR-er. |
 | Skill | [`fyllut-follow-up-issue`](skills/fyllut-follow-up-issue/SKILL.md) | Oppretter oppfølgingssaker med opphav og kriterier for `follow-up` og `quick-win`. Krever eksplisitt invokasjon fra et menneske. |

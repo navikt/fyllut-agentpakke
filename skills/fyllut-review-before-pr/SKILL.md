@@ -123,15 +123,16 @@ a short chat report, not a new report file or a GitHub comment:
   risk, include the core assessment of blast radius, size, rollback and
   recommended human review, with the person's concrete review focus.
 - Set status to `Ready for PR`, `Needs fixes` or `Needs clarification`.
+  A confirmed rød finding gives `Needs fixes`, and a rød clarification gives
+  `Needs clarification`. Gul findings do not block. List them for the PR
+  description.
 
 `Ready for PR` requires relevant checks and independent review, or self-review
-permitted for a small follow-up, with no open findings that need attention
-before handoff. Do not use it when material verification is missing. If
-required review or material verification is missing, use `Needs
-clarification` and name what is missing. The status is not merge or
-deployment approval. A user may later explicitly request a draft PR with the
-limits visible.
+permitted for a small follow-up, with no open rød findings. If required review
+or material verification is missing, use `Needs clarification` and name what
+is missing. The status is not merge or deployment approval. A user may later
+explicitly request a draft PR with the limits visible.
 
-The reviewer stops after reporting. Any author-side fixes remain part of an
-already approved implementation task and follow `fyllut-review-core`, including
-its shared round count across local review and later CI fixes.
+The reviewer stops after reporting. Author-side fixes need permission from the
+calling workflow, follow `fyllut-review-core`, and share the round count with
+later CI fixes.

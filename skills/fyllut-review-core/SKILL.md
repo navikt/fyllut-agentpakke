@@ -208,6 +208,8 @@ promise that reverting code also undoes external effects.
 
 A reviewer does not fix code. An author in an approved implementation task may
 fix verified findings within that scope, respecting separate approval gates.
+A calling workflow can restrict this further. `fyllut-create-pr` decides when
+PR creation permits fixes.
 New code requires relevant checks and the review the calling workflow
 requires, focused on the new diff and its effects on the whole change.
 

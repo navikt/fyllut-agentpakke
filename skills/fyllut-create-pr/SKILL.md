@@ -10,20 +10,29 @@ metadata:
 
 ## Choose review mode first
 
-Decide this before anything else.
+Decide this before anything else. The mode sets whether you review and
+whether you may fix findings.
 
 - **Explicit invocation.** The user's current message starts this skill with
-  `/fyllut-create-pr` or by name, for example «bruk fyllut-create-pr». Ask
-  once whether to run agent review, and recommend review. Use the client's
-  question tool if it has one. Skip the question if the user already chose,
-  if current review evidence covers the change, or if a required delivery
-  review is outstanding, as the exception below describes.
-- **Any other start.** Always review. This covers PR requests that do not name
-  the skill, loading by another skill or a subagent, and a skill name the user
-  mentioned earlier in the conversation. If the user asks to skip review, say
-  that the choice is offered only when the skill is invoked explicitly.
+  `/fyllut-create-pr` or by name, for example «bruk fyllut-create-pr». Ask one
+  question with these choices, and recommend the first. Use the client's
+  question tool if it has one.
 
-If unsure which case applies, always review.
+  1. Review and report findings. Do not edit code.
+  2. Review and fix findings.
+  3. No review, under the exception below.
+
+  Skip the question if the user already chose. Leave out the third choice
+  when a required delivery review is outstanding, as the exception describes.
+- **Started by another skill.** Always review. Fix verified findings within
+  that skill's task scope, and ask before changes outside it.
+- **Any other start.** Always review, report findings and do not edit code.
+  This covers PR requests that do not name the skill, a subagent, and a skill
+  name the user mentioned earlier in the conversation. If the user asks to
+  skip review, say that the choice is offered only when the skill is invoked
+  explicitly.
+
+If unsure which case applies, review and report findings without editing.
 
 ## Purpose
 
@@ -66,19 +75,26 @@ otherwise use the local workflow to perform only missing or invalidated review
 and checks. Invoking the workflow does not require a new reviewer or test run
 when coverage is already sufficient.
 
-A request to create a PR does not authorize source-code fixes. Report findings
-and ask before editing unless an existing implementation agreement already
-authorizes those changes.
-
-For any status other than `Ready for PR`, fix only within an approved
-implementation task or ask the user how to proceed. Regardless of review mode,
-do not publish a ready PR with known blockers or material test gaps. The user
-may explicitly request a draft PR with those limits visible.
-
 Reuse the review's check results, security report and core assessment of risk,
 blast radius, rollback and human review. In default mode, if material evidence
 is missing, return to local review rather than inventing it or running a second
 review just to write the description.
+
+## Handle findings
+
+A PR request alone never permits code changes. Fix findings only when the
+review mode permits it. Continuation prompts, tool approvals and silence are
+not approval. Separate approval gates, such as changes to authentication or
+personal data, still apply.
+
+When you may not fix, show the findings and ask whether to fix them, publish a
+draft PR with them visible, or stop. Approval to fix covers the listed
+findings. Ask again for new findings.
+
+Rød findings block a ready PR. Gul findings do not block. Fix them when the
+mode permits or list them under Verification. Never publish a ready PR with
+known blockers or material test gaps. The user may explicitly request a draft
+PR with those limits visible.
 
 ## Explicit exception for agent review
 
@@ -169,6 +185,7 @@ headings and placeholders into the agreed output language:
 
 - `<command>` passed and covers <behavior>.
 - <Material limit or remaining test, if any.>
+- <Open gul findings from the review, if any.>
 - <Agent-review status. Required when the exception is used.>
 
 ## Risk and rollback
@@ -219,8 +236,9 @@ When PR publication is requested:
    passing checks. If waiting is unavailable, report status and what remains.
 
 On CI failure, read the job error and establish whether it concerns the change.
-Fix only in approved scope and follow `fyllut-review-core` for evidence and the
-shared fix-round limit, including rounds before publication. New code needs
+Fix only as Handle findings allows, and follow `fyllut-review-core` for
+evidence and the shared fix-round limit, including rounds before publication.
+New code needs
 local verification and review required by the implementation agreement before
 another push. The PR exception does not waive those requirements. Update the
 description to actual head and results when that follow-up is requested,

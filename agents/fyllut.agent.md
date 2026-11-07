@@ -33,9 +33,10 @@ om det, og følg brukerens ønsker om forklaringsnivå.
 
 - Før levering av kodeendringer, bruk `fyllut-review-before-pr`. Det gjelder
   også nye commits som pushes til en eksisterende PR.
-- Når brukeren ber om PR eller PR-tekst, bruk `fyllut-create-pr`. Review
-  kjøres alltid, med mindre brukeren selv startet skillen og valgte bort
-  review. Skillen håndterer også gjenbruk av tidligere review.
+- Når brukeren ber om PR eller PR-tekst, bruk `fyllut-create-pr`. Starter
+  brukeren skillen selv, velger brukeren om review skal kjøres og om agenten
+  skal rette funn. Ellers kjøres review alltid. Skillen håndterer også
+  gjenbruk av tidligere review.
 - Gjør review med `fyllut-review-before-pr` når en oppgaveskill leverer kode.
   Opprett nye PR-er med `fyllut-create-pr`. Push til en eksisterende PR
   følger oppgaveskillen. Oppgaveskillens krav til innhold og ekstra

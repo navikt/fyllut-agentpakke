@@ -89,7 +89,29 @@ test('PR handoff reuses review evidence and supports human-written code', () => 
   assert.match(localReview, /## Reuse evidence first/);
   assert.match(localReview, /If independent review is still needed/);
   assert.match(createPr, /human-written, agent-written and mixed changes/);
-  assert.match(createPr, /A request to create a PR does not authorize source-code fixes/);
+  assert.match(createPr, /A PR request alone never permits code changes/);
+});
+
+test('review mode decides whether PR creation may fix findings', () => {
+  const createPr = read('skills/fyllut-create-pr/SKILL.md');
+  const core = read('skills/fyllut-review-core/SKILL.md');
+  const localReview = read('skills/fyllut-review-before-pr/SKILL.md');
+  assert.match(createPr, /1\. Review and report findings\. Do not edit code\./);
+  assert.match(createPr, /2\. Review and fix findings\./);
+  assert.match(createPr, /3\. No review, under the exception below\./);
+  assert.match(createPr, /\*\*Started by another skill\.\*\* Always review\. Fix verified findings within\s+that skill's task scope/);
+  assert.match(createPr, /\*\*Any other start\.\*\* Always review, report findings and do not edit code/);
+  assert.match(createPr, /If unsure which case applies, review and report findings without editing/);
+  assert.doesNotMatch(createPr, /who wrote the code decides|Code the user wrote|Code you wrote/i, 'fix permission must not depend on guessing authorship');
+  assert.match(createPr, /## Handle findings/);
+  assert.match(createPr, /Fix findings only when the\s+review mode permits it/);
+  assert.match(createPr, /Continuation prompts, tool approvals and silence are\s+not approval/);
+  assert.match(createPr, /Rød findings block a ready PR\. Gul findings do not block/);
+  assert.match(createPr, /Open gul findings from the review/);
+  assert.match(createPr, /Fix only as Handle findings allows/);
+  assert.match(core, /`fyllut-create-pr` decides when\s+PR creation permits fixes/);
+  assert.match(localReview, /Gul findings do not block/);
+  assert.match(localReview, /Author-side fixes need permission from the\s+calling workflow/);
 });
 
 test('PR creation permits an explicit review exception without waiving required checks', () => {
@@ -101,9 +123,7 @@ test('PR creation permits an explicit review exception without waiving required 
     createPr.indexOf('## Choose review mode first') < createPr.indexOf('## Permission and target'),
     'review mode must be decided before the rest of the workflow',
   );
-  assert.match(createPr, /If unsure which case applies, always review/);
-  assert.match(createPr, /\*\*Explicit invocation\.\*\*[\s\S]*Ask\s+once whether to run agent review/);
-  assert.match(createPr, /\*\*Any other start\.\*\* Always review\./);
+  assert.match(createPr, /\*\*Explicit invocation\.\*\*[\s\S]*Ask one\s+question with these choices, and recommend the first/);
   assert.match(createPr, /applies only when the user invoked this skill explicitly/);
   assert.match(createPr, /## Review by default/);
   assert.match(createPr, /## Explicit exception for agent review/);
