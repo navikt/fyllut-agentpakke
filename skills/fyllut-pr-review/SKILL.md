@@ -21,14 +21,12 @@ changes, merge, or enqueue.
 
 ## Shared review criteria
 
-Load `fyllut-review-core` for requirements, evidence, finding severity,
-security and risk assessment. Stop if it is unavailable. This workflow owns
-PR retrieval, model selection, comment format and publishing permission.
-The core does not replace those rules or authorize additional commands.
+Load `fyllut-review-core` for criteria. Stop if unavailable. This workflow
+still controls PR retrieval, model, comment format and publishing permissions;
+the core grants no extra commands.
 
-The selected model reviews every PR in scope. Do not reuse conclusions from
-earlier agent reviews, including local review before the PR. CI results,
-existing comments and the author's test reports remain evidence.
+The selected model reviews every scoped PR. Do not reuse conclusions from
+earlier agent reviews. CI, existing comments and author test reports remain evidence.
 
 ## Identify what to review
 
@@ -128,9 +126,8 @@ explicit `repos/<owner>/<repo>/...` paths on repository-specific `gh api` calls:
    current worktree's rules for an unrelated repository. Load only instructions
    relevant to the changed paths, including nested `AGENTS.md` files.
    Apply the shared rules to changed instructions and unavailable guidance.
-7. Gather requirement sources from the PR links, commits and repository
-   documents, then apply `fyllut-review-core` before delegation. Keep each
-   source tied to the recorded revision and intended stack layer.
+7. Before delegation, gather requirements from PR links, commits and repo
+   documents under core rules. Tie sources to reviewed revisions and stack layers.
 8. Trace contracts and use specialist guidance under the core criteria.
 
 Recheck `headRefOid` after gathering context, and also check `baseRefOid`.
@@ -138,9 +135,8 @@ Restart affected layers if either changed, rather than mix revisions.
 
 Do not run the full build unless the user asks. Prefer CI results.
 
-Use the core evidence and requirements rules throughout. Include missing
-requirements coverage and other material gaps under `Avgrensning`, and report
-supported requirement findings in the same consequence-ordered comment.
+Report material gaps, including unchecked requirements, under `Avgrensning`.
+Include supported requirement findings in the consequence-ordered comment.
 
 ## Delegate the review when supported
 
@@ -148,18 +144,13 @@ After assembling context, use a review subagent with the selected model and
 supported effort if the client can do so. Otherwise review in the current
 session, subject to the model fallback rule above.
 
-Give the child this skill and `fyllut-review-core`, target-repository
-instructions, resolved `owner/repo` and PR numbers, verified base/head IDs,
-stack order, user scope, requirements sources and their per-layer scope,
-context and coverage gaps, and the temporary repository location. Ask it to
-apply the core criteria, including the requirements check. It must not
-restart model selection, reuse earlier review conclusions or broaden the scope.
-
-The child is draft-only: no source edits, commits, pushes or GitHub writes.
-It returns findings with evidence, coverage limits and draft comments to the
-parent. Only the parent publishes.
-The parent fills in provenance from the actual invocation and validates
-candidate findings under the core rules before publishing.
+Supply this skill, `fyllut-review-core`, repo instructions, `owner/repo`, PR
+numbers, verified base/head IDs, stack order, scope, per-layer requirements
+sources, context, gaps and temporary repo location. Require core criteria,
+including requirements checks. Forbid model reselection, reused conclusions,
+scope expansion, edits, commits, pushes and GitHub writes.
+The child returns evidence-backed findings, limits and draft comments.
+The parent validates findings and fills actual invocation provenance before publishing.
 
 ## Write the comments
 
@@ -198,23 +189,18 @@ Avgrensning: <skipped or unavailable material; omit if none>.
 KI-gjennomgang: Modell=<model display name>, Innsats:<effort>, Skill=fyllut-pr-review-v<version>, Kriterier=fyllut-review-core-v<core version>.
 ```
 
-Take `Risiko` and `Tilbakerulling` from the core assessment. Write `Risiko`
-only when risk is medium, high or unclear, and `Tilbakerulling` only when a
-revert followed by normal deployment cannot restore behavior. Leave out
-simplicity suggestions without a concrete consequence; they are not findings.
+Use the core assessment. Include `Risiko` only for medium, high or unclear risk;
+`Tilbakerulling` only if revert and normal deploy cannot restore behavior.
+Omit simplicity preferences without concrete consequences.
 
 Omit `, Innsats:<effort>` when the used level is not established. Show known
 levels in Norwegian: low=Lav, medium=Middels, high=Høy, xhigh=Ekstra høy,
-max=Maksimal. Example: `KI-gjennomgang: Modell=GPT-6.1 Sol, Innsats:Høy,
-Skill=fyllut-pr-review-v0.4.0, Kriterier=fyllut-review-core-v0.1.0.` Without
-effort: `KI-gjennomgang: Modell=GPT-6.1 Sol, Skill=fyllut-pr-review-v0.4.0,
-Kriterier=fyllut-review-core-v0.1.0.`
+max=Maksimal.
 
 Drop "(nivå … i stacken)" for a single PR. Always include the
 `KI-gjennomgang` line with the recorded model, effort when known, and the
-`version` from the front matter of this skill and `fyllut-review-core`, so the
-team can compare models and criteria later.
-Apply the core's privacy restrictions to every draft and published comment.
+front-matter `version` of this skill and `fyllut-review-core`.
+Apply core privacy rules to drafts and published comments.
 
 ## Publish
 

@@ -85,21 +85,17 @@ facts already established.
 
 ## Review and publish
 
-1. Review the complete change with `fyllut-review-before-pr`. In addition to
-   the shared criteria, ask the reviewer to check for races, false-positive
-   tests, shared-flow gaps and unrelated changes.
-2. Fix verified findings in a new commit and re-run affected checks. Follow
-   the fix-round limit in `fyllut-review-core`.
-3. Publish with `fyllut-create-pr`. Invoking this skill is the request to
-   create the pull request, so it permits commits and pushes of the agreed fix.
-   Use conventional commits with required trailers. Target `main` unless the
-   user specifies another base branch.
-4. If an issue exists, put `Closes #NUMBER` in the pull request body. Add the
-   cause, behavior change and red-before-green proof to the description format
-   in `fyllut-create-pr`.
-5. Follow required checks on the published head. Fix failures within this task
-   under the same fix-round limit. When the limit is reached, stop and ask the
-   user how to proceed.
+1. Use `fyllut-review-before-pr` on the complete change, also checking races,
+   false-positive tests, shared-flow gaps and unrelated changes.
+2. Fix verified findings in a new commit and rerun affected checks under the
+   fix-round limit in `fyllut-review-core`.
+3. Publish with `fyllut-create-pr`. This skill's invocation permits committing
+   and pushing the agreed fix. Use conventional commits with required trailers
+   and target `main` unless specified otherwise.
+4. Include cause, behavior change, red-before-green proof and, if an issue
+   exists, `Closes #NUMBER` in that skill's PR format.
+5. Follow required checks on published head. Fix task-scoped failures within
+   the same round limit, then stop and ask how to proceed.
 6. Verify the remote branch, pull request body, target branch, linked issue, and
    repository status before reporting completion.
 

@@ -110,13 +110,10 @@ mode. Do not edit, validate, commit, push, reply, or resolve threads.
    chose another grouping. Do not create empty commits for reply-only outcomes.
    Follow the repository's commit convention and required trailers.
 8. Before pushing, review the new commits with `fyllut-review-before-pr`.
-   It scales the review to the size and risk of the follow-up, from
-   self-review of a small fix to independent review of the whole PR.
-   Fix verified
-   findings only within the confirmed plan, and follow the fix-round limit in
-   `fyllut-review-core`. The confirmed plan starts a new implementation task
-   for that count. Ask the user about findings outside the plan.
-   Reply-only outcomes need no review.
+   It scales review by follow-up size and risk. Fix verified findings only
+   within the plan under the fix-round limit in `fyllut-review-core`, counted
+   as a new task from plan confirmation. Ask about out-of-plan findings.
+   Replies without code changes need no review.
 9. Push the pull request branch.
 
 ## Reply and resolve
