@@ -12,6 +12,7 @@
   the import revision. Preserve local adaptations when refreshing them.
 - Support Copilot, OpenCode, and Pi. Preserve explicit user approvals; use the
   client's question/plan equivalents rather than inventing unavailable tools.
+- Start skill descriptions with "Use when" and briefly state when the agent should use the skill, rather than summarize its contents.
 - Validate with `nav-pilot validate --source "$PWD"`,
   `mise run test`, `mise exec -- node --check
   skills/fyllut-form-text-history/scripts/generate-form-text-history.mjs`, and
