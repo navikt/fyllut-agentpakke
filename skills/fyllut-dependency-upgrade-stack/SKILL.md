@@ -1,6 +1,6 @@
 ---
 name: fyllut-dependency-upgrade-stack
-description: Replace open dependency update PRs with a tested GitHub stack. Use for periodic repository-wide Maven, Gradle, npm, Docker image, or GitHub Actions upgrades when minor and patch updates should land before researched major updates.
+description: Use when the user invokes this skill for repository-wide dependency upgrades in a PR stack, replacing open Dependabot or Renovate PRs.
 disable-model-invocation: true
 ---
 

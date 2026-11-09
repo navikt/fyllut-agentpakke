@@ -1,6 +1,6 @@
 ---
 name: fyllut-review-before-pr
-description: Verify local changes before delivery, PR creation or follow-up pushes. Uses fyllut-review-core for review, security and readiness criteria. Does not edit or publish.
+description: Use when local changes need verification and review before delivery, PR creation or a follow-up push to an existing PR.
 license: MIT
 metadata:
   version: "0.1.0"

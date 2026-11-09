@@ -1,6 +1,6 @@
 ---
 name: fyllut-bug-triage-and-fix
-description: Trace a suspected bug from evidence to root cause, optionally file a detailed GitHub issue, implement and prove the fix, then publish a pull request. Use when a bug report needs investigation and delivery rather than a speculative patch.
+description: Use when a suspected bug needs investigation, a verified fix and a pull request.
 license: MIT
 metadata:
   version: "1.1.0"

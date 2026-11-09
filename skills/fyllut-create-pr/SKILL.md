@@ -1,6 +1,6 @@
 ---
 name: fyllut-create-pr
-description: Draft PR text or create a PR with local verification and review. Reuses existing review evidence. Publishes only when requested.
+description: Use when the user requests PR text, PR creation or a push followed by PR creation.
 license: MIT
 metadata:
   version: "0.1.0"

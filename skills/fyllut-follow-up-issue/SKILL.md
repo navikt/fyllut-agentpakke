@@ -1,6 +1,6 @@
 ---
 name: fyllut-follow-up-issue
-description: Create a GitHub follow-up issue for work discovered during another task or incident. Use only when a human explicitly invokes this skill.
+description: Use when a human explicitly invokes this skill to track work discovered during another task or incident in a GitHub issue.
 disable-model-invocation: true
 license: MIT
 metadata:

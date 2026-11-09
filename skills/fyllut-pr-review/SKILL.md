@@ -1,6 +1,6 @@
 ---
 name: fyllut-pr-review
-description: Review one GitHub pull request, several pull requests, or a stacked PR without changing code. Draft a short Norwegian comment per PR with evidence-based findings in rød, gul and grønn sone; publish one comment per PR without further confirmation. Use only when the user explicitly invokes fyllut-pr-review.
+description: Use when the user explicitly invokes fyllut-pr-review to review one or more GitHub PRs or a PR stack.
 disable-model-invocation: true
 license: MIT
 metadata:

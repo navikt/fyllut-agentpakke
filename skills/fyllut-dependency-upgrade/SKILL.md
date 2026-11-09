@@ -1,6 +1,6 @@
 ---
 name: fyllut-dependency-upgrade
-description: Upgrade one dependency or a small group of two or three tightly related dependencies in one pull request. Use for targeted Maven, Gradle, npm, Docker image, runtime, or GitHub Actions upgrades without inspecting or managing Dependabot or Renovate pull requests.
+description: Use when upgrading one dependency or up to three tightly related dependencies in one PR, not when managing Dependabot or Renovate PRs.
 ---
 
 # Upgrade a dependency in one pull request

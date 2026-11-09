@@ -1,6 +1,6 @@
 ---
 name: fyllut-unslop
-description: Cut AI tells from any writing.
+description: Use when the user explicitly invokes this skill to remove AI writing patterns from text.
 disable-model-invocation: true
 ---
 

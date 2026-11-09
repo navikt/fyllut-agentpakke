@@ -1,9 +1,8 @@
 ---
 name: fyllut-sendinn-specification
 description: >-
-  Create a functional or technical specification for Fyllut-Sendinn products,
-  then publish it as a GitHub issue or hand it to Copilot plan. Use only when
-  the user explicitly invokes /fyllut-sendinn-specification or a repository
+  Use when a functional or technical specification for Fyllut-Sendinn is needed
+  and the user explicitly invokes /fyllut-sendinn-specification or a repository
   skill invokes it.
 ---
 

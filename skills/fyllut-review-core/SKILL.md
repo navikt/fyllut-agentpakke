@@ -1,6 +1,6 @@
 ---
 name: fyllut-review-core
-description: Shared criteria for fyllut-review-before-pr, fyllut-pr-review and fyllut-create-pr. Not an entry point. Covers evidence, requirements, severity, security, risk, rollback and fix-round limits. Does not run checks, edit or publish.
+description: Use when fyllut-review-before-pr, fyllut-pr-review or fyllut-create-pr calls for shared review criteria. Not an entry point.
 license: MIT
 metadata:
   version: "0.1.0"

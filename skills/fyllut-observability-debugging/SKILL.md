@@ -1,6 +1,6 @@
 ---
 name: fyllut-observability-debugging
-description: Navigate Fyllut-Sendinn logs, metrics, and traces after preprod testing or during incidents. Use with observability-debugging for app names, namespaces, flow, and integrations.
+description: Use when querying Fyllut-Sendinn logs, metrics or traces after preprod testing or during incidents, alongside observability-debugging.
 license: MIT
 metadata:
   version: "1.1.0"
