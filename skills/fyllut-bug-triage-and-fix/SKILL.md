@@ -1,9 +1,9 @@
 ---
 name: fyllut-bug-triage-and-fix
-description: Trace a suspected bug from evidence to root cause, optionally file a detailed GitHub issue, implement and prove the fix, then publish a pull request. Use when a bug report needs investigation and delivery rather than a speculative patch.
+description: Use when a suspected bug needs investigation, a verified fix and a pull request.
 license: MIT
 metadata:
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Triage and fix a bug
@@ -85,17 +85,17 @@ facts already established.
 
 ## Review and publish
 
-1. Review the complete diff for races, false-positive tests, shared-flow gaps,
-   and unrelated changes. Use a read-only reviewer when available.
-2. Fix review findings in a new commit. Re-run affected checks.
-3. After the fix passes its tests and you verify the behavior, create
-   conventional commits with required trailers, push the feature branch, and
-   open a pull request against `main` unless the user specifies another base
-   branch.
-4. If an issue exists, put `Closes #NUMBER` in the pull request body. Explain
-   the cause, behavior change, red-before-green proof, and validation commands.
-5. Watch the pull request until all checks pass. Fix failures, push the changes,
-   and repeat until the checks are green.
+1. Use `fyllut-review-before-pr` on the complete change, also checking races,
+   false-positive tests, shared-flow gaps and unrelated changes.
+2. Fix verified findings in a new commit and rerun affected checks under the
+   fix-round limit in `fyllut-review-core`.
+3. Publish with `fyllut-create-pr`. This skill's invocation permits committing
+   and pushing the agreed fix. Use conventional commits with required trailers
+   and target `main` unless specified otherwise.
+4. Include cause, behavior change, red-before-green proof and, if an issue
+   exists, `Closes #NUMBER` in that skill's PR format.
+5. Follow required checks on published head. Fix task-scoped failures within
+   the same round limit, then stop and ask how to proceed.
 6. Verify the remote branch, pull request body, target branch, linked issue, and
    repository status before reporting completion.
 

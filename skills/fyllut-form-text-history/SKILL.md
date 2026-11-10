@@ -1,6 +1,6 @@
 ---
 name: fyllut-form-text-history
-description: Extract the user-visible text history of a published FyllUt form across a date range, including Bokmål source text, translations in its published languages, exact change dates, and a shareable HTML report. Use when someone asks what wording a form had, when wording changed, or whether a specific question changed.
+description: Use when someone asks what wording or translations a published FyllUt form had, when they changed, or whether a specific question changed.
 ---
 
 # Trace user-visible form text

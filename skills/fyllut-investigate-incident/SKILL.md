@@ -1,6 +1,6 @@
 ---
 name: fyllut-investigate-incident
-description: Use when a developer wants to investigate a Fyllut-Sendinn incident in production or preprod, such as a Slack alarm, recent errors or warnings, a trace ID with an environment, unusual response times, or a user-reported failure.
+description: Use when investigating Fyllut-Sendinn incidents in production or preprod, such as alarms, errors, traces, unusual response times or user-reported failures. Confirm skill use unless explicitly requested.
 license: MIT
 metadata:
   version: "1.0.0"

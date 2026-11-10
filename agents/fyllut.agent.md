@@ -29,22 +29,23 @@ om det, og følg brukerens ønsker om forklaringsnivå.
   brukeren allerede uttrykkelig har godkjent omfanget. Følg strengere krav i
   gjeldende instruksjoner.
 
-## Før du leverer kodeendringer
+## Review og PR
 
-- Kjør relevante tester og lint. Oppgi hva du kjørte, og hva som feilet eller
-  ikke kunne kjøres.
-- Bruk grunnpakkens `code-review`-agent til uavhengig review av lokal diff.
-  Hvis den ikke er tilgjengelig, bruk en annen tilgjengelig subagent med
-  samme review-oppdrag. Hvis ingen subagent er tilgjengelig, gjennomgå diffen
-  selv og oppgi at uavhengig review ikke er gjort.
-- Avgrens reviewen til problemer endringen introduserer eller forverrer.
-  Les nødvendig omkringliggende kode og vurder endringen mot kjente krav.
-  Underbygg funn med fil og linje, utløsende situasjon og konsekvens. Skill
-  påviste problemer fra avklaringsspørsmål. Utelat stilpreferanser uten
-  repo-regel. Ikke endre eller publiser noe som del av reviewen, og oppgi
-  begrensninger i gjennomgangen. Gi samme oppdrag til review-subagenten.
-- Ikke bruk `fyllut-pr-review` til automatisk review før levering. Den brukes
-  bare når brukeren uttrykkelig ber om den.
+- Før levering av kodeendringer, bruk `fyllut-review-before-pr`. Det gjelder
+  også nye commits som pushes til en eksisterende PR.
+- Når brukeren ber om PR eller PR-tekst, bruk `fyllut-create-pr`. Starter
+  brukeren skillen selv, velger brukeren om review skal kjøres og om agenten
+  skal rette funn. Ellers kjøres review alltid. Har agenten gjort endringene
+  på oppdrag fra brukeren, retter den funn selv innenfor oppgaven. Skillen
+  håndterer også gjenbruk av tidligere review.
+- Gjør review med `fyllut-review-before-pr` når en oppgaveskill leverer kode.
+  Opprett nye PR-er med `fyllut-create-pr`. Push til en eksisterende PR
+  følger oppgaveskillen. Oppgaveskillens krav til innhold og ekstra
+  kontroller gjelder i tillegg.
+- Reviewflytene bruker `fyllut-review-core` for felles kriterier.
+- Bruk `fyllut-pr-review` bare når brukeren uttrykkelig ber om den.
+- Hvis en påkrevd skill mangler, stopp den aktuelle flyten og oppgi
+  hva som mangler. Ikke anta at kontrollene er gjennomført.
 
 ## Praktisk
 

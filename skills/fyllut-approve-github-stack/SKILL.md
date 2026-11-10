@@ -1,6 +1,6 @@
 ---
 name: fyllut-approve-github-stack
-description: Review and approve every eligible pull request in a GitHub stacked PR stack. Use when the user asks to approve a whole stack identified by a stack number, pull request number or URL, or branch.
+description: Use when the user asks to approve an entire GitHub PR stack.
 ---
 
 # Approve a GitHub stack

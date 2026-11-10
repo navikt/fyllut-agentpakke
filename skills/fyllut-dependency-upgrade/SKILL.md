@@ -1,6 +1,6 @@
 ---
 name: fyllut-dependency-upgrade
-description: Upgrade one dependency or a small group of two or three tightly related dependencies in one pull request. Use for targeted Maven, Gradle, npm, Docker image, runtime, or GitHub Actions upgrades without inspecting or managing Dependabot or Renovate pull requests.
+description: Use when upgrading one dependency or up to three tightly related dependencies in one PR, not when managing Dependabot or Renovate PRs.
 ---
 
 # Upgrade a dependency in one pull request
@@ -9,7 +9,7 @@ Upgrade one named dependency, or two or three dependencies that must move togeth
 
 This skill may also be called by `fyllut-dependency-upgrade-stack` for one layer of a larger stack. In that case, use the branch and base supplied by the stack skill, but keep all selected dependencies in one PR layer.
 
-If the `fyllut-unslop` skill is available, invoke it before writing branch names, commits, PR text, risk notes, or the final report. Do not assume every machine has it installed.
+Load `klarsprak` before writing branch names, commits, PR text, risk notes, or the final report.
 
 ## Keep the scope narrow
 
@@ -96,9 +96,10 @@ For a Docker image or runtime target:
 5. Run the smallest complete repository-native validation. Use the same build command as CI when practical.
 6. For framework or runtime majors, run tests that start the real application, not only compilation or isolated unit tests.
 7. Fix root causes. If a framework split or moved a module, add the supported module instead of recreating old behavior.
-8. Commit with a plain description.
-9. Push the branch and create one pull request. When called by `fyllut-dependency-upgrade-stack`, use its stack submission command instead.
-10. Wait for required GitHub checks and fix failures before finishing.
+8. Review the change with `fyllut-review-before-pr` and fix verified findings.
+9. Commit with a plain description.
+10. Publish one PR with `fyllut-create-pr` and the content below. This skill's invocation requests PR creation. For `fyllut-dependency-upgrade-stack`, use its submission command but retain `fyllut-create-pr` text and pre-publication checks.
+11. Wait for required GitHub checks and fix failures under the fix-round limit in `fyllut-review-core`. At the limit, stop and ask how to proceed.
 
 If local tests pass but CI fails, inspect the failed job log and reproduce the same command locally before changing code.
 
@@ -116,7 +117,7 @@ In `Migration work and decisions`, name every workaround, necessary rewrite, con
 
 ## Finish
 
-Confirm that the PR contains only the selected dependency group, required migration work, and synchronized metadata. Confirm every required check passes.
+Confirm the PR contains only selected dependencies, required migration work and synchronized metadata. Confirm required checks pass, or report failures remaining at the fix-round limit.
 
 Report:
 

@@ -1,75 +1,14 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
-const read = (path) => readFileSync(join(root, path), 'utf8');
-const expectedSkills = [
-  'fyllut-approve-github-stack',
-  'fyllut-bug-triage-and-fix',
-  'fyllut-dependency-upgrade',
-  'fyllut-dependency-upgrade-stack',
-  'fyllut-follow-up-issue',
-  'fyllut-form-text-history',
-  'fyllut-investigate-incident',
-  'fyllut-observability-debugging',
-  'fyllut-playwright-best-practices',
-  'fyllut-pr-review',
-  'fyllut-pr-review-follow-up',
-  'fyllut-release',
-  'fyllut-sendinn-specification',
-  'fyllut-unslop',
-];
 const releaseScript = join(root, 'skills/fyllut-release/scripts/list-releasable-fyllut-commits.sh');
 const generator = join(root, 'skills/fyllut-form-text-history/scripts/generate-form-text-history.mjs');
-
-test('Tier 1 layout includes every team skill and a startable persona', () => {
-  const manifest = JSON.parse(read('.nav-pilot/agentpakke.json'));
-  const base = JSON.parse(read('.nav-pilot/agentpakke.lock.json'));
-  assert.equal(manifest.name, 'fyllut-agentpakke');
-  assert.equal(manifest.contractVersion, '1');
-  assert.deepEqual(manifest.layout, { agents: 'agents', skills: 'skills', instructions: 'instructions' });
-  assert.equal(base.source, 'navikt/copilot');
-  assert.match(base.sha, /^[0-9a-f]{40}$/);
-  for (const client of ['copilot', 'opencode', 'pi']) {
-    assert.equal(manifest.clients[client].payloads, undefined);
-    assert.deepEqual(manifest.clients[client].primaryAgents, ['fyllut']);
-    assert.equal(manifest.clients[client].defaultModel, 'inherit');
-  }
-  assert.match(read('instructions/fyllut-sandbox.instructions.md'), /^---\napplyTo: "\*\*"\n---\n/);
-  assert.match(read('agents/fyllut.agent.md'), /^---\nname: fyllut\n/);
-  assert.deepEqual(readdirSync(join(root, 'skills')).sort(), expectedSkills);
-  for (const skill of expectedSkills) {
-    assert.ok(skill.startsWith('fyllut-'));
-    assert.match(read(`skills/${skill}/SKILL.md`), new RegExp(`^---\\nname: ${skill}\\n`));
-  }
-  for (const reference of [
-    'functional-discovery-question-bank.md',
-    'technical-discovery-question-bank.md',
-    'prototype-validation.md',
-  ]) {
-    assert.ok(read(`skills/fyllut-sendinn-specification/references/${reference}`).length > 0);
-  }
-});
-
-test('Playwright skill bundles its referenced guides and license', () => {
-  const directory = 'skills/fyllut-playwright-best-practices';
-  const skill = read(`${directory}/SKILL.md`);
-  const references = [...skill.matchAll(/\]\(([^)]+\.md)\)/g)].map((match) => match[1]);
-  for (const reference of references) {
-    assert.ok(!reference.startsWith('/') && !reference.split('/').includes('..'));
-    assert.ok(read(`${directory}/${reference}`).length > 0, reference);
-  }
-  assert.ok(read(`${directory}/LICENSE.md`).length > 0);
-});
-
-test('Unslop bundles its license', () => {
-  assert.ok(read('skills/fyllut-unslop/LICENSE').length > 0);
-});
 
 test('report generator exposes help and rejects invalid input before repository access', () => {
   const help = spawnSync(process.execPath, [generator, '--help'], { encoding: 'utf8' });

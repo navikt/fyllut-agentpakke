@@ -30,6 +30,7 @@ og [cplt](https://github.com/navikt/cplt).
 | Agent | [`fyllut`](agents/fyllut.agent.md) | Hjelper teamet med utvikling og brukerstøtte i repoet du arbeider i. |
 | Skill | [`fyllut-approve-github-stack`](skills/fyllut-approve-github-stack/SKILL.md) | Gjennomgår og godkjenner kvalifiserte PR-er i en GitHub-stack. |
 | Skill | [`fyllut-bug-triage-and-fix`](skills/fyllut-bug-triage-and-fix/SKILL.md) | Undersøker en feil, retter den og leverer en testet PR. |
+| Skill | [`fyllut-create-pr`](skills/fyllut-create-pr/SKILL.md) | Skriver korte PR-beskrivelser med verifisering, risiko og rollback. Starter du skillen selv, velger du om review skal kjøres og om agenten skal rette funn. Ellers kjøres review alltid. Publiserer bare på bestilling. |
 | Skill | [`fyllut-dependency-upgrade`](skills/fyllut-dependency-upgrade/SKILL.md) | Oppgraderer én avhengighet eller en liten gruppe i én PR. |
 | Skill | [`fyllut-dependency-upgrade-stack`](skills/fyllut-dependency-upgrade-stack/SKILL.md) | Samler avhengighetsoppgraderinger i en testet PR-stack og erstatter dekkede bot-PR-er. |
 | Skill | [`fyllut-follow-up-issue`](skills/fyllut-follow-up-issue/SKILL.md) | Oppretter oppfølgingssaker med opphav og kriterier for `follow-up` og `quick-win`. Krever eksplisitt invokasjon fra et menneske. |
@@ -40,6 +41,8 @@ og [cplt](https://github.com/navikt/cplt).
 | Skill | [`fyllut-pr-review`](skills/fyllut-pr-review/SKILL.md) | Gjennomgår én PR eller en hel stack med valgt modell og innsats, og kommenterer funn i rød, gul og grønn sone. |
 | Skill | [`fyllut-pr-review-follow-up`](skills/fyllut-pr-review-follow-up/SKILL.md) | Avklarer reviewkommentarer med deg og gjennomfører avtalte endringer. |
 | Skill | [`fyllut-release`](skills/fyllut-release/SKILL.md) | Publiserer en valgt FyllUt-commit etter bekreftelse. |
+| Skill | [`fyllut-review-before-pr`](skills/fyllut-review-before-pr/SKILL.md) | Verifiserer og gjennomgår lokale endringer før PR, med uavhengig review, sikkerhet og vurdering av menneskelig kontroll. Små rettelser i en eksisterende PR får lettere review. |
+| Skill | [`fyllut-review-core`](skills/fyllut-review-core/SKILL.md) | Felles kriterier for lokal review og PR-review. Beskriver kravkontroll, funn, risiko og rollback uten å styre tester eller publisering. |
 | Skill | [`fyllut-sendinn-specification`](skills/fyllut-sendinn-specification/SKILL.md) | Lager en funksjonell eller teknisk spesifikasjon ved eksplisitt invokasjon. |
 | Skill | [`fyllut-unslop`](skills/fyllut-unslop/SKILL.md) | Fjerner KI-markører og unødvendige formuleringer fra tekst. |
 
