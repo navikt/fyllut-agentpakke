@@ -123,7 +123,7 @@ human-review recommendations as completed approvals.
 
 ## Write a short description
 
-Load `klarsprak`; also follow user-only `fyllut-unslop` if already loaded.
+Load `klarsprak` and `fyllut-unslop` before writing the description.
 Use the agreed language. Aim for 150 to 250 words, fewer for simple changes.
 Required security warnings, migration order, test gaps and task-skill content
 have no word limit.

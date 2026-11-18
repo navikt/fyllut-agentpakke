@@ -1,7 +1,6 @@
 ---
 name: fyllut-unslop
-description: Use when the user explicitly invokes this skill to remove AI writing patterns from text.
-disable-model-invocation: true
+description: Use when writing or editing prose, including documentation, PR descriptions, review comments and user-facing text, to remove AI writing patterns.
 ---
 
 # Unslop

@@ -86,7 +86,8 @@ distribusjonskilden. Eget innhold har [MIT-lisens](LICENSE).
 
 Playwright-skillen har lokalt navn, Nav-integrasjonsregler og repoets testkommando.
 Avsluttende mellomrom i to referansefiler er fjernet. Unslop har lokalt navn og
-beskrivelse og krever at brukeren starter skillen eksplisitt.
+beskrivelse. I motsetning til originalen kan agenten laste skillen automatisk
+ved skriving og redigering av prosa. `disable-model-invocation` er fjernet lokalt.
 Hent hele skillmapper ved oppdatering, bevar lisensene og lokale tilpasninger,
 og gjennomgå endringene i en PR.
 
