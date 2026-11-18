@@ -81,11 +81,12 @@ distribusjonskilden. Eget innhold har [MIT-lisens](LICENSE).
 
 | Importert skill | Kilde og pinnet revisjon | Lisens |
 | --- | --- | --- |
-| `fyllut-playwright-best-practices` | [currents-dev/playwright-best-practices-skill, `283d5cbc5d11aac1abda058b16ad22c317d54dc0`](https://github.com/currents-dev/playwright-best-practices-skill/tree/283d5cbc5d11aac1abda058b16ad22c317d54dc0/playwright-best-practices) | [MIT, Currents Software Inc.](skills/fyllut-playwright-best-practices/LICENSE.md) |
-| `fyllut-unslop` | [cursor/plugins, `f713f14203cd6420cec13cd7c55c32d598dbab68`](https://github.com/cursor/plugins/tree/f713f14203cd6420cec13cd7c55c32d598dbab68/pstack/skills/unslop) | [MIT fra `pstack/LICENSE`, Lauren Tan](skills/fyllut-unslop/LICENSE) |
+| `fyllut-playwright-best-practices` | [currents-dev/playwright-best-practices-skill, `0b75b5835a87de1fdd202ba965f3bc5a27738fdf`](https://github.com/currents-dev/playwright-best-practices-skill/tree/0b75b5835a87de1fdd202ba965f3bc5a27738fdf/playwright-best-practices) | [MIT, Currents Software Inc.](skills/fyllut-playwright-best-practices/LICENSE.md) |
+| `fyllut-unslop` | [cursor/plugins, `2f87c854fe3e2fcda44ca86b46ede35aad3c46b7`](https://github.com/cursor/plugins/tree/2f87c854fe3e2fcda44ca86b46ede35aad3c46b7/pstack/skills/unslop) | [MIT fra `pstack/LICENSE`, Lauren Tan](skills/fyllut-unslop/LICENSE) |
 
 Playwright-skillen har lokalt navn, Nav-integrasjonsregler og repoets testkommando.
-Avsluttende mellomrom i to referansefiler er fjernet. Unslop beholder lokalt navn.
+Avsluttende mellomrom i to referansefiler er fjernet. Unslop har lokalt navn og
+beskrivelse og krever at brukeren starter skillen eksplisitt.
 Hent hele skillmapper ved oppdatering, bevar lisensene og lokale tilpasninger,
 og gjennomgå endringene i en PR.
 
