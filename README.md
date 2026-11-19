@@ -28,7 +28,6 @@ og [cplt](https://github.com/navikt/cplt).
 | Type | Navn | Beskrivelse |
 | --- | --- | --- |
 | Agent | [`fyllut`](agents/fyllut.agent.md) | Hjelper teamet med utvikling og brukerstøtte i repoet du arbeider i. |
-| Skill | [`fyllut-approve-github-stack`](skills/fyllut-approve-github-stack/SKILL.md) | Gjennomgår og godkjenner kvalifiserte PR-er i en GitHub-stack. |
 | Skill | [`fyllut-bug-triage-and-fix`](skills/fyllut-bug-triage-and-fix/SKILL.md) | Undersøker en feil, retter den og leverer en testet PR. |
 | Skill | [`fyllut-create-pr`](skills/fyllut-create-pr/SKILL.md) | Skriver korte PR-beskrivelser med verifisering, risiko og rollback. Starter du skillen selv, velger du om review skal kjøres og om agenten skal rette funn. Ellers kjøres review alltid. Publiserer bare på bestilling. |
 | Skill | [`fyllut-dependency-upgrade`](skills/fyllut-dependency-upgrade/SKILL.md) | Oppgraderer én avhengighet eller en liten gruppe i én PR. |
@@ -69,7 +68,6 @@ Et repos egen pakkekilde kan overstyre brukerens standard. Legg til
 
 Start gjennom nav-pilot for å få `NAV_PILOT_SKILLS_DIR` satt for medfølgende
 skript. GitHub-arbeidsflytene krever innlogget `gh` og tilgang til målrepoet.
-`fyllut-approve-github-stack` krever også extensionen `github/gh-stack`.
 Øvrige krav står i hver skill. MCP aktiveres separat med `nav-pilot mcp enable`.
 
 ## Opphav og lisenser
