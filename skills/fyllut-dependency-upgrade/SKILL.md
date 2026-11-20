@@ -9,7 +9,9 @@ Upgrade one named dependency, or two or three dependencies that must move togeth
 
 This skill may also be called by `fyllut-dependency-upgrade-stack` for one layer of a larger stack. In that case, use the branch and base supplied by the stack skill, but keep all selected dependencies in one PR layer.
 
-Load `klarsprak` before writing branch names, commits, PR text, risk notes, or the final report.
+Load `klarsprak` before writing branch names. Load `klarsprak` and
+`fyllut-unslop` before writing commit messages, PR text, risk notes, or the
+final report.
 
 ## Keep the scope narrow
 

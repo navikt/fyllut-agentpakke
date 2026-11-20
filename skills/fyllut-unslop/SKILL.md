@@ -1,11 +1,16 @@
 ---
 name: fyllut-unslop
-description: Use when writing or editing prose, including documentation, PR descriptions, review comments and user-facing text, to remove AI writing patterns.
+description: Use when writing or editing any prose, including chat replies, GitHub issue descriptions, PR descriptions, review comments, documentation and user-facing text.
 ---
 
 # Unslop
 
 Edit text to remove AI patterns. Scan for the patterns below, then rewrite. Preserve meaning and match the intended tone.
+
+If you also load `klarsprak`, apply it first for Norwegian language quality
+and reader needs. Then check for AI patterns using the rules below. In
+Norwegian prose, use Norwegian quotation marks instead of rule 19. Leave code,
+identifiers, direct quotes and required formats unchanged.
 
 Rule numbers are stable ids that other skills cite. A removed rule leaves a gap.
 

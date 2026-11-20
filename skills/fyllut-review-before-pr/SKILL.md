@@ -82,8 +82,8 @@ choose the broader level.
 
 ## Return readiness, not approval
 
-Load `klarsprak`. Report briefly in chat in the agreed language, not in a file
-or GitHub comment:
+Load `klarsprak` and `fyllut-unslop`. Report briefly in chat in the agreed
+language, not in a file or GitHub comment:
 
 - Count confirmed findings and questions with evidence, or state no concrete
   findings in inspected scope. Name inspected areas, results and material gaps.

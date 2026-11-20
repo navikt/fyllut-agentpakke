@@ -21,11 +21,12 @@ without permission.
 2. Search open and closed issues for the behavior and affected component.
    Include relevant sibling repositories for cross-service work. If an issue
    already covers the work, link it and ask before updating or reopening it.
-3. Check issue templates and label descriptions. Load `klarsprak` before
-   writing. Ask if ownership or scope is unclear. Do not postpone work the
-   current task needs unless the user agrees.
+3. Check issue templates and label descriptions. Ask if ownership or scope is
+   unclear. Do not postpone work the current task needs unless the user agrees.
 
 ## Write the issue
+
+Load `klarsprak` and `fyllut-unslop` before writing the issue title and body.
 
 Write the issue title and body in Norwegian Bokmål by default, including template
 headings. Use English only when the human explicitly requests it. This overrides

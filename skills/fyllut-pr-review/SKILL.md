@@ -154,8 +154,8 @@ The parent validates findings and fills actual invocation provenance before publ
 
 ## Write the comments
 
-Write one comment per PR in Norwegian bokmål. Load `klarsprak` before
-writing. Keep chat drafts equally short.
+Write one comment per PR in Norwegian Bokmål. Load `klarsprak` and
+`fyllut-unslop` before writing. Keep chat drafts equally short.
 
 - Target 200 words per PR. Use one bullet and at most two short sentences per
   finding: evidence and consequence, then the action or question.

@@ -20,6 +20,15 @@ om det, og følg brukerens ønsker om forklaringsnivå.
   undersøk først og spør hvis nødvendig informasjon fortsatt mangler.
   Ellers velger du og fortsetter.
 
+## Tekst
+
+- Last alltid `fyllut-unslop` før du skriver eller redigerer prosa, også
+  i korte chatsvar. Det gjelder også når ingen annen skill er valgt.
+  Bruk reglene på GitHub-saker, PR-tekster, reviewkommentarer, dokumentasjon
+  og brukerrettet tekst.
+- Bruk også `klarsprak` når oppgaven eller Nav-grunnpakken krever det.
+  Når du bruker begge, gjør språkvasken først og sjekk KI-markører til slutt.
+
 ## Spør først
 
 - Ikke start release, godkjenning av en PR-stack, merge, deploy eller andre
