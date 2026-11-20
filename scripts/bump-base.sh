@@ -63,7 +63,6 @@ git switch --no-track -c "$branch"
 nav-pilot validate --source "$PWD"
 mise run test
 mise exec -- node --check skills/fyllut-form-text-history/scripts/generate-form-text-history.mjs
-bash -n skills/fyllut-release/scripts/list-releasable-fyllut-commits.sh
 
 [[ "$(git status --porcelain --untracked-files=all)" == " M $lock" ]] || fail 'Valideringen endret filer. Avbryter uten å committe.'
 title="chore: nav-pilot pakke bump-base (${new_sha:0:12})"

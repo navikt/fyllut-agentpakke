@@ -39,7 +39,6 @@ og [cplt](https://github.com/navikt/cplt).
 | Skill | [`fyllut-playwright-best-practices`](skills/fyllut-playwright-best-practices/SKILL.md) | Gir råd og temainndelte referanser for Playwright-tester. |
 | Skill | [`fyllut-pr-review`](skills/fyllut-pr-review/SKILL.md) | Gjennomgår én PR eller en hel stack med valgt modell og innsats, og kommenterer funn i rød, gul og grønn sone. |
 | Skill | [`fyllut-pr-review-follow-up`](skills/fyllut-pr-review-follow-up/SKILL.md) | Avklarer reviewkommentarer med deg og gjennomfører avtalte endringer. |
-| Skill | [`fyllut-release`](skills/fyllut-release/SKILL.md) | Publiserer en valgt FyllUt-commit etter bekreftelse. |
 | Skill | [`fyllut-review-before-pr`](skills/fyllut-review-before-pr/SKILL.md) | Verifiserer og gjennomgår lokale endringer før PR, med uavhengig review, sikkerhet og vurdering av menneskelig kontroll. Små rettelser i en eksisterende PR får lettere review. |
 | Skill | [`fyllut-review-core`](skills/fyllut-review-core/SKILL.md) | Felles kriterier for lokal review og PR-review. Beskriver kravkontroll, funn, risiko og rollback uten å styre tester eller publisering. |
 | Skill | [`fyllut-sendinn-specification`](skills/fyllut-sendinn-specification/SKILL.md) | Lager en funksjonell eller teknisk spesifikasjon ved eksplisitt invokasjon. |
@@ -97,7 +96,6 @@ Kjør fra pakkerepoet med verktøyversjonene i `mise.toml`:
 mise run test
 nav-pilot validate --source "$PWD"
 mise exec -- node --check skills/fyllut-form-text-history/scripts/generate-form-text-history.mjs
-bash -n skills/fyllut-release/scripts/list-releasable-fyllut-commits.sh
 ```
 
 Oppdater Nav-grunnpakken fra en vanlig terminal utenfor agentsandkassen:

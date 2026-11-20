@@ -5,8 +5,7 @@
   `.nav-pilot/agentpakke.lock.json` pins the reused `navikt/copilot` base.
 - Keep complete `skills/<name>/` directories, including scripts and references.
   Resolve scripts through `NAV_PILOT_SKILLS_DIR`; never hardcode plugin paths.
-- Prefix team skill names with `fyllut-`. Use `fyllut-release` for the release
-  skill, but keep the upstream workflow name `release-fyllut.yaml`.
+- Prefix team skill names with `fyllut-`.
   `conventional-commit` comes from the base; do not add a local copy.
 - Skills originated in `navikt/fyllut-sendinn-local-dev-env`; README records
   the import revision. Preserve local adaptations when refreshing them.
@@ -15,8 +14,7 @@
 - Start skill descriptions with "Use when" and briefly state when the agent should use the skill, rather than summarize its contents.
 - Do not add tests of skill wording or package structure; test executable script behavior instead.
 - Validate with `nav-pilot validate --source "$PWD"`,
-  `mise run test`, `mise exec -- node --check
-  skills/fyllut-form-text-history/scripts/generate-form-text-history.mjs`, and
-  `bash -n skills/fyllut-release/scripts/list-releasable-fyllut-commits.sh`.
+  `mise run test`, and `mise exec -- node --check
+  skills/fyllut-form-text-history/scripts/generate-form-text-history.mjs`.
 - Never install into the developer's real profile just to test this package.
   Use an isolated HOME/config. Do not dispatch releases during validation.
