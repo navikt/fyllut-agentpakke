@@ -25,8 +25,10 @@ og [cplt](https://github.com/navikt/cplt).
 
 ## Agent og skills i dette repoet
 
-Start [`fyllut`](agents/fyllut.agent.md) i repoet du jobber i. Beskriv oppgaven,
-så bruker agenten de skillsene den trenger. Noen må du be om ved navn.
+Teamets agent [`fyllut`](agents/fyllut.agent.md) er valgt når du bruker
+Fyllut-agentpakken. Den følger teamets regler for testing, kodegjennomgang og
+publisering. Beskriv oppgaven, så velger agenten hvilke skills den trenger.
+Noen skills må du be om ved navn.
 
 ### Skills å kjenne til i det daglige
 
