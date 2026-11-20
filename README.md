@@ -35,6 +35,7 @@ Noen skills må du be om ved navn.
 | Oppgave | Skill | Hva agenten gjør |
 | --- | --- | --- |
 | Undersøke en hendelse i prod eller preprod | [`fyllut-investigate-incident`](skills/fyllut-investigate-incident/SKILL.md) | Skiller funn fra hypoteser uten å endre noe i miljøet. |
+| Sjekke loggene etter å ha testet en endring i dev | [`fyllut-observability-debugging`](skills/fyllut-observability-debugging/SKILL.md) | Finner riktig Fyllut-Sendinn-app og søker i logger, metrikker og spor. |
 | Spesifisere en endring | [`fyllut-sendinn-specification`](skills/fyllut-sendinn-specification/SKILL.md) | Skriver en funksjonell eller teknisk spesifikasjon sammen med deg. |
 | Rette en bug | [`fyllut-bug-triage-and-fix`](skills/fyllut-bug-triage-and-fix/SKILL.md) | Finner årsaken, tester rettelsen og oppretter en PR. |
 | Samle avhengighetsoppgraderinger | [`fyllut-dependency-upgrade-stack`](skills/fyllut-dependency-upgrade-stack/SKILL.md) | Tester oppgraderingene i en PR-stack og erstatter bot-PR-ene som stacken dekker. |
@@ -48,7 +49,6 @@ Noen skills må du be om ved navn.
 | [`fyllut-dependency-upgrade`](skills/fyllut-dependency-upgrade/SKILL.md) | Oppgraderer én avhengighet eller en liten gruppe i én PR. |
 | [`fyllut-follow-up-issue`](skills/fyllut-follow-up-issue/SKILL.md) | Oppretter en oppfølgingssak i GitHub når du ber om denne skillen. |
 | [`fyllut-form-text-history`](skills/fyllut-form-text-history/SKILL.md) | Viser hva som sto i publiserte skjemaer, og når teksten endret seg. |
-| [`fyllut-observability-debugging`](skills/fyllut-observability-debugging/SKILL.md) | Viser hvilke Fyllut-Sendinn-apper du bør sjekke, og hvor du finner logger, metrikker og spor. |
 | [`fyllut-playwright-best-practices`](skills/fyllut-playwright-best-practices/SKILL.md) | Gir råd om å skrive og feilsøke Playwright-tester. |
 | [`fyllut-unslop`](skills/fyllut-unslop/SKILL.md) | Fjerner KI-markører og unødvendige formuleringer fra tekst. |
 
