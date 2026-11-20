@@ -25,24 +25,48 @@ og [cplt](https://github.com/navikt/cplt).
 
 ## Agent og skills i dette repoet
 
-| Type | Navn | Beskrivelse |
+Start [`fyllut`](agents/fyllut.agent.md) i repoet du jobber i. Beskriv oppgaven,
+så bruker agenten de skillsene den trenger. Noen må du be om ved navn.
+
+### Skills å kjenne til i det daglige
+
+| Oppgave | Skill | Hva agenten gjør |
 | --- | --- | --- |
-| Agent | [`fyllut`](agents/fyllut.agent.md) | Hjelper teamet med utvikling og brukerstøtte i repoet du arbeider i. |
-| Skill | [`fyllut-bug-triage-and-fix`](skills/fyllut-bug-triage-and-fix/SKILL.md) | Undersøker en feil, retter den og leverer en testet PR. |
-| Skill | [`fyllut-create-pr`](skills/fyllut-create-pr/SKILL.md) | Skriver korte PR-beskrivelser med verifisering, risiko og rollback. Starter du skillen selv, velger du om review skal kjøres og om agenten skal rette funn. Ellers kjøres review alltid. Publiserer bare på bestilling. |
-| Skill | [`fyllut-dependency-upgrade`](skills/fyllut-dependency-upgrade/SKILL.md) | Oppgraderer én avhengighet eller en liten gruppe i én PR. |
-| Skill | [`fyllut-dependency-upgrade-stack`](skills/fyllut-dependency-upgrade-stack/SKILL.md) | Samler avhengighetsoppgraderinger i en testet PR-stack og erstatter dekkede bot-PR-er. |
-| Skill | [`fyllut-follow-up-issue`](skills/fyllut-follow-up-issue/SKILL.md) | Oppretter oppfølgingssaker med opphav og kriterier for `follow-up` og `quick-win`. Krever eksplisitt invokasjon fra et menneske. |
-| Skill | [`fyllut-form-text-history`](skills/fyllut-form-text-history/SKILL.md) | Dokumenterer publiserte skjematekster og endringsdatoer i en HTML-rapport. |
-| Skill | [`fyllut-investigate-incident`](skills/fyllut-investigate-incident/SKILL.md) | Undersøker hendelser i prod og preprod uten å endre miljøet. Skiller funn fra hypoteser og gir en kort oppsummering til alarmen. |
-| Skill | [`fyllut-observability-debugging`](skills/fyllut-observability-debugging/SKILL.md) | Gir appkart, flyt og integrasjoner for feilsøking i Fyllut-Sendinn. Bygger på `observability-debugging`. |
-| Skill | [`fyllut-playwright-best-practices`](skills/fyllut-playwright-best-practices/SKILL.md) | Gir råd og temainndelte referanser for Playwright-tester. |
-| Skill | [`fyllut-pr-review`](skills/fyllut-pr-review/SKILL.md) | Gjennomgår én PR eller en hel stack med valgt modell og innsats, og kommenterer funn i rød, gul og grønn sone. |
-| Skill | [`fyllut-pr-review-follow-up`](skills/fyllut-pr-review-follow-up/SKILL.md) | Avklarer reviewkommentarer med deg og gjennomfører avtalte endringer. |
-| Skill | [`fyllut-review-before-pr`](skills/fyllut-review-before-pr/SKILL.md) | Verifiserer og gjennomgår lokale endringer før PR, med uavhengig review, sikkerhet og vurdering av menneskelig kontroll. Små rettelser i en eksisterende PR får lettere review. |
-| Skill | [`fyllut-review-core`](skills/fyllut-review-core/SKILL.md) | Felles kriterier for lokal review og PR-review. Beskriver kravkontroll, funn, risiko og rollback uten å styre tester eller publisering. |
-| Skill | [`fyllut-sendinn-specification`](skills/fyllut-sendinn-specification/SKILL.md) | Lager en funksjonell eller teknisk spesifikasjon ved eksplisitt invokasjon. |
-| Skill | [`fyllut-unslop`](skills/fyllut-unslop/SKILL.md) | Fjerner KI-markører og unødvendige formuleringer fra tekst. |
+| Undersøke en hendelse i prod eller preprod | [`fyllut-investigate-incident`](skills/fyllut-investigate-incident/SKILL.md) | Skiller funn fra hypoteser uten å endre noe i miljøet. |
+| Spesifisere en endring | [`fyllut-sendinn-specification`](skills/fyllut-sendinn-specification/SKILL.md) | Skriver en funksjonell eller teknisk spesifikasjon sammen med deg. |
+| Rette en bug | [`fyllut-bug-triage-and-fix`](skills/fyllut-bug-triage-and-fix/SKILL.md) | Finner årsaken, tester rettelsen og oppretter en PR. |
+| Samle avhengighetsoppgraderinger | [`fyllut-dependency-upgrade-stack`](skills/fyllut-dependency-upgrade-stack/SKILL.md) | Tester oppgraderingene i en PR-stack og erstatter bot-PR-ene som stacken dekker. |
+
+<details>
+<summary>Hjelpeskills</summary>
+
+| Skill | Hva den hjelper med |
+| --- | --- |
+| [`fyllut-create-pr`](skills/fyllut-create-pr/SKILL.md) | Skriver PR-beskrivelser og oppretter PR-er når du ber om det. |
+| [`fyllut-dependency-upgrade`](skills/fyllut-dependency-upgrade/SKILL.md) | Oppgraderer én avhengighet eller en liten gruppe i én PR. |
+| [`fyllut-follow-up-issue`](skills/fyllut-follow-up-issue/SKILL.md) | Oppretter en oppfølgingssak i GitHub når du ber om denne skillen. |
+| [`fyllut-form-text-history`](skills/fyllut-form-text-history/SKILL.md) | Viser hva som sto i publiserte skjemaer, og når teksten endret seg. |
+| [`fyllut-observability-debugging`](skills/fyllut-observability-debugging/SKILL.md) | Viser hvilke Fyllut-Sendinn-apper du bør sjekke, og hvor du finner logger, metrikker og spor. |
+| [`fyllut-playwright-best-practices`](skills/fyllut-playwright-best-practices/SKILL.md) | Gir råd om å skrive og feilsøke Playwright-tester. |
+| [`fyllut-unslop`](skills/fyllut-unslop/SKILL.md) | Fjerner KI-markører og unødvendige formuleringer fra tekst. |
+
+</details>
+
+<details>
+<summary>Skills for kodegjennomgang</summary>
+
+Du trenger ikke be om review av koden agenten skriver for deg. Agenten sjekker
+endringene før levering og retter det den finner innenfor oppgaven. Starter du
+`fyllut-create-pr` selv, velger du om agenten skal kjøre review og rette funn.
+
+| Skill | Hva den hjelper med |
+| --- | --- |
+| [`fyllut-review-before-pr`](skills/fyllut-review-before-pr/SKILL.md) | Verifiserer og gjennomgår lokale endringer før levering eller push. |
+| [`fyllut-review-core`](skills/fyllut-review-core/SKILL.md) | Felles kriterier for de andre review-skillene. |
+| [`fyllut-pr-review`](skills/fyllut-pr-review/SKILL.md) | Gjennomgår en PR eller en hel stack når du ber om det. |
+| [`fyllut-pr-review-follow-up`](skills/fyllut-pr-review-follow-up/SKILL.md) | Avklarer reviewkommentarene med deg og gjør avtalte endringer. |
+
+</details>
 
 Nav-grunnpakkens agenter og skills kommer i tillegg, blant annet
 `conventional-commit` og `playwright-testing`. Sistnevnte gir innførende
@@ -60,8 +84,8 @@ nav-pilot --client opencode --persona fyllut
 nav-pilot --client pi --persona fyllut
 ```
 
-Be om en skill ved navn. Spesifikasjonsflyten må startes eksplisitt med
-`/fyllut-sendinn-specification` eller en tilsvarende forespørsel.
+Be eksplisitt om `/fyllut-sendinn-specification` for å lage en spesifikasjon,
+eller `/fyllut-dependency-upgrade-stack` for å samle avhengighetsoppgraderinger.
 Et repos egen pakkekilde kan overstyre brukerens standard. Legg til
 `--source navikt/fyllut-agentpakke` ved oppstart for å velge teamets pakke.
 
