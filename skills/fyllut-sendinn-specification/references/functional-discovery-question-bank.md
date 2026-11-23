@@ -1,77 +1,78 @@
-# Functional specification discovery question bank
+# Discovery question bank
 
-Use this as a question bank, not a questionnaire to send wholesale. Select the
-whole current frontier: every relevant decision whose prerequisites are
-settled. Ask those decisions together in one round, written in your reply,
-with one focused question per decision. Investigate facts that can be
-established from the repository or other reliable sources.
+Pick the questions that matter for this change, and look up the facts first.
+Phrase each question in plain language for developers, designers and
+functional architects.
 
-Phrase every question in plain product language for a functional architect or
-designer. When a request starts with a proposed technical solution, discover
-the underlying user need before discussing the proposed element.
+## Intent and scope
 
-## Product intent
-
-- Who is affected? Include distinct roles when their permissions or needs differ.
+- Who is affected? Include distinct roles when their needs or permissions
+  differ.
 - What must they achieve, and what prevents it today?
 - What is verified current behavior, and what is only reported or assumed?
-- What user, business, or service outcome defines success?
-- Which product surface and starting context are affected?
-- Is this a new capability, a correction, a replacement, or a removal?
-- What remains unchanged?
-- Are any terms vague, overloaded, or inconsistent with existing product
+- What outcome defines success?
+- Is this a new capability, a correction, a replacement or a removal?
+- What must stay unchanged?
+- Are any terms vague, overloaded or different from the existing product
   language?
 
-## Journey and behavior
+## Behavior and flow
 
-- What starts the journey? Is there more than one entry point?
+- What starts the flow? Is there more than one entry point?
 - What does the user see before acting, and what information do they need?
-- What actions can they take, in what order, and which are optional?
-- What ends the journey successfully? What happens next?
-- Can the user pause, go back, edit, cancel, or resume? What must be preserved?
-- Does a previous answer, role, state, or date change what is shown or allowed?
-- What state can the user return from, and what state can they return to?
-- What happens when an action is repeated, interrupted, undone, or performed in
-  another tab or session?
-- Are there deadlines, time zones, expiry, or duplicate-action considerations?
-- If both fyllut and bygger are affected, what must remain consistent between
-  authoring, preview, completion, summary, and submission?
-- Which concrete scenario would expose a misunderstanding about the journey?
+- Which actions can they take, in what order, and which are optional?
+- What ends the flow successfully, and what happens next?
+- Can the user pause, go back, edit, cancel or resume? What must be kept?
+- Does an earlier answer, role, state or date change what is shown or allowed?
+- What happens when an action is repeated, interrupted or done in another tab?
+- Are there deadlines, expiry dates or time zones to consider?
+- Which concrete example would expose a misunderstanding?
 
-## Forms and user-entered information
+## Forms and answers
 
-- Which answers are required, optional, conditionally required, or read-only?
-- What are representative examples of answers that should and should not be
-  accepted?
-- What labels, descriptions, examples, help, and error messages are required?
-- What makes an answer valid or invalid from the user's perspective?
-- Does the change intentionally need different validation timing or recovery
-  from repository defaults? If not, apply them without asking.
-- Can multiple errors occur together? Which errors block progression or
-  submission?
-- What happens to hidden, changed, removed, or previously saved answers?
-- What happens when an author changes a form that already has saved or
-  submitted answers?
-- Are attachments, consent, declarations, personal data, or an explicit review
-  before submission involved?
-- What must the summary, receipt, and any confirmation communicate?
-- Must calculated, repeated, prefilled, or externally sourced values behave
-  differently from directly entered answers?
+Use this section only when the change affects a form.
 
-## Failure paths and boundaries
+- Which answers are required, optional, conditionally required or read-only?
+- Which example answers should and should not be accepted?
+- Which labels, descriptions, help texts and error messages are needed?
+- What happens to hidden, changed, removed or previously saved answers?
+- What happens when a form is changed after people have saved or submitted
+  answers?
+- Are attachments, declarations, consent or personal data involved?
+- What must the summary, receipt and confirmation show?
+- Must calculated, repeated or prefilled values behave differently from
+  values the user enters?
+- If both the form builder and the published form are affected, what must
+  match between building, preview, filling in, summary and submission?
 
-- What happens when information is unavailable, stale, conflicting, or missing?
-- What happens on an unsuccessful save, submission, upload, or lookup?
-- Can the user retry safely, receive help, or continue later?
-- Are roles, eligibility rules, privacy, consent, retention, or audit needs
-  relevant?
-- Are there relevant language variants, plain-language/content approval, or
-  legal requirements?
-- Does the feature depend on another team, policy decision, content, service,
-  rollout date, or analytics definition?
-- Which uncertainties need research, a prototype, content testing, policy
-  clarification, or another owner rather than another interview question?
-- Which remaining uncertainties are technical planning topics rather than
-  functional product decisions?
-- If someone else owns an answer, who is it, what exactly must they decide, and
-  what behavior depends on it?
+## Receiving systems and integrations
+
+Use this section only when the change affects what is sent, received or
+stored.
+
+- Who or what receives the result, and what must they get?
+- Must existing receivers get the same result as before?
+- What happens when a receiving system is unavailable or rejects the result?
+  What does the user see, and what reaches the caseworker?
+- Is it acceptable that a result is delayed, retried or delivered twice?
+- Who must find out when something fails?
+
+## Errors and boundaries
+
+- What happens when information is missing, outdated or conflicting?
+- What happens when saving, submitting, uploading or a lookup fails?
+- Can the user retry safely, get help or continue later?
+- Are eligibility rules, privacy, retention or audit needs involved beyond the
+  repository defaults?
+- Are other languages, content approval or legal requirements involved?
+- Does the change depend on another team, a policy decision, content or a date?
+- Which uncertainty needs research, user testing or another owner instead of
+  another question?
+
+## Slices
+
+- Can the change be delivered in smaller parts that each work on their own?
+- What do users see between two slices? Must a slice stay hidden until a later
+  slice is ready?
+- Which slices can different people work on at the same time?
+- Which slice must be merged before another can start?
