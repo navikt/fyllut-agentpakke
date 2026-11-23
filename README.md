@@ -50,6 +50,7 @@ Noen skills må du be om ved navn.
 | [`fyllut-follow-up-issue`](skills/fyllut-follow-up-issue/SKILL.md) | Oppretter en oppfølgingssak i GitHub når du ber om denne skillen. |
 | [`fyllut-form-text-history`](skills/fyllut-form-text-history/SKILL.md) | Viser hva som sto i publiserte skjemaer, og når teksten endret seg. |
 | [`fyllut-playwright-best-practices`](skills/fyllut-playwright-best-practices/SKILL.md) | Gir råd om å skrive og feilsøke Playwright-tester. |
+| [`fyllut-trello-card`](skills/fyllut-trello-card/SKILL.md) | Skriver tittel og beskrivelse til en Trello-sak for ikke-tekniske lesere. |
 | [`fyllut-unslop`](skills/fyllut-unslop/SKILL.md) | Fjerner KI-markører og unødvendige formuleringer fra tekst. |
 
 </details>
