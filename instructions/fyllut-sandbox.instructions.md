@@ -17,3 +17,11 @@ Git-konfigurasjonen. Ikke forsøk å omgå tilgangsbegrensningen.
   selv om registrering av upstream feilet.
 - Hvis oppgaven fortsatt krever en blokkert operasjon, forklar hva som
   gjenstår og be brukeren utføre den utenfor sandboxen.
+
+## PR-kommentarer i sandbox
+
+For å svare i en eksisterende review-tråd på en PR i sandbox, bruk
+`gh api graphql` med mutasjonen `addPullRequestReviewThreadReply` og
+`-f`-parametere. `gh_guard` blokkerer REST-endepunktet
+`gh api repos/.../replies`. Last alltid `fyllut-unslop` før du poster
+kommentarer på GitHub.
