@@ -36,7 +36,7 @@ Noen skills må du be om ved navn.
 | --- | --- | --- |
 | Undersøke en hendelse i prod eller preprod | [`fyllut-investigate-incident`](skills/fyllut-investigate-incident/SKILL.md) | Skiller funn fra hypoteser uten å endre noe i miljøet. |
 | Sjekke loggene etter å ha testet en endring i dev | [`fyllut-observability-debugging`](skills/fyllut-observability-debugging/SKILL.md) | Finner riktig Fyllut-Sendinn-app og søker i logger, metrikker og spor. |
-| Spesifisere en endring | [`fyllut-sendinn-specification`](skills/fyllut-sendinn-specification/SKILL.md) | Skriver en funksjonell eller teknisk spesifikasjon sammen med deg. |
+| Spesifisere en endring | [`fyllut-sendinn-specification`](skills/fyllut-sendinn-specification/SKILL.md) | Skriver en funksjonell spesifikasjon sammen med deg og oppretter én GitHub-issue. |
 | Rette en bug | [`fyllut-bug-triage-and-fix`](skills/fyllut-bug-triage-and-fix/SKILL.md) | Finner årsaken, tester rettelsen og oppretter en PR. |
 | Samle avhengighetsoppgraderinger | [`fyllut-dependency-upgrade-stack`](skills/fyllut-dependency-upgrade-stack/SKILL.md) | Tester oppgraderingene i en PR-stack og erstatter bot-PR-ene som stacken dekker. |
 
