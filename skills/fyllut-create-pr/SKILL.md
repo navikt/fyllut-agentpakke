@@ -128,8 +128,12 @@ Use the agreed language. Aim for 150 to 250 words, fewer for simple changes.
 Required security warnings, migration order, test gaps and task-skill content
 have no word limit.
 
-Start with one or two sentences on change and effect. Link issues or prerequisites;
-use `Closes` only for completed issues, not partial stack layers. Include important
+Start with a `What changed` heading, translated to the agreed language, such as
+`Hva er endret` in Norwegian. Write one or two high-level sentences focused on
+the functional change and its effect. Leave file names, metric names and other
+code identifiers out of this opening section. Put technical specifics under
+`Decisions` or `Verification` when needed. Link issues or prerequisites; use
+`Closes` only for completed issues, not partial stack layers. Include important
 decisions and reasons, commands with results and covered behavior, and available
 bugfix red-before-green evidence. Reuse reviewed risk, rollback and concrete
 human-review recommendations, or the limited assessment and review-status
@@ -138,7 +142,9 @@ statement under the exception. Recommendations do not satisfy approvals.
 Unless the repo requires another format, use this template in the agreed language:
 
 ```markdown
-<Short description of the change and its effect.>
+## What changed
+
+<High-level functional description of the change and its effect, without file names, metric names or other code identifiers.>
 
 <Relevant issue or prerequisite, if any.>
 
