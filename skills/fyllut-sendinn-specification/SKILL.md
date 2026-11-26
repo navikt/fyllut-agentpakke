@@ -97,12 +97,14 @@ before a given slice starts. Do not ask it again in this interview. When
 research, user testing, policy or another person must decide, also record who
 decides.
 
-Always consider whether the work can be split into slices that can be merged
-to `main` separately. When it has natural parts, propose a delivery plan as a
-question with a recommendation. When the work has more than one slice, ask
-what users see between slices. Each slice is merged to `main` on its own, so
-a slice is either released when it is merged or kept hidden until a later
-slice is ready.
+Always consider whether the work can be split into parts that reach `main`
+separately. Decide from your research how the work reaches `main`, as
+described under "Delivery plan and slices". Ask the user only when the
+research leaves it unclear.
+When the work has natural parts, propose a delivery plan as a question with a
+recommendation. When the work reaches `main` in more than one merge, ask what
+users see between merges. Each merged part is either released when it is
+merged or kept hidden until a later part is ready.
 
 Pick questions from the [question bank](references/functional-discovery-question-bank.md)
 that matter for this change.
@@ -163,17 +165,21 @@ Use this structure:
 - <Observable outcome>
 
 ## Delivery plan
+<How the work reaches `main`. For example: "Each slice is merged on its own.
+Slices in the same phase can run in parallel. A phase starts when the phase
+before it is merged.">
+
 **Phase 1**
 - [ ] <What the slice makes possible>
 
-**Phase 2: in parallel, after phase 1**
+**Phase 2**
 - [ ] <What the slice makes possible>
 - [ ] <What the slice makes possible>
 
-**Phase 3: after phase 2**
+**Phase 3**
 - [ ] <What the slice makes possible>
 
-<What users see between slices, and which slices stay hidden until a later
+<What users see between merges, and which slices stay hidden until a later
 slice is ready.>
 ```
 
@@ -192,13 +198,36 @@ system is unavailable when the user submits.
 
 ### Delivery plan and slices
 
+A slice is one task that one person or agent can build, review and verify
+on its own. Decide how the work reaches `main`. Prefer the first option that
+works, and decide per phase when the phases differ:
+
+1. **Each slice is merged on its own.** Every slice is one pull request that
+   leaves `main` working, even when the behavior stays hidden until a later
+   slice. Prefer this.
+2. **Each phase is merged as a whole.** Use this only when the slices in a
+   phase cannot leave `main` working one at a time, even with the behavior
+   hidden. The slices can still be built in parallel, but they reach `main`
+   together.
+3. **The whole issue is merged at once.** Use this only when no part can
+   reach `main` without the rest. When the work still has tasks that can be
+   built in parallel, put them in one phase and say that they reach `main`
+   together. Leave out the delivery plan only when the work is a single
+   slice.
+
+Say in the plan which option applies. When only some phases are merged as a
+whole, name them. An epic always has a delivery plan.
+
+- A slice does one thing. When a slice title joins unrelated features with
+  "and" or a comma, split it into one slice per feature.
+- When a slice cannot leave `main` working, first try to hide it until a
+  later slice is ready. If that does not help, join it with the slice it
+  depends on, or merge the phase as a whole.
 - Prefer slices that change behavior someone can observe, such as "the field
   is shown as read-only".
 - A slice can also be technical preparation, such as setting up a new package.
   Find out from your research whether it is needed, and propose it yourself
   instead of asking. Describe what it makes possible.
-- Each slice can be merged to `main` on its own without breaking existing
-  behavior.
 - Split only where it lets the work reach `main` earlier or lets people work
   in parallel.
 - The delivery plan is a checklist for working through the issue, and it
@@ -221,12 +250,16 @@ system is unavailable when the user submits.
   optional and cover only the overall outcome.
 - A **slice** starts its body with `Part of <link to the parent issue>.`
   Summarize the parent's background in one sentence instead of repeating it.
+  When the parent merges the slice's phase as a whole, say so and name the
+  slices it reaches `main` with.
 
 ## Approve and publish
 
 Before you show the draft, check that every behavior rule has an acceptance
 criterion, that every open question says when it must be decided, and that
-facts, decisions and open questions are kept apart.
+facts, decisions and open questions are kept apart. Also check that each slice
+does one thing, unless its parts cannot reach `main` apart, and that it fits
+how the plan says the work reaches `main`.
 
 Show the complete draft and offer four choices in one question:
 

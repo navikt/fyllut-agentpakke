@@ -71,8 +71,9 @@ stored.
 
 ## Slices
 
-- Can the change be delivered in smaller parts that each work on their own?
 - What do users see between two slices? Must a slice stay hidden until a later
   slice is ready?
-- Which slices can different people work on at the same time?
-- Which slice must be merged before another can start?
+- Only when research cannot tell: which slices can different people work on at
+  the same time?
+- Only when research cannot tell: which slice must be merged before another
+  can start?
